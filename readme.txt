@@ -22,7 +22,7 @@ Puede obtener más información sobre **Google Video Sitemap Feed With Multisite
 
 == Installation ==
 
-1. Subir la carpeta `google-video-sitemap-feed-with-multisite-support` al directorio `/wp-content/plugins/`.  
+1. Subir la carpeta `google-video-sitemap-feed-with-multisite-support` al directorio `/wp-content/plugins/`.
 2. Activar el plugin a través del menú 'Plugins' en el Panel de Administración de WordPress.
 
 == Frequently Asked Questions ==
