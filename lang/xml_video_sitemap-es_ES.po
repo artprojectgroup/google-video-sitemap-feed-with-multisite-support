@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Google Video Sitemap Feed With Multisite Support v0.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-11-23 00:37:30+0000\n"
+"PO-Revision-Date: 2013-11-23 01:47:25+0000\n"
 "Last-Translator: admin <info@artprojectgroup.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,52 +22,52 @@ msgstr ""
 
 #. translators: plugin header field 'Name'
 #: xml-sitemap.php:0
-#@ xml_mobile_sitemap
+#@ xml_video_sitemap
 msgid "Google Video Sitemap Feed With Multisite Support"
 msgstr ""
 
 #. translators: plugin header field 'PluginURI'
 #: xml-sitemap.php:0
-#@ xml_mobile_sitemap
+#@ xml_video_sitemap
 msgid "http://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/"
 msgstr ""
 
 #. translators: plugin header field 'Author'
 #: xml-sitemap.php:0
-#@ xml_mobile_sitemap
+#@ xml_video_sitemap
 msgid "Art Project Group"
 msgstr ""
 
 #. translators: plugin header field 'AuthorURI'
 #: xml-sitemap.php:0
-#@ xml_mobile_sitemap
+#@ xml_video_sitemap
 msgid "http://www.artprojectgroup.es/"
 msgstr ""
 
 #: xml-sitemap.php:50
-#@ xml_mobile_sitemap
+#@ xml_video_sitemap
 msgid "Visit the official plugin website"
 msgstr "Visitar la web oficial del plugin"
 
 #: xml-sitemap.php:51
-#@ xml_mobile_sitemap
+#@ xml_video_sitemap
 msgid "<strong>Google XML Sitemaps</strong> compatibility fix"
 msgstr "Solución de compatibilidad con <strong>Google XML Sitemaps</strong>"
 
 #: xml-sitemap.php:52
-#@ xml_mobile_sitemap
+#@ xml_video_sitemap
 msgid "https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif"
 msgstr "https://www.paypalobjects.com/es_ES/i/btn/btn_donate_LG.gif"
 
 #. translators: plugin header field 'Description'
 #: xml-sitemap.php:0
-#@ xml_mobile_sitemap
+#@ xml_video_sitemap
 msgid "Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. No settings required. Compatible with WordPress Multisite installations. Created from <a href=\"http://profiles.wordpress.org/users/timbrd/\" target=\"_blank\">Tim Brandon</a> <a href=\"http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/\" target=\"_blank\"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href=\"http://profiles.wordpress.org/labnol/\" target=\"_blank\">Amit Agarwal</a> <a href=\"http://wordpress.org/plugins/xml-sitemaps-for-videos/\" target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a> plugins."
 msgstr "Genera dinámicamente un mapa de sitio de vídeos para Google, informando automáticamente de actualizaciones a Google y Bing. No requiere configuración. Compatible con instalaciones de WordPress multisitio. Creado a partir del plugin de <a href=\"http://profiles.wordpress.org/users/timbrd/\" target=\"_blank\">Tim Brandon</a> <a href=\"http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/\" target=\"_blank\"><strong>Google News Sitemap Feed With Multisite Support</strong></a> y el plugin de <a href=\"http://profiles.wordpress.org/labnol/\" target=\"_blank\">Amit Agarwal</a> <a href=\"http://wordpress.org/plugins/xml-sitemaps-for-videos/\" target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a>."
 
 #. translators: plugin header field 'Version'
 #: xml-sitemap.php:0
-#@ xml_mobile_sitemap
+#@ xml_video_sitemap
 msgid "0.2"
 msgstr ""
 
