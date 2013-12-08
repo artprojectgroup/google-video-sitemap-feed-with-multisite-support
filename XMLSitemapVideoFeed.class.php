@@ -4,7 +4,7 @@ class XMLSitemapVideoFeed {
 
 	function go() {		
 		global $wpdb;
-		if ( $wpdb->blogid && function_exists('get_site_option') && get_site_option('tags_blog_id') == $wpdb->blogid ) 
+		if ($wpdb->blogid && function_exists('get_site_option') && get_site_option('tags_blog_id') == $wpdb->blogid) 
 		{
 			// we are on wpmu and this is a tags blog!
 			// create NO sitemap since it will be full 
@@ -13,13 +13,13 @@ class XMLSitemapVideoFeed {
 		else 
 		{
 			// INIT
-			add_action('init', array(__CLASS__, 'init') );
+			add_action('init', array(__CLASS__, 'init'));
 	
 			// FEED
 			add_action('do_feed_sitemap-video', array(__CLASS__, 'load_template_sitemap_video'), 10, 1);
 
 			// REWRITES
-			add_filter('generate_rewrite_rules', array(__CLASS__, 'rewrite') );
+			add_filter('generate_rewrite_rules', array(__CLASS__, 'rewrite'));
 			
 			//Envía el ping a Google y Bing
 			add_action('enviar_ping', array(__CLASS__, 'EnviaPing'), 10, 1);
@@ -31,12 +31,12 @@ class XMLSitemapVideoFeed {
 		}
 
 		// DE-ACTIVATION
-		register_deactivation_hook( XMLSVF_PLUGIN_DIR . '/xml-sitemap.php', array(__CLASS__, 'deactivate') );
+		register_deactivation_hook(XMLSVF_PLUGIN_DIR . '/xml-sitemap.php', array(__CLASS__, 'deactivate'));
 	}
 
 	// set up the video sitemap template
 	function load_template_sitemap_video() {
-		load_template( XMLSVF_PLUGIN_DIR . '/feed-sitemap-video.php' );
+		load_template(XMLSVF_PLUGIN_DIR . '/feed-sitemap-video.php');
 	}
 
 	// REWRITES //
@@ -48,7 +48,7 @@ class XMLSitemapVideoFeed {
 
 	// DE-ACTIVATION
 	function deactivate() {
-		remove_filter('generate_rewrite_rules', array(__CLASS__, 'rewrite') );
+		remove_filter('generate_rewrite_rules', array(__CLASS__, 'rewrite'));
 		delete_option('gn-sitemap-video-feed-mu-version');
 		global $wp_rewrite;
 		$wp_rewrite->flush_rules();

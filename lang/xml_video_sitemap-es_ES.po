@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Google Video Sitemap Feed With Multisite Support v0.2\n"
+"Project-Id-Version: Google Video Sitemap Feed With Multisite Support v0.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-11-23 01:47:25+0000\n"
+"PO-Revision-Date: 2013-12-08 14:27:31+0000\n"
 "Last-Translator: admin <info@artprojectgroup.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -44,20 +44,10 @@ msgstr ""
 msgid "http://www.artprojectgroup.es/"
 msgstr ""
 
-#: xml-sitemap.php:50
-#@ xml_video_sitemap
-msgid "Visit the official plugin website"
-msgstr "Visitar la web oficial del plugin"
-
-#: xml-sitemap.php:51
+#: xml-sitemap.php:62
 #@ xml_video_sitemap
 msgid "<strong>Google XML Sitemaps</strong> compatibility fix"
 msgstr "Solución de compatibilidad con <strong>Google XML Sitemaps</strong>"
-
-#: xml-sitemap.php:52
-#@ xml_video_sitemap
-msgid "https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif"
-msgstr "https://www.paypalobjects.com/es_ES/i/btn/btn_donate_LG.gif"
 
 #. translators: plugin header field 'Description'
 #: xml-sitemap.php:0
@@ -68,6 +58,51 @@ msgstr "Genera dinámicamente un mapa de sitio de vídeos para Google, informand
 #. translators: plugin header field 'Version'
 #: xml-sitemap.php:0
 #@ xml_video_sitemap
-msgid "0.2"
+msgid "0.4"
 msgstr ""
+
+#: xml-sitemap.php:63
+#@ xml_video_sitemap
+msgid "Make a donation by "
+msgstr "Haz una donación por "
+
+#: xml-sitemap.php:65
+#@ xml_video_sitemap
+msgid "Follow us on "
+msgstr "Síguenos en "
+
+#: xml-sitemap.php:66
+#@ xml_video_sitemap
+msgid "More plugins on "
+msgstr "Más plugins en "
+
+#: xml-sitemap.php:67
+#@ xml_video_sitemap
+msgid "Contact with us by "
+msgstr "Contacta con nosotros por "
+
+#: xml-sitemap.php:68
+#@ xml_video_sitemap
+msgid "***** Fantastic!"
+msgstr "***** ¡Fantástico!"
+
+#: xml-sitemap.php:68
+#@ xml_video_sitemap
+msgid "**** Great"
+msgstr "**** Genial"
+
+#: xml-sitemap.php:68
+#@ xml_video_sitemap
+msgid "*** Good"
+msgstr "*** Bueno"
+
+#: xml-sitemap.php:68
+#@ xml_video_sitemap
+msgid "** Works"
+msgstr "** Funciona"
+
+#: xml-sitemap.php:68
+#@ xml_video_sitemap
+msgid "* Poor"
+msgstr "* Pobre"
 
