@@ -3,8 +3,8 @@ Contributors: artprojectgroup
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SJTSWRFD2UTA8
 Tags: google, google Video, google video sitemap, video sitemap, sitemap video, sitemap, sitemap-video.xml
 Requires at least: 2.6
-Tested up to: 3.7.1
-Stable tag: 0.4
+Tested up to: 3.8
+Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,9 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 1. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 0.5 =
+* Actualización de las hojas de estilo acorde al nuevo WordPress 8.
+* Arreglo de pequeños errores en el código.
 = 0.4 =
 * Inclusión de nuevos botones y enlaces.
 = 0.3 =
@@ -76,6 +79,9 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
+= 0.5 =
+* Actualización de las hojas de estilo acorde al nuevo WordPress 8.
+* Arreglo de pequeños errores en el código.
 = 0.4 =
 * Inclusión de nuevos botones y enlaces.
 = 0.3 =
