@@ -73,8 +73,8 @@ function xml_sitemap_video_enlaces($enlaces, $archivo) {
 add_filter('plugin_row_meta', 'xml_sitemap_video_enlaces', 10, 2);
 
 //Constantes
-define('XMLSVF_VERSION','0.2');
-define('XMLSVF_MEMORY_LIMIT','128M');
+define('XMLSVF_VERSION', '0.6');
+define('XMLSVF_MEMORY_LIMIT', '128M');
 
 if (file_exists(dirname(__FILE__).'/google-video-sitemap-feed-mu')) define('XMLSVF_PLUGIN_DIR', dirname(__FILE__).'/google-video-sitemap-feed-mu');
 else define('XMLSVF_PLUGIN_DIR', dirname(__FILE__));		
