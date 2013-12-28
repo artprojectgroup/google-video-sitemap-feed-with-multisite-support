@@ -5,24 +5,15 @@
  * @package Google Video Sitemap Feed With Multisite Support plugin for WordPress
  */
 
-//Obtiene la duración del vídeo
-function duracion_del_video($identificador) {
-	try 
-	{
-		$ch = curl_init ();
-		curl_setopt ($ch, CURLOPT_URL, "http://gdata.youtube.com/feeds/api/videos/$identificador");
-		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-		$youtube = curl_exec ($ch);
-		curl_close ($ch);
-
-		preg_match ("/duration=['\"]([0-9]*)['\"]/", $youtube, $duracion);
-		
-		return $duracion[1];
-    } 
-	catch (Exception $e) 
-	{
-		return '0'; # returning 0 if the YouTube API fails for some reason.
-	}
+//Obtiene información del vídeo
+function informacion_del_video($identificador) {
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "http://gdata.youtube.com/feeds/api/videos/$identificador");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	$youtube = simplexml_load_string(curl_exec($ch));
+	curl_close($ch);
+	
+	return $youtube;
 }
 
 status_header('200'); // force header('HTTP/1.1 200 OK') for sites without posts
@@ -45,11 +36,13 @@ if (!empty($entradas))
 	$videos = array();
 	foreach ($entradas as $entrada) 
 	{
+		setup_postdata($entrada);
 		if (preg_match_all ('/youtube.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $entrada->post_content, $videos, PREG_SET_ORDER) || preg_match_all ('/youtube-nocookie.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $entrada->post_content, $videos, PREG_SET_ORDER)) 
 		{
-			$extracto = ($entrada->post_excerpt != "") ? $entrada->post_excerpt : $entrada->post_title; 
-			$enlace = htmlspecialchars(get_permalink($entrada->id)); 
-
+			$extracto = ($entrada->post_excerpt != "") ? $entrada->post_excerpt : get_the_excerpt(); 
+			$enlace = htmlspecialchars(get_permalink($entrada->id));
+			$contador = 0;
+	
 			foreach ($videos as $video) 
 			{
 				$identificador = $video[2];
@@ -57,21 +50,29 @@ if (!empty($entradas))
 				if (in_array($identificador, $videos)) continue;
                             
 				array_push($videos, $identificador);
-                        
+
+				if ($contador > 0) $multiple = true;
+				else $multiple = false;
+				if ($multiple) 
+				{
+					$youtube = informacion_del_video($identificador);
+					$titulo = $youtube->title;
+					$descripcion = $titulo . ". " . $extracto;
+				}
+				else 
+				{
+					$titulo = $entrada->post_title;
+					$descripcion = $extracto;
+				}
+				$contador++;
+				
 				echo "\t" . '<url>' . "\n";
 				echo "\t\t" . '<loc>' . $enlace . '</loc>' . "\n";
 				echo "\t\t" . '<video:video>' . "\n";
 				echo "\t\t" . '<video:player_loc allow_embed="yes" autoplay="autoplay=1">http://www.youtube.com/v/' . $identificador . '</video:player_loc>' . "\n";
 				echo "\t\t" . '<video:thumbnail_loc>http://i.ytimg.com/vi/' . $identificador . '/hqdefault.jpg</video:thumbnail_loc>' . "\n";
-				echo "\t\t" . '<video:title>' . htmlspecialchars($entrada->post_title) . '</video:title>' . "\n";
-				echo "\t\t" . '<video:description>' . htmlspecialchars($extracto) . '</video:description>' . "\n";
-    
-				if ($_POST['time'] == 1) 
-				{  
-                	$duracion = duracion_del_video($identificador);
-                	if ($duracion != 0) echo "\t\t" . '<video:duration>' . duracion_del_video($identificador) . '</video:duration>' . "\n";
-				}
-				echo "\t\t" . '<video:publication_date>' . date(DATE_W3C, strtotime($entrada->post_date_gmt)) . '</video:publication_date>' . "\n";
+				echo "\t\t" . '<video:title>' . html_entity_decode($titulo, ENT_QUOTES, 'UTF-8') . '</video:title>' . "\n";
+				echo "\t\t" . '<video:description>' . html_entity_decode($descripcion, ENT_QUOTES, 'UTF-8') . '</video:description>' . "\n";
     
 				$etiquetas = get_the_tags($entrada->id); 
 				if ($etiquetas) 
