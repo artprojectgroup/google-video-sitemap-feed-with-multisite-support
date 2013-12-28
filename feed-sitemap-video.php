@@ -23,7 +23,7 @@ echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . '"?>
 <!-- Created by Google Video Sitemap Feed With Multisite Support by Art Project Group (http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support) -->
 <!-- Generated-on="' . date('Y-m-d\TH:i:s+00:00') . '" -->
 <?xml-stylesheet type="text/xsl" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/google-video-sitemap-feed-with-multisite-support/video-sitemap.xsl"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">'."\n";
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">' . PHP_EOL;
 
 $entradas = $wpdb->get_results ("SELECT id, post_title, post_content, post_date_gmt, post_excerpt FROM $wpdb->posts WHERE post_status = 'publish' AND (post_type = 'post' OR post_type = 'page') AND (post_content LIKE '%youtube.com%' OR post_content LIKE '%youtube-nocookie.com%') ORDER BY post_date DESC"); //Consulta
 	
@@ -42,6 +42,7 @@ if (!empty($entradas))
 			$extracto = ($entrada->post_excerpt != "") ? $entrada->post_excerpt : get_the_excerpt(); 
 			$enlace = htmlspecialchars(get_permalink($entrada->id));
 			$contador = 0;
+			$multiple = false;
 	
 			foreach ($videos as $video) 
 			{
@@ -52,7 +53,6 @@ if (!empty($entradas))
 				array_push($videos, $identificador);
 
 				if ($contador > 0) $multiple = true;
-				else $multiple = false;
 				if ($multiple) 
 				{
 					$youtube = informacion_del_video($identificador);
@@ -66,13 +66,13 @@ if (!empty($entradas))
 				}
 				$contador++;
 				
-				echo "\t" . '<url>' . "\n";
-				echo "\t\t" . '<loc>' . $enlace . '</loc>' . "\n";
-				echo "\t\t" . '<video:video>' . "\n";
-				echo "\t\t" . '<video:player_loc allow_embed="yes" autoplay="autoplay=1">http://www.youtube.com/v/' . $identificador . '</video:player_loc>' . "\n";
-				echo "\t\t" . '<video:thumbnail_loc>http://i.ytimg.com/vi/' . $identificador . '/hqdefault.jpg</video:thumbnail_loc>' . "\n";
-				echo "\t\t" . '<video:title>' . html_entity_decode($titulo, ENT_QUOTES, 'UTF-8') . '</video:title>' . "\n";
-				echo "\t\t" . '<video:description>' . html_entity_decode($descripcion, ENT_QUOTES, 'UTF-8') . '</video:description>' . "\n";
+				echo "\t" . '<url>' . PHP_EOL;
+				echo "\t\t" . '<loc>' . $enlace . '</loc>' . PHP_EOL;
+				echo "\t\t" . '<video:video>' . PHP_EOL;
+				echo "\t\t" . '<video:player_loc allow_embed="yes" autoplay="autoplay=1">http://www.youtube.com/v/' . $identificador . '</video:player_loc>' . PHP_EOL;
+				echo "\t\t" . '<video:thumbnail_loc>http://i.ytimg.com/vi/' . $identificador . '/hqdefault.jpg</video:thumbnail_loc>' . PHP_EOL;
+				echo "\t\t" . '<video:title>' . html_entity_decode($titulo, ENT_QUOTES, 'UTF-8') . '</video:title>' . PHP_EOL;
+				echo "\t\t" . '<video:description>' . html_entity_decode($descripcion, ENT_QUOTES, 'UTF-8') . '</video:description>' . PHP_EOL;
     
 				$etiquetas = get_the_tags($entrada->id); 
 				if ($etiquetas) 
@@ -81,7 +81,7 @@ if (!empty($entradas))
                 	foreach ($etiquetas as $etiqueta) 
 					{
                 		if ($numero_de_etiquetas++ > 32) break;
-                		echo "\t\t" . '<video:tag>' . $etiqueta->name . '</video:tag>' . "\n";
+                		echo "\t\t" . '<video:tag>' . $etiqueta->name . '</video:tag>' . PHP_EOL;
                 	}
 				}    
 
@@ -90,12 +90,12 @@ if (!empty($entradas))
 				{ 
                 	foreach ($categorias as $categoria) 
 					{
-                		echo "\t\t" . '<video:category>' . $categoria->name . '</video:category>' . "\n";
+                		echo "\t\t" . '<video:category>' . $categoria->name . '</video:category>' . PHP_EOL;
                 		break;
                 	}
 				}        
-				echo "\t\t" . '</video:video>' . "\n";
-				echo "\t" . '</url>' . "\n";
+				echo "\t\t" . '</video:video>' . PHP_EOL;
+				echo "\t" . '</url>' . PHP_EOL;
 			}
 		}
 	}
