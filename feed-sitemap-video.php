@@ -4,6 +4,38 @@
  *
  * @package Google Video Sitemap Feed With Multisite Support plugin for WordPress
  */
+ 
+//Procesa correctamente las entidades del RSS
+$entity_custom_from = false; 
+$entity_custom_to = false;
+
+function sitemap_video_html_entity($data) {
+	global $entity_custom_from, $entity_custom_to;
+	
+	if(!is_array($entity_custom_from) || !is_array($entity_custom_to)) {
+		$array_position = 0;
+		foreach (get_html_translation_table(HTML_ENTITIES) as $key => $value) {
+			switch ($value) {
+				case '&nbsp;':
+					break;
+				case '&gt;':
+				case '&lt;':
+				case '&quot;':
+				case '&apos;':
+				case '&amp;':
+					$entity_custom_from[$array_position] = $key; 
+					$entity_custom_to[$array_position] = $value; 
+					$array_position++; 
+					break; 
+				default: 
+					$entity_custom_from[$array_position] = $value; 
+					$entity_custom_to[$array_position] = $key; 
+					$array_position++; 
+			} 
+		}
+	}
+	return str_replace($entity_custom_from, $entity_custom_to, $data); 
+}
 
 //Obtiene información del vídeo
 function informacion_del_video($identificador) {
@@ -71,8 +103,8 @@ if (!empty($entradas))
 				echo "\t\t" . '<video:video>' . PHP_EOL;
 				echo "\t\t" . '<video:player_loc allow_embed="yes" autoplay="autoplay=1">http://www.youtube.com/v/' . $identificador . '</video:player_loc>' . PHP_EOL;
 				echo "\t\t" . '<video:thumbnail_loc>http://i.ytimg.com/vi/' . $identificador . '/hqdefault.jpg</video:thumbnail_loc>' . PHP_EOL;
-				echo "\t\t" . '<video:title>' . html_entity_decode($titulo, ENT_QUOTES, 'UTF-8') . '</video:title>' . PHP_EOL;
-				echo "\t\t" . '<video:description>' . html_entity_decode($descripcion, ENT_QUOTES, 'UTF-8') . '</video:description>' . PHP_EOL;
+				echo "\t\t" . '<video:title>' . sitemap_video_html_entity(html_entity_decode($titulo, ENT_QUOTES, 'UTF-8')) . '</video:title>' . PHP_EOL;
+				echo "\t\t" . '<video:description>' . sitemap_video_html_entity(html_entity_decode($descripcion, ENT_QUOTES, 'UTF-8')) . '</video:description>' . PHP_EOL;
     
 				$etiquetas = get_the_tags($entrada->id); 
 				if ($etiquetas) 
