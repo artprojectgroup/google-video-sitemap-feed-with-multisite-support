@@ -1,9 +1,10 @@
 <?php
 /*
 Plugin Name: Google Video Sitemap Feed With Multisite Support
-Version: 0.9
+Version: 1.0
 Plugin URI: http://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
-Description: Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. No settings required. Compatible with WordPress Multisite installations. Created from <a href="http://profiles.wordpress.org/users/timbrd/" target="_blank">Tim Brandon</a> <a href="http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="http://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="http://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins.
+Description: Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. No settings required. Compatible with WordPress Multisite installations. Created from <a href="http://profiles.wordpress.org/users/timbrd/" target="_blank">Tim Brandon</a> <a href="http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="http://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="http://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://github.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
+
 Author: Art Project Group
 Author URI: http://www.artprojectgroup.es/
 
@@ -73,7 +74,7 @@ function xml_sitemap_video_enlaces($enlaces, $archivo) {
 add_filter('plugin_row_meta', 'xml_sitemap_video_enlaces', 10, 2);
 
 //Constantes
-define('XMLSVF_VERSION', '0.9');
+define('XMLSVF_VERSION', '1.0');
 define('XMLSVF_MEMORY_LIMIT', '128M');
 
 if (file_exists(dirname(__FILE__).'/google-video-sitemap-feed-mu')) define('XMLSVF_PLUGIN_DIR', dirname(__FILE__) . '/google-video-sitemap-feed-mu');
@@ -104,5 +105,6 @@ add_action('admin_init', 'xml_video_sitemap_carga_css');
 function xml_video_sitemap_desinstalar() {
   delete_option('gn-sitemap-video-feed-mu-version');
 }
-register_deactivation_hook( __FILE__, 'xml_video_sitemap_desinstalar' );
+register_deactivation_hook(__FILE__, 'xml_video_sitemap_desinstalar');
+
 

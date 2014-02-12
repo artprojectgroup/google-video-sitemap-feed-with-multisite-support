@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Google Video Sitemap Feed With Multisite Support v0.3\n"
+"Project-Id-Version: Google Video Sitemap Feed With Multisite Support v1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-12-08 14:27:31+0000\n"
+"PO-Revision-Date: 2014-02-12 15:11:22+0000\n"
 "Last-Translator: admin <info@artprojectgroup.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -44,65 +44,65 @@ msgstr ""
 msgid "http://www.artprojectgroup.es/"
 msgstr ""
 
-#: xml-sitemap.php:62
+#: xml-sitemap.php:63
 #@ xml_video_sitemap
 msgid "<strong>Google XML Sitemaps</strong> compatibility fix"
 msgstr "Solución de compatibilidad con <strong>Google XML Sitemaps</strong>"
 
-#. translators: plugin header field 'Description'
-#: xml-sitemap.php:0
-#@ xml_video_sitemap
-msgid "Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. No settings required. Compatible with WordPress Multisite installations. Created from <a href=\"http://profiles.wordpress.org/users/timbrd/\" target=\"_blank\">Tim Brandon</a> <a href=\"http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/\" target=\"_blank\"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href=\"http://profiles.wordpress.org/labnol/\" target=\"_blank\">Amit Agarwal</a> <a href=\"http://wordpress.org/plugins/xml-sitemaps-for-videos/\" target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a> plugins."
-msgstr "Genera dinámicamente un mapa de sitio de vídeos para Google, informando automáticamente de actualizaciones a Google y Bing. No requiere configuración. Compatible con instalaciones de WordPress multisitio. Creado a partir del plugin de <a href=\"http://profiles.wordpress.org/users/timbrd/\" target=\"_blank\">Tim Brandon</a> <a href=\"http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/\" target=\"_blank\"><strong>Google News Sitemap Feed With Multisite Support</strong></a> y el plugin de <a href=\"http://profiles.wordpress.org/labnol/\" target=\"_blank\">Amit Agarwal</a> <a href=\"http://wordpress.org/plugins/xml-sitemaps-for-videos/\" target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a>."
-
-#. translators: plugin header field 'Version'
-#: xml-sitemap.php:0
-#@ xml_video_sitemap
-msgid "0.4"
-msgstr ""
-
-#: xml-sitemap.php:63
+#: xml-sitemap.php:64
 #@ xml_video_sitemap
 msgid "Make a donation by "
 msgstr "Haz una donación por "
 
-#: xml-sitemap.php:65
+#: xml-sitemap.php:66
 #@ xml_video_sitemap
 msgid "Follow us on "
 msgstr "Síguenos en "
 
-#: xml-sitemap.php:66
+#: xml-sitemap.php:67
 #@ xml_video_sitemap
 msgid "More plugins on "
 msgstr "Más plugins en "
 
-#: xml-sitemap.php:67
+#: xml-sitemap.php:68
 #@ xml_video_sitemap
 msgid "Contact with us by "
 msgstr "Contacta con nosotros por "
 
-#: xml-sitemap.php:68
+#: xml-sitemap.php:69
 #@ xml_video_sitemap
 msgid "***** Fantastic!"
 msgstr "***** ¡Fantástico!"
 
-#: xml-sitemap.php:68
+#: xml-sitemap.php:69
 #@ xml_video_sitemap
 msgid "**** Great"
 msgstr "**** Genial"
 
-#: xml-sitemap.php:68
+#: xml-sitemap.php:69
 #@ xml_video_sitemap
 msgid "*** Good"
 msgstr "*** Bueno"
 
-#: xml-sitemap.php:68
+#: xml-sitemap.php:69
 #@ xml_video_sitemap
 msgid "** Works"
 msgstr "** Funciona"
 
-#: xml-sitemap.php:68
+#: xml-sitemap.php:69
 #@ xml_video_sitemap
 msgid "* Poor"
 msgstr "* Pobre"
+
+#. translators: plugin header field 'Version'
+#: xml-sitemap.php:0
+#@ xml_video_sitemap
+msgid "1.0"
+msgstr ""
+
+#. translators: plugin header field 'Description'
+#: xml-sitemap.php:0
+#@ xml_video_sitemap
+msgid "Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. No settings required. Compatible with WordPress Multisite installations. Created from <a href=\"http://profiles.wordpress.org/users/timbrd/\" target=\"_blank\">Tim Brandon</a> <a href=\"http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/\" target=\"_blank\"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href=\"http://profiles.wordpress.org/labnol/\" target=\"_blank\">Amit Agarwal</a> <a href=\"http://wordpress.org/plugins/xml-sitemaps-for-videos/\" target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href=\"https://github.com/ludobonnet\" target=\"_blank\">Ludo Bonnet</a>."
+msgstr "Genera dinámicamente un mapa de sitio de vídeos para Google, informando automáticamente de actualizaciones a Google y Bing. No requiere configuración. Compatible con instalaciones de WordPress multisitio. Creado a partir del plugin de <a href=\"http://profiles.wordpress.org/users/timbrd/\" target=\"_blank\">Tim Brandon</a> <a href=\"http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/\" target=\"_blank\"><strong>Google News Sitemap Feed With Multisite Support</strong></a> y el plugin de <a href=\"http://profiles.wordpress.org/labnol/\" target=\"_blank\">Amit Agarwal</a> <a href=\"http://wordpress.org/plugins/xml-sitemaps-for-videos/\" target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a>. Añadidas nuevas funciones e ideas (soporte para Vimeo y Dailymotion) por <a href=\"https://github.com/ludobonnet\" target=\"_blank\">Ludo Bonnet</a>."
 

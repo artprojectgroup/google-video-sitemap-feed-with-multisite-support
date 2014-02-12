@@ -1,25 +1,30 @@
 === Google Video Sitemap Feed With Multisite Support ===
 Contributors: artprojectgroup 
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SJTSWRFD2UTA8
-Tags: google, google Video, google video sitemap, video sitemap, sitemap video, sitemap, sitemap-video.xml
+Tags: google, google Video, google video sitemap, video sitemap, sitemap video, sitemap, sitemap-video.xml, youtube, vimeo, dailymotion
 Requires at least: 2.6
 Tested up to: 3.8.1
-Stable tag: 0.9
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos para Google. No requiere ningún tipo de configuración.
 
 == Description ==
+[*Español*](http://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/) - [*English*](http://goo.gl/93lWhz) - [*Italiano*](http://goo.gl/jIv71W) - [*Français*](http://goo.gl/Gbquf8) - [*Deutsch*](http://goo.gl/kuCgCa) 
+
 **Google Video Sitemap Feed With Multisite Support** genera dinámicamente un mapa de sitio de vídeos para Google creando un archivo `sitemap-video.xml` virtual. 
 
 = Características =
 * No requiere ningún tipo de configuración, por lo que funciona de forma totalmente autónoma y automática.
 * Es totalmente compatible con instalaciones de WordPress multisitio.
-* Informa automáticamente a Google y a Bing cada vez que publiquemos una nueva entrada o página. 
+* Informa automáticamente a Google y a Bing cada vez que publiquemos una nueva entrada o página.
+* Añade automáticamente todos los vídeos de YouTube, Vimeo y Dailymotion.
 
 = Origen =
 **Google Video Sitemap Feed With Multisite Support** ha sido programado a partir de los plugins [*Google News Sitemap Feed With Multisite Support*](http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/) de [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [*Google XML Sitemap for Videos*](http://wordpress.org/plugins/xml-sitemaps-for-videos/) de [Amit Agarwal](http://profiles.wordpress.org/labnol/), que aún siendo magníficos plugins no ofrecían todas las características que necesitábamos. Aún así su trabajo ha sido completamente imprescindible para la realización de este plugin.
+
+También se han realizado mejoras a partir de la versión 1.0 gracias al código aportado por [Ludo Bonnet](https://github.com/ludobonnet) y su idea de mejorar **Google Video Sitemap Feed With Multisite Support** añadiéndole soporte para Vimeo y Dailymotion. 
 
 = Complementos =
 Se recomienda el uso de **Google Video Sitemap Feed With Multisite Support** junto a [**Google Image Sitemap Feed With Multisite Support**](http://wordpress.org/plugins/google-image-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-image.xml`, y [**Google Mobile Sitemap Feed With Multisite Support**](http://wordpress.org/plugins/google-mobile-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-mobile.xml`.
@@ -63,6 +68,10 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 1. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.0 =
+* Añadido soporte para el acortador http://youtu.be.
+* Añadido soporte para Vimeo.
+* Añadido soporte para Dailymotion.
 = 0.9 =
 * Añadida nueva función que limpia la base de datos al desinstalar el plugin.
 = 0.8 =
@@ -87,6 +96,10 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
+= 1.0 =
+* Añadido soporte para el acortador http://youtu.be.
+* Añadido soporte para Vimeo.
+* Añadido soporte para Dailymotion.
 = 0.9 =
 * Añadida nueva función que limpia la base de datos al desinstalar el plugin.
 = 0.8 =
@@ -126,6 +139,7 @@ Esperamos que os guste nuestra iniciativa.
 
 == Gracias ==
 * A [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [Amit Agarwal](http://profiles.wordpress.org/labnol/) por sus grandes plugins que han inspirado **Google Video Sitemap Feed With Multisite Support**.
+* A [Ludo Bonnet](https://github.com/ludobonnet) por sus aportaciones al código y por su idea de añadir soporte para Vimeo y Dailymotion.
 * A todos los que lo usáis.
 * A todos los que ayudáis a mejorarlo.
 * A todos los que realizáis donaciones.
