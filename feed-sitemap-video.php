@@ -137,6 +137,8 @@ function xml_sitemap_video_procesa_url($url, $video, $proveedor) {
 function xml_sitemap_video_curl($url) { 
 	global $error_404;
 	
+	$error_404 = false;
+	
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_TIMEOUT, 10);
