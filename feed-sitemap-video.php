@@ -5,13 +5,47 @@
  * @package Google Video Sitemap Feed With Multisite Support plugin for WordPress
  */
 
-set_time_limit(300); //Limitación de tiempo para CURL añadido por Ludo Bonnet [https://github.com/ludobonnet])
+//Variables globales
+global $tabla, $apis, $error_404;
+
+$tabla = $wpdb->base_prefix . "xml_sitemap_video";
+$apis = array('youtube' => 'http://gdata.youtube.com/feeds/api/videos/', 'dailymotion' => 'https://api.dailymotion.com/video/', 'vimeo' => 'http://vimeo.com/api/v2/video/');
+$error_404 = false;
+
+$wpdb->query("create table IF NOT EXISTS $tabla (id int UNSIGNED auto_increment PRIMARY KEY, url text NOT NULL, contenido mediumtext NOT NULL, video text NOT NULL, proveedor text NOT NULL, fecha datetime NOT NULL) default charset=utf8;"); //Crea la base de datos si es necesario
+
+//Consulta para obtener los datos de la entrada que contiene el vídeo
+function xml_sitemap_video_consulta($video) {
+	global $wpdb;
+	
+	return $wpdb->get_results("(SELECT id, post_title, post_content, post_date, post_excerpt
+                                    FROM $wpdb->posts
+                                    WHERE post_status = 'publish'
+                                        AND (post_type = 'post' OR post_type = 'page')
+                                        AND (post_content LIKE '%$video%'))
+                                UNION ALL
+                                    (SELECT id, post_title, meta_value as 'post_content', post_date, post_excerpt
+                                        FROM $wpdb->posts
+                                        JOIN $wpdb->postmeta
+                                            ON id = post_id
+                                                AND meta_key = 'wpex_post_oembed'
+                                                AND (meta_value LIKE '%$video%')
+                                        WHERE post_status = 'publish'
+                                            AND (post_type = 'post' OR post_type = 'page'))
+                                ORDER BY post_date DESC");
+}
+
+//Envía un correo informando de que el vídeo ya no existe
+function xml_sitemap_video_envia_correo($identificador) {
+	$entrada = xml_sitemap_video_consulta($identificador);
+
+	wp_mail(get_option('admin_email'), __('Video not found!', 'xml_video_sitemap'), sprintf(__('Please check post <a href="%s">%s</a> on your blog %s and edit the deleted video id %s.\r\remail sended by <a href="http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support">Google Video Sitemap Feed With Multisite Support</a>', 'xml_video_sitemap'), get_permalink($entrada[0]->id), $entrada[0]->post_title, bloginfo('name'), $identificador));
+}
 
 //Procesa correctamente las entidades del RSS
 $entity_custom_from = false; 
 $entity_custom_to = false;
-
-function sitemap_video_html_entity($data) {
+function xml_sitemap_video_html_entity($data) {
 	global $entity_custom_from, $entity_custom_to;
 	
 	if(!is_array($entity_custom_from) || !is_array($entity_custom_to)) {
@@ -39,51 +73,121 @@ function sitemap_video_html_entity($data) {
 	return str_replace($entity_custom_from, $entity_custom_to, $data); 
 }
 
+//Añadimos un nuevo intervalo mensual
+function xml_sitemap_video_mensual($schedules) { 
+	$schedules['monthly'] = array(
+		'interval' => 2635200,
+		'display' => __('Once a month')
+	); 
+	
+    return $schedules;
+}
+add_filter('cron_schedules', 'xml_sitemap_video_mensual');
+ 
+//Activamos la tarea programada si es necesario
+function xml_sitemap_video_activacion_limpieza() {
+    if (!wp_next_scheduled('xml_sitemap_video_limpieza')) wp_schedule_event(time(), 'monthly', 'xml_sitemap_video_limpieza');
+}
+add_action('wp', 'xml_sitemap_video_activacion_limpieza');
+ 
+//Limpiamos la base de datos una vez al mes
+function xml_sitemap_video_limpia() {
+	global $wpdb, $tabla, $apis, $error_404;
+
+	$videos = $wpdb->get_results("select video from $tabla");
+	if (!empty($videos)) 
+	{
+		foreach ($videos as $video) 
+		{
+			$entradas = xml_sitemap_video_consulta($video->video);
+			if (empty($informacion)) $wpdb->query("delete from $tabla where video = '$video->video'"); //Borramos un vídeo que ya no está en WordPress
+			else
+			{
+				if ($video->proveedor == 'vimeo') $url = $apis[$video->proveedor] . $identificador . ".json";
+				else $url = $apis[$video->proveedor] . $identificador;
+				
+				$contenido = xml_sitemap_video_curl($url);
+				$dailymotion = NULL;
+				if ($video->proveedor == 'dailymotion') $dailymotion = json_decode($contenido);
+				
+				if (!$error_404) $wpdb->query("update $tabla set contenido = '" . mysql_real_escape_string($contenido) . "', fecha = NOW() where video = '$video->video'"); //Actualiza el contenido
+				else if ($contenido == 'Video not found' || $contenido == 'Invalid id' || isset($dailymotion->error)) $wpdb->query("delete from $tabla where video = '$video->video'");
+			}
+		}
+	}
+}
+add_action('xml_sitemap_video_limpieza', 'xml_sitemap_video_limpia');
+
 //Obtiene información del vídeo (función mejorada con ayuda de Ludo Bonnet [https://github.com/ludobonnet])
-function sitemap_video_youtube($identificador) {
+function xml_sitemap_video_procesa_url($url, $video, $proveedor) {
+	global $wpdb, $tabla, $error_404;
+
+	$informacion = $wpdb->get_results("select * from $tabla where video = '$video'");
+	if (empty($informacion))
+	{
+		$contenido = xml_sitemap_video_curl($url);
+		if (!$error_404) $wpdb->query("insert into $tabla (url, contenido, video, proveedor, fecha) values ('$url', '" . mysql_real_escape_string($contenido) . "', '$video', '$proveedor', NOW())"); //Almacena el contenido en la base de datos
+
+		return $contenido; 
+	}
+	else return $informacion[0]->contenido;
+}
+
+//Lee las URL externas	
+function xml_sitemap_video_curl($url) { 
+	global $error_404;
+	
 	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, "http://gdata.youtube.com/feeds/api/videos/$identificador");
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $youtube = curl_exec($ch);
-    curl_close($ch);
-    if ($youtube == 'Video not found' OR $youtube == 'Invalid id') return false;
-	
-	return simplexml_load_string($youtube);
+	$contenido = curl_exec($ch);
+	$cabecera = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	if ($cabecera == 404) $error_404 = true;
+	curl_close($ch);
+		
+	return $contenido; 
 }
 
-function sitemap_video_dailymotion($identificador) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://api.dailymotion.com/video/$identificador");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $dailymotion = json_decode(curl_exec($ch));
-    curl_close($ch);
-	
-    return $dailymotion;
-}
+//Procesa los datos externos
+function xml_sitemap_video_informacion($identificador, $proveedor) {
+	global $error_404, $apis;
 
-function sitemap_video_vimeo($identificador) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://vimeo.com/api/v2/video/$identificador.json");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $vimeo = json_decode(curl_exec($ch));
-    curl_close($ch);
-	
-    return $vimeo[0];
-}
-
-function sitemap_video_informacion($identificador, $proveedor) {
-    switch ($proveedor) {
-        case 'youtube':
-            return sitemap_video_youtube($identificador);
-            break;
-        case 'dailymotion':
-            return sitemap_video_dailymotion($identificador);
-            break;
-        case 'vimeo':
-            return sitemap_video_vimeo($identificador);
-            break;
+	switch ($proveedor) 
+	{
+		case 'youtube':
+			$youtube = xml_sitemap_video_procesa_url($apis[$proveedor] . $identificador, $identificador, $proveedor);
+			if ($youtube == 'Video not found' || $youtube == 'Invalid id' || $error_404) 
+			{
+				xml_sitemap_video_envia_correo($identificador);
+				return false;
+				break;
+			}
+			else return simplexml_load_string($youtube);
+			break;
+		case 'dailymotion':
+			$dailymotion = json_decode(xml_sitemap_video_procesa_url($apis[$proveedor] . $identificador, $identificador, $proveedor));
+			if (isset($dailymotion->error) || $error_404) 
+			{
+				xml_sitemap_video_envia_correo($identificador);
+				return false;
+				break;
+			}
+			return $dailymotion;
+			break;
+		case 'vimeo':
+			$vimeo = json_decode(xml_sitemap_video_procesa_url($apis[$proveedor] . $identificador . ".json", $identificador, $proveedor));
+			if ($error_404)
+			{
+				xml_sitemap_video_envia_correo($identificador);
+				return false;
+				break;
+			}
+			return $vimeo[0];
+			break;
     }
-    return '';
+	
+	return false;
 }
 
 status_header('200'); // force header('HTTP/1.1 200 OK') for sites without posts
@@ -95,7 +199,7 @@ echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . '"?>
 <?xml-stylesheet type="text/xsl" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/google-video-sitemap-feed-with-multisite-support/video-sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">' . PHP_EOL;
 
-$entradas = $wpdb->get_results ("(SELECT id, post_title, post_content, post_date, post_excerpt
+$entradas = $wpdb->get_results("(SELECT id, post_title, post_content, post_date, post_excerpt, post_author
                                     FROM $wpdb->posts
                                     WHERE post_status = 'publish'
                                         AND (post_type = 'post' OR post_type = 'page')
@@ -105,7 +209,7 @@ $entradas = $wpdb->get_results ("(SELECT id, post_title, post_content, post_date
                                             OR post_content LIKE '%dailymotion.com%'
                                             OR post_content LIKE '%vimeo.com%'))
                                 UNION ALL
-                                    (SELECT id, post_title, meta_value as 'post_content', post_date, post_excerpt
+                                    (SELECT id, post_title, meta_value as 'post_content', post_date, post_excerpt, post_author
                                         FROM $wpdb->posts
                                         JOIN $wpdb->postmeta
                                             ON id = post_id
@@ -129,22 +233,23 @@ if (!empty($entradas))
 
 	foreach ($entradas as $entrada) 
 	{
+		$entrada->ID = $entrada->id;
 		setup_postdata($entrada);
 		$contenido = $entrada->post_content;
 
-		if (preg_match_all ('/youtube\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER) || preg_match_all ('/youtube-nocookie\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER)) //Youtube
+		if (preg_match_all('/youtube\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER) || preg_match_all('/youtube-nocookie\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER)) //Youtube
 		{
 			foreach ($busquedas as $busqueda) $videos[] = array('proveedor' => 'youtube', 'identificador' => $busqueda[2], 'reproductor' => "http://youtube.googleapis.com/v/$busqueda[2]", 'imagen' => "http://i.ytimg.com/vi/$busqueda[2]/hqdefault.jpg");
 		}
-		if (preg_match_all ('/youtu\.be\/([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER)) //Acortador de Youtube
+		if (preg_match_all('/youtu\.be\/([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER)) //Acortador de Youtube
 		{
 			foreach ($busquedas as $busqueda) $videos[] = array('proveedor' => 'youtube', 'identificador' => $busqueda[1], 'reproductor' => "http://youtube.googleapis.com/v/$busqueda[1]", 'imagen' => "http://i.ytimg.com/vi/$busqueda[1]/hqdefault.jpg");
 		}
-		if (preg_match_all ('/dailymotion.com\/(video\/)([^\$][a-zA-Z0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER)) //Dailymotion. Añadido por Ludo Bonnet [https://github.com/ludobonnet]
+		if (preg_match_all('/dailymotion.com\/(video\/)([^\$][a-zA-Z0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER)) //Dailymotion. Añadido por Ludo Bonnet [https://github.com/ludobonnet]
 		{
 			foreach ($busquedas as $busqueda) $videos[] = array('proveedor' => 'dailymotion', 'identificador' => $busqueda[2], 'reproductor' => "http://www.dailymotion.com/embed/video/$busqueda[2]", 'imagen' => "http://www.dailymotion.com/thumbnail/video/$busqueda[2]");
 		}
-		if (preg_match_all ('/vimeo.com\/([^\$][0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER))  //Vimeo. Añadido por Ludo Bonnet [https://github.com/ludobonnet]
+		if (preg_match_all('/vimeo.com\/([^\$][0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER))  //Vimeo. Añadido por Ludo Bonnet [https://github.com/ludobonnet]
 		{
 			foreach ($busquedas as $busqueda) $videos[] = array('proveedor' => 'vimeo', 'identificador' => $busqueda[1], 'reproductor' => "http://player.vimeo.com/video/$busqueda[1]");
 		}
@@ -167,21 +272,17 @@ if (!empty($entradas))
 				if ($contador > 0) $multiple = true;
 				if ($multiple) 
 				{
-					$informacion = sitemap_video_informacion($video['identificador'], $video['proveedor']);
+					$informacion = xml_sitemap_video_informacion($video['identificador'], $video['proveedor']);
 					if (!$informacion) continue;
-					$descripcion = $titulo . ". " . $extracto;
-					$titulo .= ". " . $informacion->title;
-					if ($video['proveedor'] == 'vimeo') $video['imagen'] = $informacion->thumbnail_large;
+					$titulo .= " | " . $informacion->title;
+					$descripcion = $extracto . " " .$informacion->title;
 				}
 				else 
 				{
 					$descripcion = $extracto;
-					if ($video['proveedor'] == 'vimeo') 
-					{
-						$informacion = sitemap_video_informacion($video['identificador'], $video['proveedor']);
-						$video['imagen'] = $informacion->thumbnail_large;
-					}
+					$informacion = xml_sitemap_video_informacion($video['identificador'], $video['proveedor']);
 				}
+				if ($video['proveedor'] == 'vimeo') $video['imagen'] = $informacion->thumbnail_large;
 				$contador++;
 				
 				echo "\t" . '<url>' . PHP_EOL;
@@ -189,8 +290,8 @@ if (!empty($entradas))
 				echo "\t\t" . '<video:video>' . PHP_EOL;
 				echo "\t\t" . '<video:player_loc allow_embed="yes" autoplay="autoplay=1">' . $video['reproductor'] . '</video:player_loc>' . PHP_EOL;
 				echo "\t\t" . '<video:thumbnail_loc>'. $video['imagen'] .'</video:thumbnail_loc>' . PHP_EOL;
-				echo "\t\t" . '<video:title>' . sitemap_video_html_entity(html_entity_decode($titulo, ENT_QUOTES, 'UTF-8')) . '</video:title>' . PHP_EOL;
-				echo "\t\t" . '<video:description>' . sitemap_video_html_entity(html_entity_decode($descripcion, ENT_QUOTES, 'UTF-8')) . '</video:description>' . PHP_EOL;
+				echo "\t\t" . '<video:title>' . xml_sitemap_video_html_entity(html_entity_decode($titulo, ENT_QUOTES, 'UTF-8')) . '</video:title>' . PHP_EOL;
+				echo "\t\t" . '<video:description>' . xml_sitemap_video_html_entity(html_entity_decode($descripcion, ENT_QUOTES, 'UTF-8')) . '</video:description>' . PHP_EOL;
     
 				$etiquetas = get_the_tags($entrada->id); 
 				if ($etiquetas) 

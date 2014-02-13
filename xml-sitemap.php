@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Google Video Sitemap Feed With Multisite Support
-Version: 1.0
+Version: 1.1
 Plugin URI: http://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
 Description: Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. No settings required. Compatible with WordPress Multisite installations. Created from <a href="http://profiles.wordpress.org/users/timbrd/" target="_blank">Tim Brandon</a> <a href="http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="http://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="http://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://github.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
 
@@ -103,7 +103,10 @@ add_action('admin_init', 'xml_video_sitemap_carga_css');
 
 //Eliminamos todo rastro del plugin al desinstalarlo
 function xml_video_sitemap_desinstalar() {
-  delete_option('gn-sitemap-video-feed-mu-version');
+	global $wpdb;
+	
+	delete_option('gn-sitemap-video-feed-mu-version');
+	$wpdb->query("drop table if exists " . $wpdb->base_prefix . "xml_sitemap_video");
 }
 register_deactivation_hook(__FILE__, 'xml_video_sitemap_desinstalar');
 

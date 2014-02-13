@@ -4,6 +4,7 @@ class XMLSitemapVideoFeed {
 
 	function go() {		
 		global $wpdb;
+		
 		if ($wpdb->blogid && function_exists('get_site_option') && get_site_option('tags_blog_id') == $wpdb->blogid) 
 		{
 			// we are on wpmu and this is a tags blog!

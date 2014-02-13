@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: google, google Video, google video sitemap, video sitemap, sitemap video, sitemap, sitemap-video.xml, youtube, vimeo, dailymotion
 Requires at least: 2.6
 Tested up to: 3.8.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,9 +17,11 @@ Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos 
 
 = Características =
 * No requiere ningún tipo de configuración, por lo que funciona de forma totalmente autónoma y automática.
+* Añade automáticamente todos los vídeos de YouTube, Vimeo y Dailymotion.
+* Gestión automática de caché de datos externos de los vídeos para acelerar la creación del archivo sitemap-video.xml.
+* Notificación por correo electrónico al administrador del sitio web en caso de que el vídeo haya sido borrado para que edite la entrada donde aparece.
 * Es totalmente compatible con instalaciones de WordPress multisitio.
 * Informa automáticamente a Google y a Bing cada vez que publiquemos una nueva entrada o página.
-* Añade automáticamente todos los vídeos de YouTube, Vimeo y Dailymotion.
 
 = Origen =
 **Google Video Sitemap Feed With Multisite Support** ha sido programado a partir de los plugins [*Google News Sitemap Feed With Multisite Support*](http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/) de [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [*Google XML Sitemap for Videos*](http://wordpress.org/plugins/xml-sitemaps-for-videos/) de [Amit Agarwal](http://profiles.wordpress.org/labnol/), que aún siendo magníficos plugins no ofrecían todas las características que necesitábamos. Aún así su trabajo ha sido completamente imprescindible para la realización de este plugin.
@@ -68,6 +70,11 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 1. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.1 =
+* Gestión de caché de datos externos de los vídeos.
+* Envía notificaciones de error por correo electrónico en caso de que el video no exista.
+* Optimización del código.
+* Arreglos de pequeños errores detectados.
 = 1.0 =
 * Añadido soporte para el acortador http://youtu.be.
 * Añadido soporte para Vimeo.
@@ -96,6 +103,11 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
+= 1.1 =
+* Gestión de caché de datos externos de los vídeos.
+* Envía notificaciones de error por correo electrónico en caso de que el video no exista.
+* Optimización del código.
+* Arreglos de pequeños errores detectados.
 = 1.0 =
 * Añadido soporte para el acortador http://youtu.be.
 * Añadido soporte para Vimeo.

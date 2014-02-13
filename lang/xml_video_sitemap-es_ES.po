@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Google Video Sitemap Feed With Multisite Support v1.0\n"
+"Project-Id-Version: Google Video Sitemap Feed With Multisite Support v1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-02-12 15:11:22+0000\n"
+"PO-Revision-Date: 2014-02-13 22:20:59+0000\n"
 "Last-Translator: admin <info@artprojectgroup.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -94,15 +94,31 @@ msgstr "** Funciona"
 msgid "* Poor"
 msgstr "* Pobre"
 
-#. translators: plugin header field 'Version'
-#: xml-sitemap.php:0
-#@ xml_video_sitemap
-msgid "1.0"
-msgstr ""
-
 #. translators: plugin header field 'Description'
 #: xml-sitemap.php:0
 #@ xml_video_sitemap
 msgid "Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. No settings required. Compatible with WordPress Multisite installations. Created from <a href=\"http://profiles.wordpress.org/users/timbrd/\" target=\"_blank\">Tim Brandon</a> <a href=\"http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/\" target=\"_blank\"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href=\"http://profiles.wordpress.org/labnol/\" target=\"_blank\">Amit Agarwal</a> <a href=\"http://wordpress.org/plugins/xml-sitemaps-for-videos/\" target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href=\"https://github.com/ludobonnet\" target=\"_blank\">Ludo Bonnet</a>."
 msgstr "Genera dinámicamente un mapa de sitio de vídeos para Google, informando automáticamente de actualizaciones a Google y Bing. No requiere configuración. Compatible con instalaciones de WordPress multisitio. Creado a partir del plugin de <a href=\"http://profiles.wordpress.org/users/timbrd/\" target=\"_blank\">Tim Brandon</a> <a href=\"http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/\" target=\"_blank\"><strong>Google News Sitemap Feed With Multisite Support</strong></a> y el plugin de <a href=\"http://profiles.wordpress.org/labnol/\" target=\"_blank\">Amit Agarwal</a> <a href=\"http://wordpress.org/plugins/xml-sitemaps-for-videos/\" target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a>. Añadidas nuevas funciones e ideas (soporte para Vimeo y Dailymotion) por <a href=\"https://github.com/ludobonnet\" target=\"_blank\">Ludo Bonnet</a>."
+
+#: feed-sitemap-video.php:80
+#@ default
+msgid "Once a month"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: xml-sitemap.php:0
+#@ xml_video_sitemap
+msgid "1.1"
+msgstr ""
+
+#: feed-sitemap-video.php:42
+#@ xml_video_sitemap
+msgid "Video not found!"
+msgstr "¡Vídeo no encontrado!"
+
+#: feed-sitemap-video.php:42
+#, php-format
+#@ xml_video_sitemap
+msgid "Please check post <a href=\"%s\">%s</a> on your blog %s and edit the deleted video id %s.\\r\\remail sended by <a href=\"http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support\">Google Video Sitemap Feed With Multisite Support</a>"
+msgstr "Por favor, chequea la entrada <a href=\"%s\">%s</a> de tu blog %s y edita el vídeo borrado con id %s.\\r\\rCorreo electrónico enviado por <a href=\"http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support\">Google Video Sitemap Feed With Multisite Support</a>"
 
