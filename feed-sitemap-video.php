@@ -39,7 +39,7 @@ function xml_sitemap_video_consulta($video) {
 function xml_sitemap_video_envia_correo($identificador) {
 	$entrada = xml_sitemap_video_consulta($identificador);
 
-	wp_mail(get_option('admin_email'), __('Video not found!', 'xml_video_sitemap'), sprintf(__('Please check post <a href="%s">%s</a> on your blog %s and edit the deleted video id %s.\r\remail sended by <a href="http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support">Google Video Sitemap Feed With Multisite Support</a>', 'xml_video_sitemap'), get_permalink($entrada[0]->id), $entrada[0]->post_title, bloginfo('name'), $identificador));
+	wp_mail(get_option('admin_email'), __('Video not found!', 'xml_video_sitemap'), sprintf(__('Please check post <a href="%s">%s</a> on your blog %s and edit the deleted video id %s.<br /><br />email sended by <a href="http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support">Google Video Sitemap Feed With Multisite Support</a>', 'xml_video_sitemap'), get_permalink($entrada[0]->id), $entrada[0]->post_title, get_bloginfo('name'), $identificador), "Content-type: text/html");
 }
 
 //Procesa correctamente las entidades del RSS

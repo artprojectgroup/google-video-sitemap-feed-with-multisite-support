@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: google, google Video, google video sitemap, video sitemap, sitemap video, sitemap, sitemap-video.xml, youtube, vimeo, dailymotion
 Requires at least: 2.6
 Tested up to: 3.8.1
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,7 @@ Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos 
 = Características =
 * No requiere ningún tipo de configuración, por lo que funciona de forma totalmente autónoma y automática.
 * Añade automáticamente todos los vídeos de YouTube, Vimeo y Dailymotion.
-* Gestión automática de caché de datos externos de los vídeos para acelerar la creación del archivo sitemap-video.xml.
+* Gestión automática de caché de datos externos de los vídeos para acelerar la creación del archivo `sitemap-video.xml`.
 * Notificación por correo electrónico al administrador del sitio web en caso de que el vídeo haya sido borrado para que edite la entrada donde aparece.
 * Es totalmente compatible con instalaciones de WordPress multisitio.
 * Informa automáticamente a Google y a Bing cada vez que publiquemos una nueva entrada o página.
@@ -70,6 +70,8 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 1. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.1.1 =
+* Arreglo del código que envía los correos electrónicos.
 = 1.1 =
 * Gestión de caché de datos externos de los vídeos.
 * Envía notificaciones de error por correo electrónico en caso de que el video no exista.
@@ -103,6 +105,8 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
+= 1.1.1 =
+* Arreglo del código que envía los correos electrónicos.
 = 1.1 =
 * Gestión de caché de datos externos de los vídeos.
 * Envía notificaciones de error por correo electrónico en caso de que el video no exista.
