@@ -18,21 +18,7 @@ $wpdb->query("create table IF NOT EXISTS $tabla (id int UNSIGNED auto_increment 
 function xml_sitemap_video_consulta($video) {
 	global $wpdb;
 	
-	return $wpdb->get_results("(SELECT id, post_title, post_content, post_date, post_excerpt
-                                    FROM $wpdb->posts
-                                    WHERE post_status = 'publish'
-                                        AND (post_type = 'post' OR post_type = 'page')
-                                        AND (post_content LIKE '%$video%'))
-                                UNION ALL
-                                    (SELECT id, post_title, meta_value as 'post_content', post_date, post_excerpt
-                                        FROM $wpdb->posts
-                                        JOIN $wpdb->postmeta
-                                            ON id = post_id
-                                                AND meta_key = 'wpex_post_oembed'
-                                                AND (meta_value LIKE '%$video%')
-                                        WHERE post_status = 'publish'
-                                            AND (post_type = 'post' OR post_type = 'page'))
-                                ORDER BY post_date DESC");
+	return $wpdb->get_results("SELECT id, post_title FROM $wpdb->posts WHERE post_status = 'publish' AND (post_type = 'post' OR post_type = 'page') AND (post_content LIKE '%$video%')");
 }
 
 //Envía un correo informando de que el vídeo ya no existe
@@ -100,7 +86,7 @@ function xml_sitemap_video_limpia() {
 		foreach ($videos as $video) 
 		{
 			$entradas = xml_sitemap_video_consulta($video->video);
-			if (empty($informacion)) $wpdb->query("delete from $tabla where video = '$video->video'"); //Borramos un vídeo que ya no está en WordPress
+			if (empty($entradas)) $wpdb->query("delete from $tabla where video = '$video->video'"); //Borramos un vídeo que ya no está en WordPress
 			else
 			{
 				if ($video->proveedor == 'vimeo') $url = $apis[$video->proveedor] . $identificador . ".json";
@@ -122,13 +108,24 @@ add_action('xml_sitemap_video_limpieza', 'xml_sitemap_video_limpia');
 function xml_sitemap_video_procesa_url($url, $video, $proveedor) {
 	global $wpdb, $tabla, $error_404;
 
-	$informacion = $wpdb->get_results("select * from $tabla where video = '$video'");
+	$informacion = $wpdb->get_results("select contenido from $tabla where video = '$video'");
 	if (empty($informacion))
 	{
 		$contenido = xml_sitemap_video_curl($url);
-		if (!$error_404) $wpdb->query("insert into $tabla (url, contenido, video, proveedor, fecha) values ('$url', '" . mysql_real_escape_string($contenido) . "', '$video', '$proveedor', NOW())"); //Almacena el contenido en la base de datos
-
-		return $contenido; 
+		$dailymotion = NULL;
+		if ($video->proveedor == 'dailymotion') $dailymotion = json_decode($contenido);
+		
+		if ($contenido != 'Video not found' && $contenido != 'Invalid id' && $contenido != 'Private video' && !isset($dailymotion->error) && !$error_404) 
+		{
+			$wpdb->query("insert into $tabla (url, contenido, video, proveedor, fecha) values ('$url', '" . mysql_real_escape_string($contenido) . "', '$video', '$proveedor', NOW())"); //Almacena el contenido en la base de datos
+			return $contenido; 
+		}
+		else 
+		{
+			$error_404 = false;
+			xml_sitemap_video_envia_correo($identificador);
+			return false; 
+		}
 	}
 	else return $informacion[0]->contenido;
 }
@@ -159,32 +156,14 @@ function xml_sitemap_video_informacion($identificador, $proveedor) {
 	{
 		case 'youtube':
 			$youtube = xml_sitemap_video_procesa_url($apis[$proveedor] . $identificador, $identificador, $proveedor);
-			if ($youtube == 'Video not found' || $youtube == 'Invalid id' || $error_404) 
-			{
-				xml_sitemap_video_envia_correo($identificador);
-				return false;
-				break;
-			}
-			else return simplexml_load_string($youtube);
+			return simplexml_load_string($youtube);
 			break;
 		case 'dailymotion':
 			$dailymotion = json_decode(xml_sitemap_video_procesa_url($apis[$proveedor] . $identificador, $identificador, $proveedor));
-			if (isset($dailymotion->error) || $error_404) 
-			{
-				xml_sitemap_video_envia_correo($identificador);
-				return false;
-				break;
-			}
 			return $dailymotion;
 			break;
 		case 'vimeo':
 			$vimeo = json_decode(xml_sitemap_video_procesa_url($apis[$proveedor] . $identificador . ".json", $identificador, $proveedor));
-			if ($error_404)
-			{
-				xml_sitemap_video_envia_correo($identificador);
-				return false;
-				break;
-			}
 			return $vimeo[0];
 			break;
     }
