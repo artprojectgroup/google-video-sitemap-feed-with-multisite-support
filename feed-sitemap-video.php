@@ -123,7 +123,7 @@ function xml_sitemap_video_procesa_url($url, $video, $proveedor) {
 		else 
 		{
 			$error_404 = false;
-			xml_sitemap_video_envia_correo($identificador);
+			xml_sitemap_video_envia_correo($video);
 			return false; 
 		}
 	}

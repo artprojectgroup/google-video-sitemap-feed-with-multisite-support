@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: google, google Video, google video sitemap, video sitemap, sitemap video, sitemap, sitemap-video.xml, youtube, vimeo, dailymotion
 Requires at least: 2.6
 Tested up to: 3.8.1
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,8 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 1. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.1.5 =
+* Arreglo de error en nombre de variable que deja datos en blanco en el correo electrónico
 = 1.1.4 =
 * Arreglos de diversos errores en los envíos de correos electrónicos.
 * Arreglos de diversos errores en el almacenamiento de datos en la caché.
@@ -112,6 +114,8 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
+= 1.1.5 =
+* Arreglo de error en nombre de variable que deja datos en blanco en el correo electrónico
 = 1.1.4 =
 * Arreglos de diversos errores en los envíos de correos electrónicos.
 * Arreglos de diversos errores en el almacenamiento de datos en la caché.
