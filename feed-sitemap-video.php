@@ -270,20 +270,17 @@ if (!empty($entradas))
 				array_push($video_procesado, $video['identificador']);
 
 				$titulo = $entrada->post_title;
-
+				$informacion = xml_sitemap_video_informacion($video['identificador'], $video['proveedor']);
+				if (!$informacion) continue;
+				
 				if ($contador > 0) $multiple = true;
 				if ($multiple) 
 				{
-					$informacion = xml_sitemap_video_informacion($video['identificador'], $video['proveedor']);
-					if (!$informacion) continue;
 					$titulo .= " | " . $informacion->title;
 					$descripcion = $extracto . " " .$informacion->title;
 				}
-				else 
-				{
-					$descripcion = $extracto;
-					$informacion = xml_sitemap_video_informacion($video['identificador'], $video['proveedor']);
-				}
+				else $descripcion = $extracto;
+
 				if ($video['proveedor'] == 'vimeo') $video['imagen'] = $informacion->thumbnail_large;
 				$contador++;
 				
