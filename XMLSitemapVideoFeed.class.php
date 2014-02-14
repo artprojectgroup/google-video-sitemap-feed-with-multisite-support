@@ -107,7 +107,9 @@ class XMLSitemapVideoFeed {
 
 	//Programa el ping a los buscadores web
 	public static function ProgramaPing() {
-		wp_schedule_single_event(time(),'enviar_ping');
+		$transients = array('xml_sitemap_video', 'xml_sitemap_video_consulta', 'xml_sitemap_video_limpia', 'xml_sitemap_video_procesa_url');
+		foreach ($transients as $transient) delete_transient($transient);
+		wp_schedule_single_event(time(), 'enviar_ping');
 	}
 
 	//Envía el ping a Google y Bing
