@@ -19,7 +19,7 @@ Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos 
 * No requiere ningún tipo de configuración, por lo que funciona de forma totalmente autónoma y automática.
 * Añade automáticamente todos los vídeos de YouTube, Vimeo y Dailymotion.
 * Gestión automática de caché de datos externos de los vídeos para acelerar la creación del archivo `sitemap-video.xml`.
-* Notificación por correo electrónico al administrador del sitio web en caso de que el vídeo haya sido borrado para que edite la entrada donde aparece.
+* Notificación por correo electrónico al administrador del sitio web en caso de que el vídeo haya sido borrado o marcado como privado para que edite la entrada donde aparece y borre la URL que ya no es válida.
 * Es totalmente compatible con instalaciones de WordPress multisitio.
 * Informa automáticamente a Google y a Bing cada vez que publiquemos una nueva entrada o página.
 
