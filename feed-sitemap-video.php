@@ -12,7 +12,7 @@ $tabla = $wpdb->base_prefix . "xml_sitemap_video";
 $apis = array('youtube' => 'http://gdata.youtube.com/feeds/api/videos/', 'dailymotion' => 'https://api.dailymotion.com/video/', 'vimeo' => 'http://vimeo.com/api/v2/video/');
 $error_404 = false;
 
-$wpdb->query("create table IF NOT EXISTS $tabla (id int UNSIGNED auto_increment PRIMARY KEY, url text NOT NULL, contenido mediumtext NOT NULL, video text NOT NULL, proveedor text NOT NULL, fecha datetime NOT NULL) default charset=utf8;"); //Crea la base de datos si es necesario
+$wpdb->query("create table IF NOT EXISTS $tabla (id int UNSIGNED auto_increment PRIMARY KEY, contenido mediumtext NOT NULL, video text NOT NULL, proveedor text NOT NULL) default charset=utf8;"); //Crea la base de datos si es necesario
 
 //Consulta para obtener los datos de la entrada que contiene el vídeo
 function xml_sitemap_video_consulta($video) {
@@ -24,8 +24,9 @@ function xml_sitemap_video_consulta($video) {
 	     $consulta = $wpdb->get_results("SELECT id, post_title FROM $wpdb->posts WHERE post_status = 'publish' AND (post_type = 'post' OR post_type = 'page') AND (post_content LIKE '%$video%')");
 	     set_transient('xml_sitemap_video_consulta', $consulta, 30 * DAY_IN_SECONDS);
 	}
+	if (isset($consulta->query)) $consulta = $consulta->query;
 	
-	return $consulta->query;
+	return $consulta;
 }
 
 //Envía un correo informando de que el vídeo ya no existe
@@ -90,7 +91,7 @@ function xml_sitemap_video_limpia() {
 	$videos = get_transient('xml_sitemap_video_consulta');
 	if ($videos === false) 
 	{
-	     $videos = $wpdb->get_results("select video from $tabla");
+	     $videos = $wpdb->get_results("select video, proveedor from $tabla");
 	     set_transient('xml_sitemap_video_limpia', $videos, 30 * DAY_IN_SECONDS);
 	}
 	if (!empty($videos)) 
@@ -108,8 +109,8 @@ function xml_sitemap_video_limpia() {
 				$dailymotion = NULL;
 				if ($video->proveedor == 'dailymotion') $dailymotion = json_decode($contenido);
 				
-				if (!$error_404) $wpdb->query("update $tabla set contenido = '" . mysql_real_escape_string($contenido) . "', fecha = NOW() where video = '$video->video'"); //Actualiza el contenido
-				else if ($contenido == 'Video not found' || $contenido == 'Invalid id' || isset($dailymotion->error)) $wpdb->query("delete from $tabla where video = '$video->video'");
+				if (!$error_404) $wpdb->query("update $tabla set contenido = '" . mysql_real_escape_string($contenido) . "' where video = '$video->video'"); //Actualiza el contenido
+				else if ($contenido == 'Video not found' || $contenido == 'Invalid id' || $contenido != 'Private video' || isset($dailymotion->error)) $wpdb->query("delete from $tabla where video = '$video->video'");
 			}
 		}
 	}
@@ -130,11 +131,11 @@ function xml_sitemap_video_procesa_url($url, $video, $proveedor) {
 	{
 		$contenido = xml_sitemap_video_curl($url);
 		$dailymotion = NULL;
-		if ($video->proveedor == 'dailymotion') $dailymotion = json_decode($contenido);
+		if ($proveedor == 'dailymotion') $dailymotion = json_decode($contenido);
 		
 		if ($contenido != 'Video not found' && $contenido != 'Invalid id' && $contenido != 'Private video' && !isset($dailymotion->error) && !$error_404) 
 		{
-			$wpdb->query("insert into $tabla (url, contenido, video, proveedor, fecha) values ('$url', '" . mysql_real_escape_string($contenido) . "', '$video', '$proveedor', NOW())"); //Almacena el contenido en la base de datos
+			$wpdb->query("insert into $tabla (contenido, video, proveedor) values ('" . mysql_real_escape_string($contenido) . "', '$video', '$proveedor')"); //Almacena el contenido en la base de datos
 			return $contenido; 
 		}
 		else 
@@ -231,8 +232,9 @@ $wp_query->is_feed = true;	//force is_feed() condition to true so WP Super Cache
 if (!empty($entradas)) 
 {
 	$videos = $video_procesado = array();
-
-	foreach ($entradas->query as $entrada) 
+	
+	if (isset($entradas->query)) $entradas = $entradas->query;
+	foreach ($entradas as $entrada) 
 	{
 		$entrada->ID = $entrada->id; //Necesario para evitar notificaciones de error
 		setup_postdata($entrada);
