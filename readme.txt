@@ -75,7 +75,7 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Añadida caché para los datos externos.
 * Añadida función que limpia la caché cuando se borra el plugin.
 * Cambio del botón y enlace de donación.
-= 1.1.7=
+= 1.1.7 =
 * Arreglos de pequeños errores.
 = 1.1.6 =
 * Mejora y optimización del código.
@@ -131,7 +131,7 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Añadida caché para los datos externos.
 * Añadida función que limpia la caché cuando se borra el plugin.
 * Cambio del botón y enlace de donación.
-= 1.1.7=
+= 1.1.7 =
 * Arreglos de pequeños errores.
 = 1.1.6 =
 * Mejora y optimización del código.
