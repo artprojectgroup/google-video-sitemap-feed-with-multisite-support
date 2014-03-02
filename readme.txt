@@ -1,10 +1,10 @@
 === Google Video Sitemap Feed With Multisite Support ===
 Contributors: artprojectgroup 
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SJTSWRFD2UTA8
+Donate link: http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support
 Tags: google, google Video, google video sitemap, video sitemap, sitemap video, sitemap, sitemap-video.xml, youtube, vimeo, dailymotion
 Requires at least: 2.6
 Tested up to: 3.8.1
-Stable tag: 1.1.7
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,7 +54,7 @@ Recuerda que puedes encontrar más plugin para WordPress en [Art Project Group](
  * Subir el archivo ZIP completo vía *Plugins -> Añadir nuevo -> Subir* en el Panel de Administración de tu instalación de WordPress.
  * Buscar **Google Video Sitemap Feed With Multisite Support** en el buscador disponible en *Plugins -> Añadir nuevo* y pulsar el botón *Instalar ahora*.
 2. Activar el plugin a través del menú *Plugins* en el Panel de Administración de WordPress.
-3. Listo, ahora ya puedes disfrutar de él, y si te gusta y te resulta útil, hacer una [*donación*](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SJTSWRFD2UTA8).
+3. Listo, ahora ya puedes disfrutar de él, y si te gusta y te resulta útil, hacer una [*donación*](http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support).
 
 == Frequently Asked Questions ==
 = ¿Necesita configuración? =
@@ -70,6 +70,11 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 1. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.2 =
+* Mejora y optimización del código.
+* Añadida caché para los datos externos.
+* Añadida función que limpia la caché cuando se borra el plugin.
+* Cambio del botón y enlace de donación.
 = 1.1.7=
 * Arreglos de pequeños errores.
 = 1.1.6 =
@@ -121,6 +126,11 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
+= 1.2 =
+* Mejora y optimización del código.
+* Añadida caché para los datos externos.
+* Añadida función que limpia la caché cuando se borra el plugin.
+* Cambio del botón y enlace de donación.
 = 1.1.7=
 * Arreglos de pequeños errores.
 = 1.1.6 =
@@ -183,7 +193,7 @@ Por ello regalamos a esa gran comunidad hispana nuestros plugins con interfaces,
 Esperamos que os guste nuestra iniciativa.
 
 == Donación ==
-¿Te ha gustado y te ha resultado útil **Google Video Sitemap Feed With Multisite Support** en tu sitio web? Te agradeceríamos una [pequeña donación](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SJTSWRFD2UTA8) que nos ayudará a seguir mejorando este plugin y a crear más plugins totalmente gratuitos para toda la comunidad WordPress.
+¿Te ha gustado y te ha resultado útil **Google Video Sitemap Feed With Multisite Support** en tu sitio web? Te agradeceríamos una [pequeña donación](http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support) que nos ayudará a seguir mejorando este plugin y a crear más plugins totalmente gratuitos para toda la comunidad WordPress.
 
 == Gracias ==
 * A [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [Amit Agarwal](http://profiles.wordpress.org/labnol/) por sus grandes plugins que han inspirado **Google Video Sitemap Feed With Multisite Support**.
