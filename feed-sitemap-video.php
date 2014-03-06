@@ -75,7 +75,9 @@ function xml_sitemap_video_procesa_url($url, $video) {
 		if (get_option('xml_sitemap_video') || get_option('xml_sitemap_video') == NULL) update_option('xml_sitemap_video', $configuracion[$url]);
 		else add_option('xml_sitemap_video', $configuracion[$url]);
 	}
-	if ($respuesta['response']['code'] == 404) xml_sitemap_video_envia_correo($video);
+	$configuracion = get_option('xml_video_sitemap');
+	$dailymotion = json_decode($respuesta['body']);
+	if (($respuesta['response']['code'] == 404 || $respuesta['body'] == 'Video not found' || $respuesta['body'] == 'Invalid id' || $respuesta['body'] == 'Private video' || isset($dailymotion->error)) && $configuracion['correo'] == "1") xml_sitemap_video_envia_correo($video);
 
 	return $respuesta['body']; 
 }

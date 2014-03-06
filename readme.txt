@@ -1,10 +1,10 @@
 === Google Video Sitemap Feed With Multisite Support ===
 Contributors: artprojectgroup 
-Donate link: http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support
+Donate link: http://www.artprojectgroup.es/donacion
 Tags: google, google Video, google video sitemap, video sitemap, sitemap video, sitemap, sitemap-video.xml, youtube, vimeo, dailymotion
 Requires at least: 2.6
 Tested up to: 3.8.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos 
 **Google Video Sitemap Feed With Multisite Support** genera dinámicamente un mapa de sitio de vídeos para Google creando un archivo `sitemap-video.xml` virtual. 
 
 = Características =
-* No requiere ningún tipo de configuración, por lo que funciona de forma totalmente autónoma y automática.
+* Prácticamente no requiere ningún tipo de configuración, por lo que funciona de forma totalmente autónoma y automática.
 * Añade automáticamente todos los vídeos de YouTube, Vimeo y Dailymotion.
 * Gestión automática de caché de datos externos de los vídeos para acelerar la creación del archivo `sitemap-video.xml`.
 * Notificación por correo electrónico al administrador del sitio web en caso de que el vídeo haya sido borrado o marcado como privado para que edite la entrada donde aparece y borre la URL que ya no es válida.
@@ -26,7 +26,7 @@ Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos 
 = Origen =
 **Google Video Sitemap Feed With Multisite Support** ha sido programado a partir de los plugins [*Google News Sitemap Feed With Multisite Support*](http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/) de [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [*Google XML Sitemap for Videos*](http://wordpress.org/plugins/xml-sitemaps-for-videos/) de [Amit Agarwal](http://profiles.wordpress.org/labnol/), que aún siendo magníficos plugins no ofrecían todas las características que necesitábamos. Aún así su trabajo ha sido completamente imprescindible para la realización de este plugin.
 
-También se han realizado mejoras a partir de la versión 1.0 gracias al código aportado por [Ludo Bonnet](https://github.com/ludobonnet) y su idea de mejorar **Google Video Sitemap Feed With Multisite Support** añadiéndole soporte para Vimeo y Dailymotion. 
+También se han realizado mejoras a partir de la versión 1.0 gracias al código aportado por [Ludo Bonnet](https://twitter.com/ludobonnet) y su idea de mejorar **Google Video Sitemap Feed With Multisite Support** añadiéndole soporte para Vimeo y Dailymotion. 
 
 = Complementos =
 Se recomienda el uso de **Google Video Sitemap Feed With Multisite Support** junto a [**Google Image Sitemap Feed With Multisite Support**](http://wordpress.org/plugins/google-image-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-image.xml`, y [**Google Mobile Sitemap Feed With Multisite Support**](http://wordpress.org/plugins/google-mobile-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-mobile.xml`.
@@ -67,9 +67,14 @@ Si, es completamente compatible.
 Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google XML Sitemaps**. Los errores están provocados por un orden erróneo de las reglas de redirección de WordPress, ya que **Google XML Sitemaps** interpreta todos los tipos de mapas de sitios posibles. En [¿Cómo arreglar la incompatibilidad de Google XML Sitemaps con nuestros plugins?](http://www.artprojectgroup.es/como-arreglar-la-incompatibilidad-de-google-xml-sitemaps-con-nuestros-plugins) encontrarás toda la información sobre esta incompatibilidad y la solución a la misma.
 
 == Screenshots ==
-1. Captura de pantalla del archivo `sitemap-video.xml`.
+1. Captura de pantalla de **Google Video Sitemap Feed With Multisite Support**.
+2. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.3 =
+* Añadido un nuevo panel de administración donde poder elegir si queremos recibir correos electrónicos o no.
+* Mejora en el código que envía el correo electrónico.
+* Cambio del enlace de donación.
 = 1.2 =
 * Mejora y optimización del código.
 * Añadida caché para los datos externos.
@@ -126,6 +131,10 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
+= 1.3 =
+* Añadido un nuevo panel de administración donde poder elegir si queremos recibir correos electrónicos o no.
+* Mejora en el código que envía el correo electrónico.
+* Cambio del enlace de donación.
 = 1.2 =
 * Mejora y optimización del código.
 * Añadida caché para los datos externos.
@@ -197,7 +206,7 @@ Esperamos que os guste nuestra iniciativa.
 
 == Gracias ==
 * A [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [Amit Agarwal](http://profiles.wordpress.org/labnol/) por sus grandes plugins que han inspirado **Google Video Sitemap Feed With Multisite Support**.
-* A [Ludo Bonnet](https://github.com/ludobonnet) por sus aportaciones al código y por su idea de añadir soporte para Vimeo y Dailymotion.
+* A [Ludo Bonnet](https://twitter.com/ludobonnet) por sus aportaciones al código y por su idea de añadir soporte para Vimeo y Dailymotion.
 * A todos los que lo usáis.
 * A todos los que ayudáis a mejorarlo.
 * A todos los que realizáis donaciones.
