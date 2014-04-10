@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Google Video Sitemap Feed With Multisite Support
-Version: 1.3
+Version: 1.3.1
 Plugin URI: http://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
 Description: Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. Compatible with WordPress Multisite installations. Created from <a href="http://profiles.wordpress.org/users/timbrd/" target="_blank">Tim Brandon</a> <a href="http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="http://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="http://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://twitter.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
 
@@ -113,7 +113,7 @@ function xml_sitemap_video_formulario_de_configuracion() {
 }
 
 //Constantes
-define('XMLSVF_VERSION', '1.3');
+define('XMLSVF_VERSION', '1.3.1');
 define('XMLSVF_MEMORY_LIMIT', '128M');
 
 if (file_exists(dirname(__FILE__).'/google-video-sitemap-feed-mu')) define('XMLSVF_PLUGIN_DIR', dirname(__FILE__) . '/google-video-sitemap-feed-mu');
@@ -132,7 +132,7 @@ function xml_video_sitemap_plugin($nombre) {
 		$respuesta = wp_remote_post('http://api.wordpress.org/plugins/info/1.0/', array('body' => $consulta));
 		set_transient('xml_video_sitemap_plugin', $respuesta, 24 * HOUR_IN_SECONDS);
 	}
-	if (isset($respuesta['body'])) $plugin = get_object_vars(unserialize($respuesta['body']));
+	if (!is_wp_error($respuesta)) $plugin = get_object_vars(unserialize($respuesta['body']));
 	else $plugin['rating'] = 100;
 	
 	return $plugin;
@@ -166,6 +166,6 @@ function xml_video_sitemap_desinstalar() {
 	foreach ($configuracion as $url) delete_transient($url);
 	delete_option('xml_sitemap_video');
 }
-register_deactivation_hook(__FILE__, 'xml_video_sitemap_desinstalar');
+register_uninstall_hook(__FILE__, 'xml_video_sitemap_desinstalar');
 
 
