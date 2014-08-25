@@ -5,12 +5,6 @@
  * @package Google Video Sitemap Feed With Multisite Support plugin for WordPress
  */
 
-//Esto lo borramos en la próxima versión
-$wpdb->query("drop table if exists " . $wpdb->base_prefix . "xml_sitemap_video");
-if (wp_next_scheduled('xml_sitemap_video_limpieza')) wp_unschedule_event(wp_next_scheduled('xml_sitemap_video_limpieza'), 'xml_sitemap_video_limpieza', array());
-$transients = array('xml_sitemap_video_limpia', 'xml_sitemap_video_procesa_url');
-foreach ($transients as $transient) if (get_transient($transient)) delete_transient($transient);
-
 //Consulta para obtener los datos de la entrada que contiene el vídeo
 function xml_sitemap_video_consulta($video) {
 	global $wpdb;
@@ -136,6 +130,12 @@ if ($entradas === false)
                                                     OR meta_value LIKE '%vimeo.com%')
                                         WHERE post_status = 'publish'
                                             AND (post_type = 'post' OR post_type = 'page'))
+                                UNION ALL
+                                    (SELECT id, post_title, post_date, post_excerpt, post_author, post_parent
+                                        FROM $wpdb->posts
+                                        WHERE post_type = 'attachment'
+                                                AND post_mime_type like 'video%'
+                                                AND post_parent > 0)
                                 ORDER BY post_date DESC"); //Consulta mejorada con ayuda de Ludo Bonnet [https://github.com/ludobonnet]
      set_transient('xml_sitemap_video', $entradas, 30 * DAY_IN_SECONDS);
 }

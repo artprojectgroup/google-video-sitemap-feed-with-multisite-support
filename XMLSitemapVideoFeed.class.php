@@ -2,7 +2,7 @@
 //XMLSitemapVideoFeed CLASS
 class XMLSitemapVideoFeed {
 
-	function go() {		
+	public static function go() {		
 		global $wpdb;
 		
 		if ($wpdb->blogid && function_exists('get_site_option') && get_site_option('tags_blog_id') == $wpdb->blogid) 
@@ -36,19 +36,19 @@ class XMLSitemapVideoFeed {
 	}
 
 	// set up the video sitemap template
-	function load_template_sitemap_video() {
+	public static function load_template_sitemap_video() {
 		load_template(XMLSVF_PLUGIN_DIR . '/feed-sitemap-video.php');
 	}
 
 	// REWRITES //
 	// add sitemap rewrite rules
-	function rewrite($wp_rewrite) {
+	public static function rewrite($wp_rewrite) {
 		$feed_rules = array('sitemap-video.xml$' => $wp_rewrite->index . '?feed=sitemap-video',);
 		$wp_rewrite->rules = $feed_rules + $wp_rewrite->rules;
 	}
 
 	// DE-ACTIVATION
-	function deactivate() {
+	public static function deactivate() {
 		remove_filter('generate_rewrite_rules', array(__CLASS__, 'rewrite'));
 		delete_option('gn-sitemap-video-feed-mu-version');
 		global $wp_rewrite;
@@ -58,7 +58,7 @@ class XMLSitemapVideoFeed {
 	// MULTI-LANGUAGE PLUGIN FILTERS
 
 	// qTranslate
-	function qtranslate($input) {
+	public static function qtranslate($input) {
 		global $q_config;
 
 		if (is_array($input)) // got an array? return one!
@@ -74,7 +74,7 @@ class XMLSitemapVideoFeed {
 	}
 
 	// xLanguage
-	function xlanguage($input) {
+	public static function xlanguage($input) {
 		global $xlanguage;
 	
 		if (is_array($input)) // got an array? return one!
@@ -89,7 +89,7 @@ class XMLSitemapVideoFeed {
 		return $return;
 	}
 
-	function init() {
+	public static function init() {
 		// FLUSH RULES after (site wide) plugin upgrade
 		if (get_option('gn-sitemap-video-feed-mu-version') != XMLSVF_VERSION) 
 		{
