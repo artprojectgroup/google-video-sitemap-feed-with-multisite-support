@@ -4,7 +4,7 @@ Donate link: http://www.artprojectgroup.es/tienda/donacion
 Tags: google, google Video, google video sitemap, video sitemap, sitemap video, sitemap, sitemap-video.xml, youtube, vimeo, dailymotion
 Requires at least: 2.6
 Tested up to: 4.0
-Stable tag: 1.4
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,8 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 2. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.4.1 =
+* Añadido borrado de caché al publicar nuevo contenido.
 = 1.4 =
 * Arreglo de error que provocaba un mensaje de error en versiones superiores a la 5.2 de PHP.
 = 1.3.1 =
@@ -136,6 +138,8 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
+= 1.4.1 =
+* Añadido borrado de caché al publicar nuevo contenido.
 = 1.4 =
 * Arreglo de error que provocaba un mensaje de error en versiones superiores a la 5.2 de PHP.
 = 1.3.1 =
