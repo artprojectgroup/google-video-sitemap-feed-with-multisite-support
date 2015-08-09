@@ -3,10 +3,10 @@ Contributors: artprojectgroup
 Donate link: http://www.artprojectgroup.es/tienda/donacion
 Tags: google, google Video, google video sitemap, video sitemap, sitemap video, sitemap, sitemap-video.xml, youtube, vimeo, dailymotion
 Requires at least: 2.6
-Tested up to: 4.0
-Stable tag: 1.4.1
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tested up to: 4.3
+Stable tag: 1.5
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos para Google. No requiere ningún tipo de configuración.
 
@@ -71,6 +71,11 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 2. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.5 =
+* Actualización de las traducciones.
+* Nueva hoja de estilo sensible.
+* Modificación de la estructura interna del plugin para ajustarse a los estándares de WordPress.
+* Actualización de la captura de pantalla.
 = 1.4.1 =
 * Añadido borrado de caché al publicar nuevo contenido.
 = 1.4 =
@@ -138,6 +143,11 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
+= 1.5 =
+* Actualización de las traducciones.
+* Nueva hoja de estilo sensible.
+* Modificación de la estructura interna del plugin para ajustarse a los estándares de WordPress.
+* Actualización de la captura de pantalla.
 = 1.4.1 =
 * Añadido borrado de caché al publicar nuevo contenido.
 = 1.4 =
