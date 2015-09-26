@@ -1,14 +1,14 @@
 <?php
 /*
 Plugin Name: Google Video Sitemap Feed With Multisite Support
-Version: 1.5
+Version: 1.6
 Plugin URI: http://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
 Description: Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. Compatible with WordPress Multisite installations. Created from <a href="http://profiles.wordpress.org/users/timbrd/" target="_blank">Tim Brandon</a> <a href="http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="http://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="http://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://twitter.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
 Author: Art Project Group
 Author URI: http://www.artprojectgroup.es/
 
 Requires at least: 2.6
-Tested up to: 4.3
+Tested up to: 4.3.1
 
 Text Domain: xml_video_sitemap
 Domain Path: /i18n/languages
@@ -141,7 +141,7 @@ if ( file_exists( dirname( __FILE__ ) . '/google-video-sitemap-feed-mu' ) ) {
 }
 
 //Clase
-if ( class_exists( 'XMLSitemapVideoFeed' ) || include( XMLSVF_PLUGIN_DIR . '/includes/XMLSitemapVideoFeed.class.php' ) ) {
+if ( class_exists( 'XMLSitemapVideoFeed' ) || include( XMLSVF_PLUGIN_DIR . '/includes/admin/XMLSitemapVideoFeed.class.php' ) ) {
 	XMLSitemapVideoFeed::go();
 }
 

@@ -3,8 +3,8 @@ Contributors: artprojectgroup
 Donate link: http://www.artprojectgroup.es/tienda/donacion
 Tags: google, google Video, google video sitemap, video sitemap, sitemap video, sitemap, sitemap-video.xml, youtube, vimeo, dailymotion
 Requires at least: 2.6
-Tested up to: 4.3
-Stable tag: 1.5
+Tested up to: 4.3.1
+Stable tag: 1.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,6 +22,13 @@ Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos 
 * Notificación por correo electrónico al administrador del sitio web en caso de que el vídeo haya sido borrado o marcado como privado para que edite la entrada donde aparece y borre la URL que ya no es válida.
 * Es totalmente compatible con instalaciones de WordPress multisitio.
 * Informa automáticamente a Google y a Bing cada vez que publiquemos una nueva entrada o página.
+
+= Traducciones =
+* Español ([**Art Project Group**](http://www.artprojectgroup.es/)).
+* English ([**Art Project Group**](http://www.artprojectgroup.es/)).
+
+= Soporte técnico =
+**Art Project Group** te ofrece [**Soporte técnico**](http://www.artprojectgroup.es/servicios/servicios-para-wordpress-y-woocommerce/soporte-tecnico) para configurar o instalar **Google Video Sitemap Feed With Multisite Support**. 
 
 = Origen =
 **Google Video Sitemap Feed With Multisite Support** ha sido programado a partir de los plugins [*Google News Sitemap Feed With Multisite Support*](http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/) de [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [*Google XML Sitemap for Videos*](http://wordpress.org/plugins/xml-sitemaps-for-videos/) de [Amit Agarwal](http://profiles.wordpress.org/labnol/), que aún siendo magníficos plugins no ofrecían todas las características que necesitábamos. Aún así su trabajo ha sido completamente imprescindible para la realización de este plugin.
@@ -71,6 +78,12 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 2. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.6 =
+* Actualización de la API de YouTube.
+* Arreglo de las expresiones regulares. Ambos problemas reportados en [WordPress.org](https://wordpress.org/support/topic/youtube-dailymotion-videos-not-working?replies=3#post-7475198).
+* Actualización de URLs de reproductores externos.
+* Actualización de las traducciones.
+* Mejora del archivo XSL que genera la plantilla del archivo XML.
 = 1.5 =
 * Actualización de las traducciones.
 * Nueva hoja de estilo sensible.
@@ -143,6 +156,12 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
+= 1.6 =
+* Actualización de la API de YouTube.
+* Arreglo de las expresiones regulares. Ambos problemas reportados en [WordPress.org](https://wordpress.org/support/topic/youtube-dailymotion-videos-not-working?replies=3#post-7475198).
+* Actualización de URLs de reproductores externos.
+* Actualización de las traducciones.
+* Mejora del archivo XSL que genera la plantilla del archivo XML.
 = 1.5 =
 * Actualización de las traducciones.
 * Nueva hoja de estilo sensible.
@@ -213,8 +232,8 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Actualización de los textos de información.
 
 ==Traducciones ==
-* *English*: by **Art Project Group** (default language).
-* *Español*: por **Art Project Group**.
+* *English*: by [**Art Project Group**](http://www.artprojectgroup.es/) (default language).
+* *Español*: por [**Art Project Group**](http://www.artprojectgroup.es/).
 
 == ¿Por qué está esta página en español? ==
 Mientras WordPress no nos permita a los desarrolladores realizar esta página en más de un idioma, elegiremos siempre el español.

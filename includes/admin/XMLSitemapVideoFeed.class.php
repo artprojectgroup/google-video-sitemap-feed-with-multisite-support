@@ -23,7 +23,7 @@ class XMLSitemapVideoFeed {
 
 	// set up the video sitemap template
 	public static function load_template_sitemap_video() {
-		load_template( XMLSVF_PLUGIN_DIR . '/includes/feed-sitemap-video.php' );
+		load_template( XMLSVF_PLUGIN_DIR . '/includes/admin/feed-sitemap-video.php' );
 	}
 
 	// REWRITES //

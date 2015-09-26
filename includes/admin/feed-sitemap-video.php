@@ -88,13 +88,13 @@ function xml_sitemap_video_procesa_url( $url, $video ) {
 //Procesa los datos externos
 function xml_sitemap_video_informacion( $identificador, $proveedor ) {
 	$apis = array( 
-		'youtube'		=> 'http://gdata.youtube.com/feeds/api/videos/', 
+		'youtube'		=> 'https://noembed.com/embed?url=https://www.youtube.com/watch?v=', 
 		'dailymotion'	=> 'https://api.dailymotion.com/video/', 
 		'vimeo'			=> 'http://vimeo.com/api/v2/video/' 
 	);
 	switch ( $proveedor ) {
 		case 'youtube':
-			return simplexml_load_string( xml_sitemap_video_procesa_url( $apis[$proveedor] . $identificador, $identificador ) );
+			return json_decode( xml_sitemap_video_procesa_url( $apis[$proveedor] . $identificador, $identificador ) );
 			break;
 		case 'dailymotion':
 			return json_decode( xml_sitemap_video_procesa_url( $apis[$proveedor] . $identificador, $identificador ) );
@@ -166,36 +166,34 @@ if ( !empty( $entradas ) ) {
 		setup_postdata( $entrada );
 		$contenido = $entrada->post_content;
 
-		if ( preg_match_all( '/youtube\.com\/( v\/|watch\?v=|embed\/ )( [^\$][a-zA-Z0-9\-_]* )/', $contenido, $busquedas, PREG_SET_ORDER ) || preg_match_all( '/youtube-nocookie\.com\/( v\/|watch\?v=|embed\/ )( [^\$][a-zA-Z0-9\-_]* )/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Youtube
+		if ( preg_match_all( '/youtube\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER ) || preg_match_all( '/youtube-nocookie\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Youtube
 			foreach ( $busquedas as $busqueda ) {
 				$videos[] = array( 
 					'proveedor'		=> 'youtube', 
 					'identificador'	=> $busqueda[2], 
-					'reproductor'	=> "http://youtube.googleapis.com/v/$busqueda[2]", 
+					'reproductor'	=> "https://youtube.googleapis.com/$busqueda[2]", 
 					'imagen'		=> "http://i.ytimg.com/vi/$busqueda[2]/hqdefault.jpg" 
 				);
 			}
 		}
-		if ( preg_match_all( '/youtu\.be\/( [^\$][a-zA-Z0-9\-_]* )/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Acortador de Youtube
+		if ( preg_match_all( '/youtu\.be\/([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Acortador de Youtube
 			foreach ( $busquedas as $busqueda ) {
 				$videos[] = array( 
 					'proveedor'		=> 'youtube', 
 					'identificador'	=> $busqueda[1], 
-					'reproductor'	=> "http://youtube.googleapis.com/v/$busqueda[1]", 
+					'reproductor'	=> "https://youtube.googleapis.com/$busqueda[1]", 
 					'imagen'		=> "http://i.ytimg.com/vi/$busqueda[1]/hqdefault.jpg" 
 				);
 			}
 		}
-		if ( preg_match_all( '/dailymotion\.com\/( video\/ )( [^\$][a-zA-Z0-9]* )/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Dailymotion. Añadido por Ludo Bonnet [https://github.com/ludobonnet]
+		if ( preg_match_all( '/dailymotion\.com\/video\/([^\$][a-zA-Z0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Dailymotion. Añadido por Ludo Bonnet [https://github.com/ludobonnet]	
 			foreach ( $busquedas as $busqueda ) {
-				if ( is_numeric( $busqueda[2] ) ) {
-					$videos[] = array( 
-						'proveedor'		=> 'dailymotion', 
-						'identificador'	=> $busqueda[2], 
-						'reproductor'	=> "http://www.dailymotion.com/embed/video/$busqueda[2]", 
-						'imagen'	=> "http://www.dailymotion.com/thumbnail/video/$busqueda[2]" 
-					);
-				}
+				$videos[] = array( 
+					'proveedor'		=> 'dailymotion', 
+					'identificador'	=> $busqueda[1], 
+					'reproductor'	=> "http://www.dailymotion.com/embed/video/$busqueda[1]", 
+					'imagen'	=> "http://www.dailymotion.com/thumbnail/video/$busqueda[1]" 
+				);
 			}
 		}
 		if ( preg_match_all( '/vimeo\.com\/moogaloop.swf\?clip_id=([^\$][0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) || preg_match_all( '/vimeo\.com\/video\/([^\$][0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) || preg_match_all( '/vimeo\.com\/([^\$][0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Vimeo. Mejorado a partir del código aportado por Ludo Bonnet [https://github.com/ludobonnet]
@@ -204,7 +202,7 @@ if ( !empty( $entradas ) ) {
 					$videos[] = array( 
 						'proveedor'		=> 'vimeo', 
 						'identificador'	=> $busqueda[1], 
-						'reproductor'	=> "http://player.vimeo.com/video/$busqueda[1]" 
+						'reproductor'	=> "https://player.vimeo.com/video/$busqueda[1]" 
 					);
 				}
 			}
@@ -247,11 +245,11 @@ if ( !empty( $entradas ) ) {
 				echo "\t" . '<url>' . PHP_EOL;
 				echo "\t\t" . '<loc>' . $enlace . '</loc>' . PHP_EOL;
 				echo "\t\t" . '<video:video>' . PHP_EOL;
-				echo "\t\t" . '<video:player_loc allow_embed="yes" autoplay="autoplay=1">' . $video['reproductor'] . '</video:player_loc>' . PHP_EOL;
+				echo "\t\t" . '<video:player_loc allow_embed="yes" autoplay="ap=1">' . $video['reproductor'] . '</video:player_loc>' . PHP_EOL;
 				echo "\t\t" . '<video:thumbnail_loc>'. $video['imagen'] .'</video:thumbnail_loc>' . PHP_EOL;
 				echo "\t\t" . '<video:title>' . xml_sitemap_video_html_entity( html_entity_decode( $titulo, ENT_QUOTES, 'UTF-8' ) ) . '</video:title>' . PHP_EOL;
 				echo "\t\t" . '<video:description>' . xml_sitemap_video_html_entity( html_entity_decode( $descripcion, ENT_QUOTES, 'UTF-8' ) ) . '</video:description>' . PHP_EOL;
-    
+   
 				$etiquetas = get_the_tags( $entrada->id ); 
 				if ( $etiquetas ) { 
                 	$numero_de_etiquetas = 0;

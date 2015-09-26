@@ -33,14 +33,14 @@
 	}
 	p {
 		position: absolute;
-		top: 130px;
+		top: 110px;
 		width: 200px;
 		color: #ddd;
 		background: #222;
 		font-style: italic;
 		line-height: 18px;
-		opacity: 0.9;
-		filter: alpha(opacity=90);
+		opacity: 0.8;
+		filter: alpha(opacity=80);
 		margin: 0;
 		padding: 0 5px;
 	}
