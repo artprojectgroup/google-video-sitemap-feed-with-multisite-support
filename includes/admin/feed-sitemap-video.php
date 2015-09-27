@@ -128,7 +128,7 @@ if ( !empty( $entradas ) ) {
 				$videos[] = array( 
 					'proveedor'		=> 'youtube', 
 					'identificador'	=> $busqueda[2], 
-					'reproductor'	=> "https://youtube.googleapis.com/$busqueda[2]", 
+					'reproductor'	=> "https://www.youtube.com/embed/$busqueda[2]", 
 					'imagen'		=> "http://i.ytimg.com/vi/$busqueda[2]/hqdefault.jpg" 
 				);
 			}
@@ -138,7 +138,7 @@ if ( !empty( $entradas ) ) {
 				$videos[] = array( 
 					'proveedor'		=> 'youtube', 
 					'identificador'	=> $busqueda[1], 
-					'reproductor'	=> "https://youtube.googleapis.com/$busqueda[1]", 
+					'reproductor'	=> "https://www.youtube.com/embed/$busqueda[1]", 
 					'imagen'		=> "http://i.ytimg.com/vi/$busqueda[1]/hqdefault.jpg" 
 				);
 			}

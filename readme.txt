@@ -4,7 +4,7 @@ Donate link: http://www.artprojectgroup.es/tienda/donacion
 Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, Sitemap, sitemap-video.xml, YouTube, Vimeo, Dailymotion
 Requires at least: 2.6
 Tested up to: 4.3.1
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -78,6 +78,8 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 2. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.7.2 =
+* Arreglo de la URL del reproductor de YouTube.
 = 1.7.1 =
 * Ajuste del diseño sensible de la plantilla XSL.
 = 1.7 =
@@ -163,6 +165,8 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
+= 1.7.2 =
+* Arreglo de la URL del reproductor de YouTube.
 = 1.7.1 =
 * Ajuste del diseño sensible de la plantilla XSL.
 = 1.7 =
