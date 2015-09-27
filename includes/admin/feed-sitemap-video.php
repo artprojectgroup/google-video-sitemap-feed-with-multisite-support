@@ -5,58 +5,13 @@
  * @package Google Video Sitemap Feed With Multisite Support plugin for WordPress
  */
 
-//Consulta para obtener los datos de la entrada que contiene el vídeo
-function xml_sitemap_video_consulta( $video ) {
-	global $wpdb;
-	
-	$consulta = get_transient( 'xml_sitemap_video_consulta' );
-	if ( $consulta === false ) {
-	     $consulta = $wpdb->get_results( "SELECT id, post_title FROM $wpdb->posts WHERE post_status = 'publish' AND (post_type = 'post' OR post_type = 'page') AND (post_content LIKE '%$video%')" );
-	     set_transient( 'xml_sitemap_video_consulta', $consulta, 30 * DAY_IN_SECONDS );
-	}
-	if ( isset( $consulta->query ) ) {
-		$consulta = $consulta->query;
-	}
-	
-	return $consulta;
-}
-
 //Envía un correo informando de que el vídeo ya no existe
 function xml_sitemap_video_envia_correo( $video ) {
-	$entrada = xml_sitemap_video_consulta( $video );
+	global $wpdb;
+
+	$entrada = $wpdb->get_results( "SELECT id, post_title FROM $wpdb->posts WHERE post_status = 'publish' AND (post_type = 'post' OR post_type = 'page') AND (post_content LIKE '%$video%')" );
 
 	wp_mail( get_option( 'admin_email' ), __( 'Video not found!', 'xml_video_sitemap' ), sprintf( __( 'Please check post <a href="%s">%s</a> on your blog %s and edit the deleted video id %s.<br /><br />email sended by <a href="http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support">Google Video Sitemap Feed With Multisite Support</a>', 'xml_video_sitemap' ), get_permalink( $entrada[0]->id ), $entrada[0]->post_title, get_bloginfo( 'name' ), $video ), "Content-type: text/html" );
-}
-
-//Procesa correctamente las entidades del RSS
-$entity_custom_from = false; 
-$entity_custom_to = false;
-function xml_sitemap_video_html_entity( $data ) {
-	global $entity_custom_from, $entity_custom_to;
-	
-	if ( !is_array( $entity_custom_from ) || !is_array( $entity_custom_to ) ) {
-		$array_position = 0;
-		foreach ( get_html_translation_table( HTML_ENTITIES ) as $key => $value ) {
-			switch ( $value ) {
-				case '&nbsp;':
-					break;
-				case '&gt;':
-				case '&lt;':
-				case '&quot;':
-				case '&apos;':
-				case '&amp;':
-					$entity_custom_from[$array_position] = $key; 
-					$entity_custom_to[$array_position] = $value; 
-					$array_position++; 
-					break; 
-				default: 
-					$entity_custom_from[$array_position] = $value; 
-					$entity_custom_to[$array_position] = $key; 
-					$array_position++; 
-			} 
-		}
-	}
-	return str_replace( $entity_custom_from, $entity_custom_to, $data ); 
 }
 
 //Obtiene información del vídeo ( función mejorada con ayuda de Ludo Bonnet [https://github.com/ludobonnet] )
@@ -77,9 +32,11 @@ function xml_sitemap_video_procesa_url( $url, $video ) {
 		$dailymotion = json_decode( $respuesta['body'] );
 		if ( ( $respuesta['response']['code'] == 404 || $respuesta['body'] == 'Video not found' || $respuesta['body'] == 'Invalid id' || $respuesta['body'] == 'Private video' || isset( $dailymotion->error ) ) && $configuracion['correo'] == "1" ) {
 			xml_sitemap_video_envia_correo( $video );
+			return NULL;
 		}
 	} else if ( $configuracion['correo'] == "1" ) {
 		xml_sitemap_video_envia_correo( $video );
+		return NULL;
 	}
 
 	return $respuesta['body']; 
@@ -114,7 +71,7 @@ header( 'Content-Type: text/xml; charset=' . get_bloginfo( 'charset' ), true );
 echo '<?xml version="1.0" encoding="' . get_bloginfo( 'charset' ) . '"?>
 <!-- Created by Google Video Sitemap Feed With Multisite Support by Art Project Group ( http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support ) -->
 <!-- Generated-on="' . date( 'Y-m-d\TH:i:s+00:00' ) . '" -->
-<?xml-stylesheet type="text/xsl" href="' . get_bloginfo( 'wpurl' ) . '/wp-content/plugins/google-video-sitemap-feed-with-multisite-support/video-sitemap.xsl"?>
+<?xml-stylesheet type="text/xsl" href="' . get_bloginfo( 'wpurl' ) . '/wp-content/plugins/google-video-sitemap-feed-with-multisite-support/assets/video-sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">' . PHP_EOL;
 
 $entradas = get_transient( 'xml_sitemap_video' );
@@ -247,8 +204,8 @@ if ( !empty( $entradas ) ) {
 				echo "\t\t" . '<video:video>' . PHP_EOL;
 				echo "\t\t" . '<video:player_loc allow_embed="yes" autoplay="ap=1">' . $video['reproductor'] . '</video:player_loc>' . PHP_EOL;
 				echo "\t\t" . '<video:thumbnail_loc>'. $video['imagen'] .'</video:thumbnail_loc>' . PHP_EOL;
-				echo "\t\t" . '<video:title>' . xml_sitemap_video_html_entity( html_entity_decode( $titulo, ENT_QUOTES, 'UTF-8' ) ) . '</video:title>' . PHP_EOL;
-				echo "\t\t" . '<video:description>' . xml_sitemap_video_html_entity( html_entity_decode( $descripcion, ENT_QUOTES, 'UTF-8' ) ) . '</video:description>' . PHP_EOL;
+				echo "\t\t" . '<video:title>' . htmlspecialchars( $titulo, ENT_QUOTES ) . '</video:title>' . PHP_EOL;
+				echo "\t\t" . '<video:description>' . htmlspecialchars( $descripcion, ENT_QUOTES ) . '</video:description>' . PHP_EOL;
    
 				$etiquetas = get_the_tags( $entrada->id ); 
 				if ( $etiquetas ) { 
@@ -257,14 +214,14 @@ if ( !empty( $entradas ) ) {
                 		if ( $numero_de_etiquetas++ > 32 ) {
 							break;
 						}
-                		echo "\t\t" . '<video:tag>' . $etiqueta->name . '</video:tag>' . PHP_EOL;
+                		echo "\t\t" . '<video:tag>' . htmlspecialchars( $etiqueta->name, ENT_QUOTES ) . '</video:tag>' . PHP_EOL;
                 	}
 				}    
 
 				$categorias = get_the_category( $entrada->id ); 
 				if ( $categorias )  { 
                 	foreach ( $categorias as $categoria ) {
-                		echo "\t\t" . '<video:category>' . $categoria->name . '</video:category>' . PHP_EOL;
+                		echo "\t\t" . '<video:category>' . htmlspecialchars( $categoria->name, ENT_QUOTES ) . '</video:category>' . PHP_EOL;
                 		break;
                 	}
 				}        
