@@ -12,10 +12,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style type="text/css">
 	body {
-		font-size: 0.5vw;
+		font-size: 0.8em;
 		background-color: #eee;
 		width: 75%;
-		margin: 	1em auto;
+		margin: 1em auto;
 	}
 	ul {
 		list-style: none;
@@ -24,8 +24,32 @@
 		position: relative;
 		display: inline-block;
 		margin: 0.5em;
-		width: 12%;
+		width: 15%;
 		vertical-align: top;
+	}
+	
+	@media screen and (max-width: 540px) {
+	li {
+		width: 100%;
+	}
+	}
+	
+	@media screen and (min-width: 540px) and (max-width: 800px) {
+	li {
+		width: 46%;
+	}
+	}
+	
+	@media screen and (min-width: 800px) and (max-width: 1000px) {
+	li {
+		width: 30%;
+	}
+	}
+	
+	@media screen and (min-width: 1000px) and (max-width: 1200px) {
+	li {
+		width: 22.5%;
+	}
 	}
 	a:hover {
 		opacity: 0.5;
@@ -36,7 +60,6 @@
 	}
 	img {
 		width: 100%;
-		max-width: 240px;
 		height: auto;
 	}
 	p {
@@ -59,7 +82,7 @@
         <xsl:variable name="u"> <xsl:value-of select="sitemap:loc"/> </xsl:variable>
         <xsl:variable name="t"> <xsl:value-of select="video:video/video:thumbnail_loc"/> </xsl:variable>
         <li><a href="{$u}" target="_blank">
-          <div> <img src="{$t}" width="240" height="180" />
+          <div> <img src="{$t}" />
             <p> <xsl:value-of select="video:video/video:title"/> </p>
           </div>
           </a></li>
