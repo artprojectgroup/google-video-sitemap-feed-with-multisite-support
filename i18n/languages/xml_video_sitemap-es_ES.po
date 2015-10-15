@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Google Video Sitemap Feed With Multisite Support\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sun Sep 27 2015 00:36:20 GMT+0200 (CEST)\n"
-"PO-Revision-Date: Sun Sep 27 2015 00:43:05 GMT+0200 (CEST)\n"
+"PO-Revision-Date: Thu Oct 15 2015 10:33:56 GMT+0200 (CEST)\n"
 "Last-Translator: Herves-Vida <info@herves-vida.com>\n"
 "Language-Team: \n"
 "Language: Spanish (Spain)\n"
@@ -49,18 +49,18 @@ msgid ""
 "Dailymotion support) by <a href=\"https://twitter.com/ludobonnet\" "
 "target=\"_blank\">Ludo Bonnet</a>."
 msgstr ""
-"Genera dinamicamente un sitemap de vídeo de Google y notifica las "
-"actualizaciones automáticamente a Google y Bing. Compatible con "
-"instalaciones de WordPress Multisite. Creado a partir de los plugins <a "
+"Genera dinamicamente un mapa de sitio de vídeo de Google y envía "
+"automáticamente las actualizaciones a Google y Bing. Compatible con "
+"instalaciones de WordPress Multisite. Creado a partir del plugin <a "
 "href=\"http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-"
 "support/\" target=\"_blank\"><strong>Google News Sitemap Feed With Multisite "
-"Support</strong></a>, de <a href=\"http://profiles.wordpress."
-"org/users/timbrd/\" target=\"_blank\">Tim Brandon</a>, y <a href=\"http:"
-"//wordpress.org/plugins/xml-sitemaps-for-videos/\" "
-"target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a>, de <a "
+"Support</strong></a> de <a href=\"http://profiles.wordpress."
+"org/users/timbrd/\" target=\"_blank\">Tim Brandon</a> y del plugin <a "
+"href=\"http://wordpress.org/plugins/xml-sitemaps-for-videos/\" "
+"target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a> de <a "
 "href=\"http://profiles.wordpress.org/labnol/\" target=\"_blank\">Amit "
 "Agarwal</a>. Nuevas funcionalidades e ideas (soporte para Vimeo y "
-"Dailymotion) añadidas por <a href=\"https://twitter.com/ludobonnet\" "
+"Dailymotion) aportadas por <a href=\"https://twitter.com/ludobonnet\" "
 "target=\"_blank\">Ludo Bonnet</a>."
 
 #. Author of the plugin
@@ -71,57 +71,57 @@ msgstr "Art Project Group"
 msgid "http://www.artprojectgroup.es"
 msgstr "http://www.artprojectgroup.es"
 
-#: ../../xml-sitemap.php:65 ../../includes/cuadro-informacion.php:7
+#: ../../xml-sitemap.php:64 ../../includes/cuadro-informacion.php:7
 msgid "Make a donation by "
 msgstr "Haz una donación por "
 
-#: ../../xml-sitemap.php:67 ../../xml-sitemap.php:67 ../../xml-sitemap.php:67 ../.
-#: ./xml-sitemap.php:67 ../../includes/cuadro-informacion.php:19 ../..
+#: ../../xml-sitemap.php:66 ../../xml-sitemap.php:66 ../../xml-sitemap.php:66 ../.
+#: ./xml-sitemap.php:66 ../../includes/cuadro-informacion.php:19 ../..
 #: includes/cuadro-informacion.php:19 ../../includes/cuadro-informacion.php:19 ..
 #: ../includes/cuadro-informacion.php:19
 msgid "Follow us on "
 msgstr "Síguenos en "
 
-#: ../../xml-sitemap.php:68 ../../includes/cuadro-informacion.php:25
+#: ../../xml-sitemap.php:67 ../../includes/cuadro-informacion.php:25
 msgid "More plugins on "
 msgstr "Más plugins en "
 
-#: ../../xml-sitemap.php:69 ../../xml-sitemap.php:69 ../../includes/cuadro-
+#: ../../xml-sitemap.php:68 ../../xml-sitemap.php:68 ../../includes/cuadro-
 #: informacion.php:33 ../../includes/cuadro-informacion.php:33
 msgid "Contact with us by "
 msgstr "Contacta con nosotros por "
 
-#: ../../xml-sitemap.php:82
+#: ../../xml-sitemap.php:81
 msgid "Settings of "
 msgstr "Ajustes de "
 
-#: ../../xml-sitemap.php:82 ../../xml-sitemap.php:190
+#: ../../xml-sitemap.php:81 ../../xml-sitemap.php:189
 msgid "Settings"
 msgstr "Ajustes"
 
-#: ../../xml-sitemap.php:83
+#: ../../xml-sitemap.php:82
 msgid "Support of "
 msgstr "Soporte técnico de "
 
-#: ../../xml-sitemap.php:83 ../../includes/cuadro-informacion.php:39
+#: ../../xml-sitemap.php:82 ../../includes/cuadro-informacion.php:39
 msgid "Support"
 msgstr "Soporte técnico"
 
-#: ../../xml-sitemap.php:96 ../../includes/formulario.php:5
+#: ../../xml-sitemap.php:95 ../../includes/formulario.php:5
 msgid "Google Video Sitemap Feed Options."
 msgstr "Opciones de Google Video Sitemap."
 
-#: ../../xml-sitemap.php:183 ../../includes/cuadro-informacion.php:44
+#: ../../xml-sitemap.php:182 ../../includes/cuadro-informacion.php:44
 #, php-format
 msgid "Please, rate %s:"
 msgstr "Por favor, puntúa %s:"
 
-#: ../../xml-sitemap.php:190
+#: ../../xml-sitemap.php:189
 #, php-format
 msgid "Please, update your %s. It's very important!"
 msgstr "Por favor, actualiza tus %s. ¡Es muy importante!"
 
-#: ../../xml-sitemap.php:190
+#: ../../xml-sitemap.php:189
 msgid "settings"
 msgstr "ajustes"
 
@@ -169,11 +169,11 @@ msgstr "Enviar notificaciones de error de vídeo por correo electrónico."
 msgid "Save Changes"
 msgstr "Guardar cambios"
 
-#: ../../includes/admin/feed-sitemap-video.php:28
+#: ../../includes/admin/feed-sitemap-video.php:14
 msgid "Video not found!"
 msgstr "¡Vídeo no encontrado!"
 
-#: ../../includes/admin/feed-sitemap-video.php:28
+#: ../../includes/admin/feed-sitemap-video.php:14
 #, php-format
 msgid ""
 "Please check post <a href=\"%s\">%s</a> on your blog %s and edit the deleted "

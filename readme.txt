@@ -4,7 +4,7 @@ Donate link: http://www.artprojectgroup.es/tienda/donacion
 Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, Sitemap, sitemap-video.xml, YouTube, Vimeo, Dailymotion
 Requires at least: 2.6
 Tested up to: 4.3.1
-Stable tag: 1.7.2
+Stable tag: 1.7.2.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,6 +40,13 @@ Se recomienda el uso de **Google Video Sitemap Feed With Multisite Support** jun
 
 = Muy importante =
 Se han descrito errores al utilizarlo conjuntamente con la última versión de **Google XML Sitemaps** con soporte para WordPress multisitio. Los errores están descritos en [¿Cómo arreglar la incompatibilidad de Google XML Sitemaps con nuestros plugins?](http://www.artprojectgroup.es/como-arreglar-la-incompatibilidad-de-google-xml-sitemaps-con-nuestros-plugins) donde encontrarás toda la información necesaria para solucionar la incompatibilidad detectada.
+
+= Traducciones =
+* Español ([**Art Project Group**](http://www.artprojectgroup.es/)).
+* English ([**Art Project Group**](http://www.artprojectgroup.es/)).
+
+= Soporte técnico =
+**Art Project Group** te ofrece [**Soporte técnico**](http://www.artprojectgroup.es/tienda/soporte-tecnico) para configurar o instalar ***Google Video Sitemap Feed With Multisite Support***.
 
 = Más información =
 En nuestro sitio web oficial puede obtener más información sobre [**Google Video Sitemap Feed With Multisite Support**](http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support). 
@@ -78,6 +85,9 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 2. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.7.2.1 =
+* Actualización del paquete de fuentes. Nuevo icono de Google+.
+* Actualización de las traducciones.
 = 1.7.2 =
 * Arreglo de la URL del reproductor de YouTube.
 = 1.7.1 =
@@ -165,7 +175,10 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 * Versión inicial.
 
 == Upgrade Notice ==
-= 1.7.2 =
+= 1.7.2.1 =
+* Actualización del paquete de fuentes. Nuevo icono de Google+.
+* Actualización de las traducciones.
+=  1.7.2 =
 * Arreglo de la URL del reproductor de YouTube.
 = 1.7.1 =
 * Ajuste del diseño sensible de la plantilla XSL.

@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Google Video Sitemap Feed With Multisite Support\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Sun Sep 27 2015 00:36:20 GMT+0200 (CEST)\n"
-"POT-Revision-Date: Sun Sep 27 2015 00:36:25 GMT+0200 (CEST)\n"
+"POT-Revision-Date: Thu Oct 15 2015 10:31:53 GMT+0200 (CEST)\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -56,57 +56,57 @@ msgstr ""
 msgid "http://www.artprojectgroup.es"
 msgstr ""
 
-#: ../../xml-sitemap.php:65 ../../includes/cuadro-informacion.php:7
+#: ../../xml-sitemap.php:64 ../../includes/cuadro-informacion.php:7
 msgid "Make a donation by "
 msgstr ""
 
-#: ../../xml-sitemap.php:67 ../../xml-sitemap.php:67 ../../xml-sitemap.php:67 ../.
-#: ./xml-sitemap.php:67 ../../includes/cuadro-informacion.php:19 ../..
+#: ../../xml-sitemap.php:66 ../../xml-sitemap.php:66 ../../xml-sitemap.php:66 ../.
+#: ./xml-sitemap.php:66 ../../includes/cuadro-informacion.php:19 ../..
 #: /includes/cuadro-informacion.php:19 ../../includes/cuadro-informacion.php:19 ..
 #: /../includes/cuadro-informacion.php:19
 msgid "Follow us on "
 msgstr ""
 
-#: ../../xml-sitemap.php:68 ../../includes/cuadro-informacion.php:25
+#: ../../xml-sitemap.php:67 ../../includes/cuadro-informacion.php:25
 msgid "More plugins on "
 msgstr ""
 
-#: ../../xml-sitemap.php:69 ../../xml-sitemap.php:69 ../../includes/cuadro-
+#: ../../xml-sitemap.php:68 ../../xml-sitemap.php:68 ../../includes/cuadro-
 #: informacion.php:33 ../../includes/cuadro-informacion.php:33
 msgid "Contact with us by "
 msgstr ""
 
-#: ../../xml-sitemap.php:82
+#: ../../xml-sitemap.php:81
 msgid "Settings of "
 msgstr ""
 
-#: ../../xml-sitemap.php:82 ../../xml-sitemap.php:190
+#: ../../xml-sitemap.php:81 ../../xml-sitemap.php:189
 msgid "Settings"
 msgstr ""
 
-#: ../../xml-sitemap.php:83
+#: ../../xml-sitemap.php:82
 msgid "Support of "
 msgstr ""
 
-#: ../../xml-sitemap.php:83 ../../includes/cuadro-informacion.php:39
+#: ../../xml-sitemap.php:82 ../../includes/cuadro-informacion.php:39
 msgid "Support"
 msgstr ""
 
-#: ../../xml-sitemap.php:96 ../../includes/formulario.php:5
+#: ../../xml-sitemap.php:95 ../../includes/formulario.php:5
 msgid "Google Video Sitemap Feed Options."
 msgstr ""
 
-#: ../../xml-sitemap.php:183 ../../includes/cuadro-informacion.php:44
+#: ../../xml-sitemap.php:182 ../../includes/cuadro-informacion.php:44
 #, php-format
 msgid "Please, rate %s:"
 msgstr ""
 
-#: ../../xml-sitemap.php:190
+#: ../../xml-sitemap.php:189
 #, php-format
 msgid "Please, update your %s. It's very important!"
 msgstr ""
 
-#: ../../xml-sitemap.php:190
+#: ../../xml-sitemap.php:189
 msgid "settings"
 msgstr ""
 
@@ -152,11 +152,11 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: ../../includes/admin/feed-sitemap-video.php:28
+#: ../../includes/admin/feed-sitemap-video.php:14
 msgid "Video not found!"
 msgstr ""
 
-#: ../../includes/admin/feed-sitemap-video.php:28
+#: ../../includes/admin/feed-sitemap-video.php:14
 #, php-format
 msgid ""
 "Please check post <a href=\"%s\">%s</a> on your blog %s and edit the deleted "
