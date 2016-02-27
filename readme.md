@@ -80,7 +80,7 @@ No, el plugin es totalmente autónomo.
 ### ¿Es compatible con instalaciones de WordPress multisitio?
 Si, es completamente compatible.
 
-### ¿Necesita configuración?
+### ¿Existen incompatibilidades?
 Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google XML Sitemaps**. Los errores están provocados por un orden erróneo de las reglas de redirección de WordPress, ya que **Google XML Sitemaps** interpreta todos los tipos de mapas de sitios posibles. En [¿Cómo arreglar la incompatibilidad de Google XML Sitemaps con nuestros plugins?](http://www.artprojectgroup.es/como-arreglar-la-incompatibilidad-de-google-xml-sitemaps-con-nuestros-plugins) encontrarás toda la información sobre esta incompatibilidad y la solución a la misma.
 
 ### Soporte técnico
@@ -89,7 +89,7 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
-= 1.7.2.2
+###1.7.2.2
 * Actualización de enlaces de soporte y pequeñas actualizaciones.
 
 ###1.7.2.1
