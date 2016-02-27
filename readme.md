@@ -84,7 +84,7 @@ Si, es completamente compatible.
 Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google XML Sitemaps**. Los errores están provocados por un orden erróneo de las reglas de redirección de WordPress, ya que **Google XML Sitemaps** interpreta todos los tipos de mapas de sitios posibles. En [¿Cómo arreglar la incompatibilidad de Google XML Sitemaps con nuestros plugins?](http://www.artprojectgroup.es/como-arreglar-la-incompatibilidad-de-google-xml-sitemaps-con-nuestros-plugins) encontrarás toda la información sobre esta incompatibilidad y la solución a la misma.
 
 ### Soporte técnico
-Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With Multisite Support**, **Art Project Group** te ofrece su servicio de [**Soporte técnico**](http://www.wcprojectgroup.es/tienda/ticket-de-soporte). 
+Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With Multisite Support**, **Art Project Group** te ofrece su servicio de [**Soporte técnico**](http://www.wpprojectgroup.es/tienda/ticket-de-soporte). 
 
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
@@ -215,7 +215,7 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 
 
 ## Soporte técnico
-Dado que **Google Video Sitemap Feed With Multisite Support** es totalmente gratuito, **Art Project Group** sólo proporciona el servicio de [**Soporte técnico**](http://www.wcprojectgroup.es/tienda/ticket-de-soporte) previo pago. En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.
+Dado que **Google Video Sitemap Feed With Multisite Support** es totalmente gratuito, **Art Project Group** sólo proporciona el servicio de [**Soporte técnico**](http://www.wpprojectgroup.es/tienda/ticket-de-soporte) previo pago. En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.
 
 ## ¿Por qué está esta página en español?
 Mientras WordPress no nos permita a los desarrolladores realizar esta página en más de un idioma, elegiremos siempre el español.
