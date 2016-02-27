@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: Google Video Sitemap Feed With Multisite Support
-Version: 1.7.2.1
+Version: 1.7.2.2
 Plugin URI: http://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
 Description: Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. Compatible with WordPress Multisite installations. Created from <a href="http://profiles.wordpress.org/users/timbrd/" target="_blank">Tim Brandon</a> <a href="http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="http://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="http://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://twitter.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
 Author: Art Project Group
 Author URI: http://www.artprojectgroup.es/
 Requires at least: 2.6
-Tested up to: 4.3.1
+Tested up to: 4.4.2
 
 Text Domain: xml_video_sitemap
 Domain Path: /i18n/languages
@@ -47,7 +47,7 @@ $xml_video_sitemap = array(
 	'plugin' 		=> 'Google Video Sitemap Feed With Multisite Support', 
 	'plugin_uri' 	=> 'google-video-sitemap-feed-with-multisite-support', 
 	'donacion' 		=> 'http://www.artprojectgroup.es/tienda/donacion',
-	'soporte' 		=> 'http://www.artprojectgroup.es/tienda/soporte-tecnico',
+	'soporte' 		=> 'http://www.wpprojectgroup.es/tienda/ticket-de-soporte',
 	'plugin_url' 	=> 'http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support', 
 	'ajustes' 		=> 'options-general.php?page=xml-sitemap-video', 
 	'puntuacion' 	=> 'http://wordpress.org/support/view/plugin-reviews/google-video-sitemap-feed-with-multisite-support'
@@ -130,7 +130,7 @@ function xml_sitemap_video_formulario_de_configuracion() {
 }
 
 //Constantes
-define( 'XMLSVF_VERSION', '1.7.2.1' );
+define( 'XMLSVF_VERSION', '1.7.2.2' );
 define( 'XMLSVF_MEMORY_LIMIT', '128M' );
 
 if ( file_exists( dirname( __FILE__ ) . '/google-video-sitemap-feed-mu' ) ) {
@@ -193,8 +193,6 @@ function xml_video_sitemap_actualizacion() {
 function xml_video_sitemap_muestra_mensaje() {
 	wp_register_style( 'xml_video_sitemap_hoja_de_estilo', plugins_url( 'assets/css/style.css', __FILE__ ) ); //Carga la hoja de estilo
 	wp_enqueue_style( 'xml_video_sitemap_hoja_de_estilo' ); //Carga la hoja de estilo global
-	wp_register_style( 'xml_video_sitemap_fuentes', plugins_url( 'assets/fonts/stylesheet.css', __FILE__ ) ); //Carga la hoja de estilo global
-	wp_enqueue_style( 'xml_video_sitemap_fuentes' ); //Carga la hoja de estilo global
 	
 	$configuracion = get_option( 'xml_video_sitemap' );
 	if ( !isset( $configuracion['correo'] ) ) {
