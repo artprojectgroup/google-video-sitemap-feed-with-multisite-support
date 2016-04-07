@@ -3,8 +3,8 @@ Contributors: artprojectgroup
 Donate link: http://www.artprojectgroup.es/tienda/donacion
 Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, Sitemap, sitemap-video.xml, YouTube, Vimeo, Dailymotion
 Requires at least: 2.6
-Tested up to: 4.4.2
-Stable tag: 1.7.2.2
+Tested up to: 4.5
+Stable tag: 1.7.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,6 +18,7 @@ Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos 
 = Características =
 * Prácticamente no requiere ningún tipo de configuración, por lo que funciona de forma totalmente autónoma y automática.
 * Añade automáticamente todos los vídeos de YouTube, Vimeo y Dailymotion.
+* Soporta todos los tipos de entradas personalizadas.
 * Gestión automática de caché de datos externos de los vídeos para acelerar la creación del archivo `sitemap-video.xml`.
 * Notificación por correo electrónico al administrador del sitio web en caso de que el vídeo haya sido borrado o marcado como privado para que edite la entrada donde aparece y borre la URL que ya no es válida.
 * Es totalmente compatible con instalaciones de WordPress multisitio.
@@ -86,6 +87,8 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 2. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.7.3 =
+* Soporta todos los tipos de entradas personalizadas.
 = 1.7.2.2 =
 * Actualización de enlaces de soporte y pequeñas actualizaciones.
 = 1.7.2.1 =
@@ -178,8 +181,8 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 * Versión inicial.
 
 == Upgrade Notice ==
-= 1.7.2.2 =
-* Actualización de enlaces de soporte y pequeñas actualizaciones.
+= 1.7.3 =
+* Soporta todos los tipos de entradas personalizadas.
 
 ==Traducciones ==
 * *English*: by [**Art Project Group**](http://www.artprojectgroup.es/) (default language).

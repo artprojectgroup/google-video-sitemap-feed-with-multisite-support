@@ -7,9 +7,9 @@ Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, 
 
 Requires at least: 2.6
 
-Tested up to: 4.4.2
+Tested up to: 4.5
 
-Stable tag: 1.7.2.2
+Stable tag: 1.7.3
 
 License: GPLv3
 
@@ -25,6 +25,7 @@ Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos 
 ### Características
 * Prácticamente no requiere ningún tipo de configuración, por lo que funciona de forma totalmente autónoma y automática.
 * Añade automáticamente todos los vídeos de YouTube, Vimeo y Dailymotion.
+* Soporta todos los tipos de entradas personalizadas.
 * Gestión automática de caché de datos externos de los vídeos para acelerar la creación del archivo `sitemap-video.xml`.
 * Notificación por correo electrónico al administrador del sitio web en caso de que el vídeo haya sido borrado o marcado como privado para que edite la entrada donde aparece y borre la URL que ya no es válida.
 * Es totalmente compatible con instalaciones de WordPress multisitio.
@@ -89,6 +90,9 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
+###1.7.3
+* Soporta todos los tipos de entradas personalizadas.
+
 ###1.7.2.2
 * Actualización de enlaces de soporte y pequeñas actualizaciones.
 

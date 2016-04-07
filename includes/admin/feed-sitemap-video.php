@@ -7,9 +7,9 @@
 
 //Envía un correo informando de que el vídeo ya no existe
 function xml_sitemap_video_envia_correo( $video ) {
-	global $wpdb;
+	global $wpdb, $busqueda;
 
-	$entrada = $wpdb->get_results( "SELECT id, post_title FROM $wpdb->posts WHERE post_status = 'publish' AND (post_type = 'post' OR post_type = 'page') AND (post_content LIKE '%$video%')" );
+	$entrada = $wpdb->get_results( "SELECT id, post_title FROM $wpdb->posts WHERE post_status = 'publish' AND ($busqueda) AND (post_content LIKE '%$video%')" );
 
 	wp_mail( get_option( 'admin_email' ), __( 'Video not found!', 'xml_video_sitemap' ), sprintf( __( 'Please check post <a href="%s">%s</a> on your blog %s and edit the deleted video id %s.<br /><br />email sended by <a href="http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support">Google Video Sitemap Feed With Multisite Support</a>', 'xml_video_sitemap' ), get_permalink( $entrada[0]->id ), $entrada[0]->post_title, get_bloginfo( 'name' ), $video ), "Content-type: text/html" );
 }
@@ -74,12 +74,22 @@ echo '<?xml version="1.0" encoding="' . get_bloginfo( 'charset' ) . '"?>
 <?xml-stylesheet type="text/xsl" href="' . get_bloginfo( 'wpurl' ) . '/wp-content/plugins/google-video-sitemap-feed-with-multisite-support/assets/video-sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">' . PHP_EOL;
 
+//Añadimos todos los tipos de entradas
+$tipos_de_entradas = get_post_types( '', 'names' );
+$busqueda = '';
+foreach ( $tipos_de_entradas as $tipo_de_entrada ) {
+	$busqueda .= "post_type = '$tipo_de_entrada' OR ";
+}
+$busqueda = substr_replace( $busqueda, '', -4, -1 );
+
+//Generamos la consulta
+delete_transient( 'xml_sitemap_video' );
 $entradas = get_transient( 'xml_sitemap_video' );
 if ( $entradas === false ) {
      $entradas = $wpdb->get_results( "(SELECT id, post_title, post_content, post_date, post_excerpt, post_author
                                     FROM $wpdb->posts
                                     WHERE post_status = 'publish'
-                                        AND (post_type = 'post' OR post_type = 'page')
+                                        AND ($busqueda)
                                         AND (post_content LIKE '%youtube.com%'
                                             OR post_content LIKE '%youtube-nocookie.com%'
                                             OR post_content LIKE '%youtu.be%'                              
@@ -97,7 +107,7 @@ if ( $entradas === false ) {
                                                     OR meta_value LIKE '%dailymotion.com%'
                                                     OR meta_value LIKE '%vimeo.com%')
                                         WHERE post_status = 'publish'
-                                            AND (post_type = 'post' OR post_type = 'page'))
+                                            AND ($busqueda))
                                 UNION ALL
                                     (SELECT id, post_title, post_date, post_excerpt, post_author, post_parent
                                         FROM $wpdb->posts
