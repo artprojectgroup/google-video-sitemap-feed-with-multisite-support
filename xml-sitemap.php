@@ -7,7 +7,7 @@ Description: Dynamically generates a Google Video Sitemap and automatically subm
 Author: Art Project Group
 Author URI: http://www.artprojectgroup.es/
 Requires at least: 2.6
-Tested up to: 4.5
+Tested up to: 4.6
 
 Text Domain: xml_video_sitemap
 Domain Path: /i18n/languages

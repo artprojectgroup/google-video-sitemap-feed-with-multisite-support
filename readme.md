@@ -7,7 +7,7 @@ Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, 
 
 Requires at least: 2.6
 
-Tested up to: 4.5
+Tested up to: 4.6
 
 Stable tag: 1.7.3
 
