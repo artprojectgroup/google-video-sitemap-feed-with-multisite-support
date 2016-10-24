@@ -9,7 +9,7 @@ Requires at least: 2.6
 
 Tested up to: 4.6
 
-Stable tag: 1.7.3
+Stable tag: 1.7.3.1
 
 License: GPLv3
 
@@ -90,6 +90,9 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
+###1.7.3.1
+* Arreglo de error que no actualizaba la configuración.
+
 ###1.7.3
 * Soporta todos los tipos de entradas personalizadas.
 

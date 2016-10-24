@@ -1,16 +1,16 @@
 <?php
 /*
 Plugin Name: Google Video Sitemap Feed With Multisite Support
-Version: 1.7.3
+Version: 1.7.3.1
 Plugin URI: http://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
 Description: Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. Compatible with WordPress Multisite installations. Created from <a href="http://profiles.wordpress.org/users/timbrd/" target="_blank">Tim Brandon</a> <a href="http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="http://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="http://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://twitter.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
 Author: Art Project Group
-Author URI: http://www.artprojectgroup.es/
+Author URI: http://artprojectgroup.es/
 Requires at least: 2.6
 Tested up to: 4.6
 
 Text Domain: xml_video_sitemap
-Domain Path: /i18n/languages
+Domain Path: /languages
 
 @package Google Video Sitemap Feed With Multisite Support
 @category Core
@@ -46,15 +46,15 @@ define( 'DIRECCION_xml_video_sitemap', plugin_basename( __FILE__ ) );
 $xml_video_sitemap = array( 	
 	'plugin' 		=> 'Google Video Sitemap Feed With Multisite Support', 
 	'plugin_uri' 	=> 'google-video-sitemap-feed-with-multisite-support', 
-	'donacion' 		=> 'http://www.artprojectgroup.es/tienda/donacion',
-	'soporte' 		=> 'http://www.wpprojectgroup.es/tienda/ticket-de-soporte',
-	'plugin_url' 	=> 'http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support', 
+	'donacion' 		=> 'http://artprojectgroup.es/tienda/donacion',
+	'soporte' 		=> 'http://wpprojectgroup.es/tienda/ticket-de-soporte',
+	'plugin_url' 	=> 'http://artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support', 
 	'ajustes' 		=> 'options-general.php?page=xml-sitemap-video', 
 	'puntuacion' 	=> 'http://wordpress.org/support/view/plugin-reviews/google-video-sitemap-feed-with-multisite-support'
  );
 
 //Carga el idioma
-load_plugin_textdomain( 'xml_video_sitemap', null, dirname( DIRECCION_xml_video_sitemap ) . '/i18n/languages' );
+load_plugin_textdomain( 'xml_video_sitemap', null, dirname( DIRECCION_xml_video_sitemap ) . '/languages' );
 
 //Enlaces adicionales personalizados
 function xml_video_sitemap_enlaces( $enlaces, $archivo ) {
@@ -64,7 +64,7 @@ function xml_video_sitemap_enlaces( $enlaces, $archivo ) {
 		$enlaces[] = '<a href="' . $xml_video_sitemap['donacion'] . '" target="_blank" title="' . __( 'Make a donation by ', 'xml_video_sitemap' ) . 'APG"><span class="genericon genericon-cart"></span></a>';
 		$enlaces[] = '<a href="'. $xml_video_sitemap['plugin_url'] . '" target="_blank" title="' . $xml_video_sitemap['plugin'] . '"><strong class="artprojectgroup">APG</strong></a>';
 		$enlaces[] = '<a href="https://www.facebook.com/artprojectgroup" title="' . __( 'Follow us on ', 'xml_video_sitemap' ) . 'Facebook" target="_blank"><span class="genericon genericon-facebook-alt"></span></a> <a href="https://twitter.com/artprojectgroup" title="' . __( 'Follow us on ', 'xml_video_sitemap' ) . 'Twitter" target="_blank"><span class="genericon genericon-twitter"></span></a> <a href="https://plus.google.com/+ArtProjectGroupES" title="' . __( 'Follow us on ', 'xml_video_sitemap' ) . 'Google+" target="_blank"><span class="genericon genericon-googleplus-alt"></span></a> <a href="http://es.linkedin.com/in/artprojectgroup" title="' . __( 'Follow us on ', 'xml_video_sitemap' ) . 'LinkedIn" target="_blank"><span class="genericon genericon-linkedin"></span></a>';
-		$enlaces[] = '<a href="http://profiles.wordpress.org/artprojectgroup/" title="' . __( 'More plugins on ', 'xml_video_sitemap' ) . 'WordPress" target="_blank"><span class="genericon genericon-wordpress"></span></a>';
+		$enlaces[] = '<a href="https://profiles.wordpress.org/artprojectgroup/" title="' . __( 'More plugins on ', 'xml_video_sitemap' ) . 'WordPress" target="_blank"><span class="genericon genericon-wordpress"></span></a>';
 		$enlaces[] = '<a href="mailto:info@artprojectgroup.es" title="' . __( 'Contact with us by ', 'xml_video_sitemap' ) . 'e-mail"><span class="genericon genericon-mail"></span></a> <a href="skype:artprojectgroup" title="' . __( 'Contact with us by ', 'xml_video_sitemap' ) . 'Skype"><span class="genericon genericon-skype"></span></a>';
 		$enlaces[] = xml_video_sitemap_plugin( $xml_video_sitemap['plugin_uri'] );
 	}
@@ -98,40 +98,35 @@ add_action( 'admin_menu', 'xml_sitemap_video_menu_administrador' );
 
 //Pinta el formulario de configuración
 function xml_sitemap_video_formulario_de_configuracion() {
-	$actualizacion = false;
-	
-	$campos = array( 'correo' );
-	foreach ( $campos as $campo ) {
-		if ( isset( $_POST[$campo] ) ) {
-			$actualizacion = true;
-		}
-	}
+	$actualizacion	= false;
+	$campos			= array( 'correo' );
+	$campos_chequeo	= array( 'correo' );
+	$configuracion	= array();
 		
-	if ($actualizacion) {
-		$campos_chequeo = array( 'correo' );
-		foreach ( $campos_chequeo as $campo ) {
+	if ( !empty( $_POST ) ) {
+		$actualizacion = true;
+		foreach ( $campos_chequeo as $campo ) { //El campo está vacío
 			if ( !isset( $_POST[$campo] ) ) {
 				$_POST[$campo] = 0;
 			}
 		}
 		
-		$configuracion = array();
-		foreach ( $campos as $campo ) {
+		foreach ( $campos as $campo ) { //Actualizamos el valor
 			$configuracion[$campo] = $_POST[$campo];
 		}
 			
 		if ( get_option( 'xml_video_sitemap' ) || get_option( 'xml_video_sitemap' ) == NULL ) {
-			update_option('xml_video_sitemap', $configuracion );
+			update_option('xml_video_sitemap', $configuracion ); //Actualiza la configuración
 		} else {
-			add_option('xml_video_sitemap', $configuracion );
+			add_option('xml_video_sitemap', $configuracion ); //Añade la configuración
 		}
 	}
 	include( 'includes/formulario.php' );
 }
 
 //Constantes
-define( 'XMLSVF_VERSION', '1.7.3' );
-define( 'XMLSVF_MEMORY_LIMIT', '128M' );
+define( 'XMLSVF_VERSION', '1.7.3.1' );
+define( 'XMLSVF_MEMORY_LIMIT', '512M' );
 
 if ( file_exists( dirname( __FILE__ ) . '/google-video-sitemap-feed-mu' ) ) {
 	define( 'XMLSVF_PLUGIN_DIR', dirname( __FILE__ ) . '/google-video-sitemap-feed-mu' );
@@ -149,18 +144,18 @@ function xml_video_sitemap_plugin( $nombre ) {
 	global $xml_video_sitemap;
 	
 	$argumentos = ( object ) array( 
-		'slug' => $nombre 
+		'slug'		=> $nombre 
 	);
 	$consulta = array( 
-		'action' => 'plugin_information', 
-		'timeout' => 15, 
-		'request' => serialize( $argumentos )
+		'action'		=> 'plugin_information', 
+		'timeout'	=> 15, 
+		'request'	=> serialize( $argumentos )
 	);
 	$respuesta = get_transient( 'xml_video_sitemap_plugin' );
 	if ( false === $respuesta ) {
 		$respuesta = wp_remote_post( 'http://api.wordpress.org/plugins/info/1.0/', array( 
-			'body' => $consulta)
-		);
+			'body'	=> $consulta 
+		) );
 		set_transient( 'xml_video_sitemap_plugin', $respuesta, 24 * HOUR_IN_SECONDS );
 	}
 	if ( !is_wp_error( $respuesta ) ) {
@@ -170,9 +165,9 @@ function xml_video_sitemap_plugin( $nombre ) {
 	}
 
 	$rating = array(
-	   'rating'	=> $plugin['rating'],
-	   'type'	=> 'percent',
-	   'number'	=> $plugin['num_ratings'],
+	   'rating'		=> $plugin['rating'],
+	   'type'		=> 'percent',
+	   'number'		=> $plugin['num_ratings'],
 	);
 	ob_start();
 	wp_star_rating( $rating );
@@ -208,8 +203,8 @@ function xml_video_sitemap_desinstalar() {
 	delete_transient( 'xml_sitemap_video' );
 	delete_transient( 'xml_sitemap_video_consulta' );
 	$configuracion = get_option( 'xml_sitemap_video' );
-	foreach ($configuracion as $url) {
-		delete_transient($url);
+	foreach ( $configuracion as $url ) {
+		delete_transient( $url );
 	}
 	delete_option( 'xml_sitemap_video' );
 }

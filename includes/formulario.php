@@ -8,8 +8,8 @@
 		if ( $actualizacion ) {
 			echo '<div id="message" class="updated fade"><p><strong>' . __( 'Options saved.', 'xml_video_sitemap' ) . '</strong></p></div>' . PHP_EOL;
 		}
-		$tab = 1;
-		$configuracion = get_option( 'xml_video_sitemap' );
+		$tab			= 1;
+		$configuracion	= get_option( 'xml_video_sitemap' );
   ?>
   <h3><a href="<?php echo $xml_video_sitemap['plugin_url']; ?>" title="Art Project Group"><?php echo $xml_video_sitemap['plugin']; ?></a> </h3>
   <p>
