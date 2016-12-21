@@ -7,9 +7,9 @@ Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, 
 
 Requires at least: 2.6
 
-Tested up to: 4.6
+Tested up to: 4.7
 
-Stable tag: 1.7.3.1
+Stable tag: 1.7.3.2
 
 License: GPLv3
 
@@ -90,130 +90,133 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
-###1.7.3.1
+### 1.7.3.2
+* Arreglo de consulta SQL.
+
+### 1.7.3.1
 * Arreglo de error que no actualizaba la configuración.
 
-###1.7.3
+### 1.7.3
 * Soporta todos los tipos de entradas personalizadas.
 
-###1.7.2.2
+### 1.7.2.2
 * Actualización de enlaces de soporte y pequeñas actualizaciones.
 
-###1.7.2.1
+### 1.7.2.1
 * Actualización del paquete de fuentes. Nuevo icono de Google+.
 * Actualización de las traducciones.
 
-###1.7.2
+### 1.7.2
 * Arreglo de la URL del reproductor de YouTube.
 
-###1.7.1
+### 1.7.1
 * Ajuste del diseño sensible de la plantilla XSL.
 
-###1.7
+### 1.7
 * Arreglo de error detectado en la notificación y procesamiento de vídeos borrados o marcados como privados.
 * Rediseño sensible de la plantilla XSL.
 * Eliminación de funciones innecesarias.
 * Actualización de la captura de pantalla.
 
-###1.6
+### 1.6
 * Actualización de la API de YouTube.
 * Arreglo de las expresiones regulares. Ambos problemas reportados en [WordPress.org](https://wordpress.org/support/topic/youtube-dailymotion-videos-not-working?replies=3#post-7475198).
 * Actualización de URLs de reproductores externos.
 * Actualización de las traducciones.
 * Mejora del archivo XSL que genera la plantilla del archivo XML.
 
-###1.5
+### 1.5
 * Actualización de las traducciones.
 * Nueva hoja de estilo sensible.
 * Modificación de la estructura interna del plugin para ajustarse a los estándares de WordPress.
 * Actualización de la captura de pantalla.
 
-###1.4.1
+### 1.4.1
 * Añadido borrado de caché al publicar nuevo contenido.
 
-###1.4
+### 1.4
 * Arreglo de error que provocaba un mensaje de error en versiones superiores a la 5.2 de PHP.
 
-###1.3.1
+### 1.3.1
 * Arreglo de error que borraba toda la configuración al desactivar el plugin.
 * Corrección menor que evita la aparición de un código de error al recopilar información sobre el plugin.
 
-###1.3
+### 1.3
 * Añadido un nuevo panel de administración donde poder elegir si queremos recibir correos electrónicos o no.
 * Mejora en el código que envía el correo electrónico.
 * Cambio del enlace de donación.
 
-###1.2
+### 1.2
 * Mejora y optimización del código.
 * Añadida caché para los datos externos.
 * Añadida función que limpia la caché cuando se borra el plugin.
 * Cambio del botón y enlace de donación.
 
-###1.1.7
+### 1.1.7
 * Arreglos de pequeños errores.
 
-###1.1.6
+### 1.1.6
 * Mejora y optimización del código.
 * Arreglos de pequeños errores.
 * Uso de la API Transients de WordPress para mejorar las consultas.
 * Mejora en la búsqueda de vídeos de Vimeo.
 
-###1.1.5
+### 1.1.5
 * Arreglo de error en nombre de variable que deja datos en blanco en el correo electrónico
 
-###1.1.4
+### 1.1.4
 * Arreglos de diversos errores en los envíos de correos electrónicos.
 * Arreglos de diversos errores en el almacenamiento de datos en la caché.
 
-###1.1.3
+### 1.1.3
 * Simplificación de código duplicado.
 
-###1.1.2
+### 1.1.2
 * Arreglo de error que no reiniciaba la variable encargada de controlar los envíos de correos electrónicos.
 
-###1.1.1
+### 1.1.1
 * Arreglo del código que envía los correos electrónicos.
 
-###1.1
+### 1.1
 * Gestión de caché de datos externos de los vídeos.
 * Envía notificaciones de error por correo electrónico en caso de que el video no exista.
 * Optimización del código.
 * Arreglos de pequeños errores detectados.
 
-###1.0
+### 1.0
 * Añadido soporte para el acortador http://youtu.be.
 * Añadido soporte para Vimeo.
 * Añadido soporte para Dailymotion.
 
-###0.9
+### 0.9
 * Añadida nueva función que limpia la base de datos al desinstalar el plugin.
 
-###0.8
+### 0.8
 * Arreglo en la codificación de las entidades RSS.
 
-###0.7
+### 0.7
 * Arreglos menores en el código.
 
-###0.6
+### 0.6
 * Mejora del código para mejorar la validación del archivo sitemap-video.xml
 
-###0.5
+### 0.5
 * Actualización de las hojas de estilo acorde al nuevo WordPress 8.
 * Arreglo de pequeños errores en el código.
 
-###0.4
+### 0.4
 * Inclusión de nuevos botones y enlaces.
 
-###0.3
+### 0.3
 * Pequeños arreglos de código.
 * Pequeño arreglo de la traducción.
 
-###0.2
+### 0.2
 * Pequeñas modificaciones y arreglos de código.
 * Inclusión de enlaces.
 * Actualización de los textos de información.
 
-###0.1
+### 0.1
 * Versión inicial.
 
 ## Traducciones

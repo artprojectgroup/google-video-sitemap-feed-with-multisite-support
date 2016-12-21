@@ -9,7 +9,7 @@
 function xml_sitemap_video_envia_correo( $video ) {
 	global $wpdb, $busqueda;
 
-	$entrada = $wpdb->get_results( "SELECT id, post_title FROM $wpdb->posts WHERE post_status = 'publish' AND ($busqueda) AND (post_content LIKE '%$video%')" );
+	$entrada = $wpdb->get_results( "SELECT id, post_title FROM $wpdb->posts WHERE post_status = 'publish' $busqueda AND (post_content LIKE '%$video%')" );
 
 	wp_mail( get_option( 'admin_email' ), __( 'Video not found!', 'xml_video_sitemap' ), sprintf( __( 'Please check post <a href="%s">%s</a> on your blog %s and edit the deleted video id %s.<br /><br />email sended by <a href="http://www.artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support">Google Video Sitemap Feed With Multisite Support</a>', 'xml_video_sitemap' ), get_permalink( $entrada[0]->id ), $entrada[0]->post_title, get_bloginfo( 'name' ), $video ), "Content-type: text/html" );
 }
@@ -81,6 +81,9 @@ foreach ( $tipos_de_entradas as $tipo_de_entrada ) {
 	$busqueda .= "post_type = '$tipo_de_entrada' OR ";
 }
 $busqueda = substr_replace( $busqueda, '', -4, -1 );
+if ( strlen( $busqueda ) ) {
+	$busqueda = "AND ($busqueda)";
+}
 
 //Generamos la consulta
 delete_transient( 'xml_sitemap_video' );
@@ -89,7 +92,7 @@ if ( $entradas === false ) {
      $entradas = $wpdb->get_results( "(SELECT id, post_title, post_content, post_date, post_excerpt, post_author
                                     FROM $wpdb->posts
                                     WHERE post_status = 'publish'
-                                        AND ($busqueda)
+                                       $busqueda
                                         AND (post_content LIKE '%youtube.com%'
                                             OR post_content LIKE '%youtube-nocookie.com%'
                                             OR post_content LIKE '%youtu.be%'                              
@@ -119,8 +122,8 @@ if ( $entradas === false ) {
 }
 
 global $wp_query;
-$wp_query->is_404 = false;	//force is_404( ) condition to false when on site without posts
-$wp_query->is_feed = true;	//force is_feed( ) condition to true so WP Super Cache includes the sitemap in its feeds cache
+$wp_query->is_404	= false;	//force is_404( ) condition to false when on site without posts
+$wp_query->is_feed	= true;	//force is_feed( ) condition to true so WP Super Cache includes the sitemap in its feeds cache
 
 if ( !empty( $entradas ) ) {
 	$videos = $video_procesado = array( );
