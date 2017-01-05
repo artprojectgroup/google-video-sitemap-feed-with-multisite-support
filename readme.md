@@ -9,7 +9,7 @@ Requires at least: 2.6
 
 Tested up to: 4.7
 
-Stable tag: 1.7.3.2
+Stable tag: 1.7.3.3
 
 License: GPLv3
 
@@ -90,6 +90,9 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
+### 1.7.3.3
+* Arreglo de consulta SQL.
+
 ### 1.7.3.2
 * Arreglo de consulta SQL.
 

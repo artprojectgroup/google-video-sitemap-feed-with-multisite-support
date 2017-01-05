@@ -92,7 +92,7 @@ if ( $entradas === false ) {
      $entradas = $wpdb->get_results( "(SELECT id, post_title, post_content, post_date, post_excerpt, post_author
                                     FROM $wpdb->posts
                                     WHERE post_status = 'publish'
-                                       $busqueda
+                                        $busqueda
                                         AND (post_content LIKE '%youtube.com%'
                                             OR post_content LIKE '%youtube-nocookie.com%'
                                             OR post_content LIKE '%youtu.be%'                              
@@ -110,7 +110,7 @@ if ( $entradas === false ) {
                                                     OR meta_value LIKE '%dailymotion.com%'
                                                     OR meta_value LIKE '%vimeo.com%')
                                         WHERE post_status = 'publish'
-                                            AND ($busqueda))
+                                            $busqueda)
                                 UNION ALL
                                     (SELECT id, post_title, post_date, post_excerpt, post_author, post_parent
                                         FROM $wpdb->posts
