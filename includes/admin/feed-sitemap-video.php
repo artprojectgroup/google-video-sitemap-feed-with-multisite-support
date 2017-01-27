@@ -194,9 +194,7 @@ if ( !empty( $entradas ) ) {
 		$videos = xml_sitemap_video_busca_video( $contenido, $videos );
 
 		if ( !empty( $videos ) ) {
-			$extracto = ( $entrada->post_excerpt != "" ) ? $entrada->post_excerpt : get_the_excerpt();
-			$extracto = preg_replace( '/\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|$!:,.;]*[A-Z0-9+&@#\/%=~_|$]/i', '', $extracto ); //Quitamos URLs
-			$extracto = str_replace(array( "\n", "\t", "\r"), '', $extracto ); //Quitamos retornos de carro
+			$extracto = ( !empty( $entrada->post_excerpt ) ) ? $entrada->post_excerpt : get_the_excerpt();
 			
 			$enlace = htmlspecialchars( get_permalink( $entrada->id ) );
 			$contador = 0;

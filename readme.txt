@@ -4,7 +4,7 @@ Donate link: http://www.artprojectgroup.es/tienda/donacion
 Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, Sitemap, sitemap-video.xml, YouTube, Vimeo, Dailymotion
 Requires at least: 2.6
 Tested up to: 4.7.2
-Stable tag: 1.8
+Stable tag: 1.8.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -87,6 +87,8 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 2. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 1.8.1 =
+* Eliminado el procesamiento adicional de descripciones cortas y extractos.
 = 1.8 =
 * Añadida búsqueda de vídeos en descripciones cortas y extractos.
 = 1.7.3.3 =
@@ -189,8 +191,8 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 * Versión inicial.
 
 == Upgrade Notice ==
-= 1.8 =
-* Añadida búsqueda de vídeos en descripciones cortas y extractos.
+= 1.8.1 =
+* Eliminado el procesamiento adicional de descripciones cortas y extractos.
 
 ==Traducciones ==
 * *English*: by [**Art Project Group**](http://www.artprojectgroup.es/) (default language).
