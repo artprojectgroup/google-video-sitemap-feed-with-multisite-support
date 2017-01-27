@@ -7,9 +7,9 @@ Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, 
 
 Requires at least: 2.6
 
-Tested up to: 4.7
+Tested up to: 4.7.2
 
-Stable tag: 1.7.3.3
+Stable tag: 1.8
 
 License: GPLv3
 
@@ -90,6 +90,9 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
+### 1.8
+* Añadida búsqueda de vídeos en descripciones cortas y extractos.
+
 ### 1.7.3.3
 * Arreglo de consulta SQL.
 

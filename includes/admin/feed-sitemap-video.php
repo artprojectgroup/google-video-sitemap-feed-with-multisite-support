@@ -65,6 +65,53 @@ function xml_sitemap_video_informacion( $identificador, $proveedor ) {
 	return false;
 }
 
+//Busca el vídeo en el contenido
+function xml_sitemap_video_busca_video ( $contenido, $videos ) { //Mejorado con ayuda de Ludo Bonnet [https://github.com/ludobonnet]
+	if ( preg_match_all( '/youtube\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER ) || preg_match_all( '/youtube-nocookie\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Youtube
+		foreach ( $busquedas as $busqueda ) {
+			$videos[] = array( 
+				'proveedor'		=> 'youtube', 
+				'identificador'	=> $busqueda[2], 
+				'reproductor'	=> "https://www.youtube.com/embed/$busqueda[2]", 
+				'imagen'		=> "http://i.ytimg.com/vi/$busqueda[2]/hqdefault.jpg" 
+			);
+		}
+	}
+	if ( preg_match_all( '/youtu\.be\/([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Acortador de Youtube
+		foreach ( $busquedas as $busqueda ) {
+			$videos[] = array( 
+				'proveedor'		=> 'youtube', 
+				'identificador'	=> $busqueda[1], 
+				'reproductor'	=> "https://www.youtube.com/embed/$busqueda[1]", 
+				'imagen'		=> "http://i.ytimg.com/vi/$busqueda[1]/hqdefault.jpg" 
+			);
+		}
+	}
+	if ( preg_match_all( '/dailymotion\.com\/video\/([^\$][a-zA-Z0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Dailymotion. Añadido por Ludo Bonnet [https://github.com/ludobonnet]	
+		foreach ( $busquedas as $busqueda ) {
+			$videos[] = array( 
+				'proveedor'		=> 'dailymotion', 
+				'identificador'	=> $busqueda[1], 
+				'reproductor'	=> "http://www.dailymotion.com/embed/video/$busqueda[1]", 
+				'imagen'	=> "http://www.dailymotion.com/thumbnail/video/$busqueda[1]" 
+			);
+		}
+	}
+	if ( preg_match_all( '/vimeo\.com\/moogaloop.swf\?clip_id=([^\$][0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) || preg_match_all( '/vimeo\.com\/video\/([^\$][0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) || preg_match_all( '/vimeo\.com\/([^\$][0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Vimeo. Mejorado a partir del código aportado por Ludo Bonnet [https://github.com/ludobonnet]
+		foreach ( $busquedas as $busqueda ) {
+			if ( is_numeric( $busqueda[1] ) ) {
+				$videos[] = array( 
+					'proveedor'		=> 'vimeo', 
+					'identificador'	=> $busqueda[1], 
+					'reproductor'	=> "https://player.vimeo.com/video/$busqueda[1]" 
+				);
+			}
+		}
+	}
+	
+	return $videos;
+}
+
 status_header( '200' ); // force header( 'HTTP/1.1 200 OK' ) for sites without posts
 header( 'Content-Type: text/xml; charset=' . get_bloginfo( 'charset' ), true );
 
@@ -86,7 +133,7 @@ if ( strlen( $busqueda ) ) {
 }
 
 //Generamos la consulta
-delete_transient( 'xml_sitemap_video' );
+//delete_transient( 'xml_sitemap_video' );
 $entradas = get_transient( 'xml_sitemap_video' );
 if ( $entradas === false ) {
      $entradas = $wpdb->get_results( "(SELECT id, post_title, post_content, post_date, post_excerpt, post_author
@@ -97,7 +144,12 @@ if ( $entradas === false ) {
                                             OR post_content LIKE '%youtube-nocookie.com%'
                                             OR post_content LIKE '%youtu.be%'                              
                                             OR post_content LIKE '%dailymotion.com%'
-                                            OR post_content LIKE '%vimeo.com%'))
+                                            OR post_content LIKE '%vimeo.com%')
+                                        OR (post_excerpt LIKE '%youtube.com%'
+                                            OR post_excerpt LIKE '%youtube-nocookie.com%'
+                                            OR post_excerpt LIKE '%youtu.be%'                              
+                                            OR post_excerpt LIKE '%dailymotion.com%'
+                                            OR post_excerpt LIKE '%vimeo.com%'))											
                                 UNION ALL
                                     (SELECT id, post_title, meta_value as 'post_content', post_date, post_excerpt, post_author
                                         FROM $wpdb->posts
@@ -122,11 +174,11 @@ if ( $entradas === false ) {
 }
 
 global $wp_query;
-$wp_query->is_404	= false;	//force is_404( ) condition to false when on site without posts
-$wp_query->is_feed	= true;	//force is_feed( ) condition to true so WP Super Cache includes the sitemap in its feeds cache
+$wp_query->is_404	= false;	//force is_404() condition to false when on site without posts
+$wp_query->is_feed	= true;	//force is_feed() condition to true so WP Super Cache includes the sitemap in its feeds cache
 
 if ( !empty( $entradas ) ) {
-	$videos = $video_procesado = array( );
+	$videos = $video_procesado = array();
 	
 	if ( isset( $entradas->query ) ) {
 		$entradas = $entradas->query;
@@ -134,52 +186,18 @@ if ( !empty( $entradas ) ) {
 	foreach ( $entradas as $entrada ) {
 		$entrada->ID = $entrada->id; //Necesario para evitar notificaciones de error
 		setup_postdata( $entrada );
+		//Procesamos el contenido
 		$contenido = $entrada->post_content;
+		$videos = xml_sitemap_video_busca_video( $contenido, $videos );
+		//Procesamos el extracto
+		$contenido = $entrada->post_excerpt;
+		$videos = xml_sitemap_video_busca_video( $contenido, $videos );
 
-		if ( preg_match_all( '/youtube\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER ) || preg_match_all( '/youtube-nocookie\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Youtube
-			foreach ( $busquedas as $busqueda ) {
-				$videos[] = array( 
-					'proveedor'		=> 'youtube', 
-					'identificador'	=> $busqueda[2], 
-					'reproductor'	=> "https://www.youtube.com/embed/$busqueda[2]", 
-					'imagen'		=> "http://i.ytimg.com/vi/$busqueda[2]/hqdefault.jpg" 
-				);
-			}
-		}
-		if ( preg_match_all( '/youtu\.be\/([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Acortador de Youtube
-			foreach ( $busquedas as $busqueda ) {
-				$videos[] = array( 
-					'proveedor'		=> 'youtube', 
-					'identificador'	=> $busqueda[1], 
-					'reproductor'	=> "https://www.youtube.com/embed/$busqueda[1]", 
-					'imagen'		=> "http://i.ytimg.com/vi/$busqueda[1]/hqdefault.jpg" 
-				);
-			}
-		}
-		if ( preg_match_all( '/dailymotion\.com\/video\/([^\$][a-zA-Z0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Dailymotion. Añadido por Ludo Bonnet [https://github.com/ludobonnet]	
-			foreach ( $busquedas as $busqueda ) {
-				$videos[] = array( 
-					'proveedor'		=> 'dailymotion', 
-					'identificador'	=> $busqueda[1], 
-					'reproductor'	=> "http://www.dailymotion.com/embed/video/$busqueda[1]", 
-					'imagen'	=> "http://www.dailymotion.com/thumbnail/video/$busqueda[1]" 
-				);
-			}
-		}
-		if ( preg_match_all( '/vimeo\.com\/moogaloop.swf\?clip_id=([^\$][0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) || preg_match_all( '/vimeo\.com\/video\/([^\$][0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) || preg_match_all( '/vimeo\.com\/([^\$][0-9]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Vimeo. Mejorado a partir del código aportado por Ludo Bonnet [https://github.com/ludobonnet]
-			foreach ( $busquedas as $busqueda ) {
-				if ( is_numeric( $busqueda[1] ) ) {
-					$videos[] = array( 
-						'proveedor'		=> 'vimeo', 
-						'identificador'	=> $busqueda[1], 
-						'reproductor'	=> "https://player.vimeo.com/video/$busqueda[1]" 
-					);
-				}
-			}
-		}
-
-		if ( !empty( $videos ) ) { //Mejorado con ayuda de Ludo Bonnet [https://github.com/ludobonnet]
-			$extracto = ( $entrada->post_excerpt != "" ) ? $entrada->post_excerpt : get_the_excerpt( ); 
+		if ( !empty( $videos ) ) {
+			$extracto = ( $entrada->post_excerpt != "" ) ? $entrada->post_excerpt : get_the_excerpt();
+			$extracto = preg_replace( '/\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|$!:,.;]*[A-Z0-9+&@#\/%=~_|$]/i', '', $extracto ); //Quitamos URLs
+			$extracto = str_replace(array( "\n", "\t", "\r"), '', $extracto ); //Quitamos retornos de carro
+			
 			$enlace = htmlspecialchars( get_permalink( $entrada->id ) );
 			$contador = 0;
 			$multiple = false;
