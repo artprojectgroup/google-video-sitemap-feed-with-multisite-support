@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: Google Video Sitemap Feed With Multisite Support
-Version: 1.8.1
-Plugin URI: http://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
+Version: 1.8.1.1
+Plugin URI: https://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
 Description: Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. Compatible with WordPress Multisite installations. Created from <a href="http://profiles.wordpress.org/users/timbrd/" target="_blank">Tim Brandon</a> <a href="http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="http://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="http://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://twitter.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
 Author: Art Project Group
-Author URI: http://artprojectgroup.es/
+Author URI: https://artprojectgroup.es/
 Requires at least: 2.6
-Tested up to: 4.7.2
+Tested up to: 4.9.1
 
 Text Domain: xml_video_sitemap
 Domain Path: /languages
@@ -46,9 +46,9 @@ define( 'DIRECCION_xml_video_sitemap', plugin_basename( __FILE__ ) );
 $xml_video_sitemap = array( 	
 	'plugin' 		=> 'Google Video Sitemap Feed With Multisite Support', 
 	'plugin_uri' 	=> 'google-video-sitemap-feed-with-multisite-support', 
-	'donacion' 		=> 'http://artprojectgroup.es/tienda/donacion',
-	'soporte' 		=> 'http://wpprojectgroup.es/tienda/ticket-de-soporte',
-	'plugin_url' 	=> 'http://artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support', 
+	'donacion' 		=> 'https://artprojectgroup.es/tienda/donacion',
+	'soporte' 		=> 'https://artprojectgroup.es/tienda/ticket-de-soporte',
+	'plugin_url' 	=> 'https://artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support', 
 	'ajustes' 		=> 'options-general.php?page=xml-sitemap-video', 
 	'puntuacion' 	=> 'http://wordpress.org/support/view/plugin-reviews/google-video-sitemap-feed-with-multisite-support'
  );
