@@ -1,10 +1,10 @@
-=== Google Video Sitemap Feed With Multisite Support ===
+=== APG Google Video Sitemap Feed ===
 Contributors: artprojectgroup 
 Donate link: https://artprojectgroup.es/tienda/donacion
 Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, Sitemap, sitemap-video.xml, YouTube, Vimeo, Dailymotion
 Requires at least: 2.6
-Tested up to: 4.9.1
-Stable tag: 1.8.1.1
+Tested up to: 6.1
+Stable tag: 2.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -13,7 +13,7 @@ Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos 
 == Description ==
 [*Español*](http://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/) - [*English*](http://goo.gl/93lWhz) - [*Italiano*](http://goo.gl/jIv71W) - [*Français*](http://goo.gl/Gbquf8) - [*Deutsch*](http://goo.gl/kuCgCa) 
 
-**Google Video Sitemap Feed With Multisite Support** genera dinámicamente un mapa de sitio de vídeos para Google creando un archivo `sitemap-video.xml` virtual. 
+**APG Google Video Sitemap Feed** genera dinámicamente un mapa de sitio de vídeos para Google creando un archivo `sitemap-video.xml` virtual. 
 
 = Características =
 * Prácticamente no requiere ningún tipo de configuración, por lo que funciona de forma totalmente autónoma y automática.
@@ -23,32 +23,33 @@ Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos 
 * Notificación por correo electrónico al administrador del sitio web en caso de que el vídeo haya sido borrado o marcado como privado para que edite la entrada donde aparece y borre la URL que ya no es válida.
 * Es totalmente compatible con instalaciones de WordPress multisitio.
 * Informa automáticamente a Google y a Bing cada vez que publiquemos una nueva entrada o página.
+* Genera automáticamente múltiples sitemaps con un máximo de 50.000 vídeos por cada uno de ellos.
 
 = Traducciones =
 * Español ([**Art Project Group**](https://artprojectgroup.es/)).
 * English ([**Art Project Group**](https://artprojectgroup.es/)).
 
 = Soporte técnico =
-**Art Project Group** te ofrece [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte) para configurar o instalar **Google Video Sitemap Feed With Multisite Support**. 
+**Art Project Group** te ofrece [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte) para configurar o instalar **APG Google Video Sitemap Feed**. 
 
 = Origen =
-**Google Video Sitemap Feed With Multisite Support** ha sido programado a partir de los plugins [*Google News Sitemap Feed With Multisite Support*](http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/) de [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [*Google XML Sitemap for Videos*](http://wordpress.org/plugins/xml-sitemaps-for-videos/) de [Amit Agarwal](http://profiles.wordpress.org/labnol/), que aún siendo magníficos plugins no ofrecían todas las características que necesitábamos. Aún así su trabajo ha sido completamente imprescindible para la realización de este plugin.
+**APG Google Video Sitemap Feed** ha sido programado a partir de los plugins [*Google News Sitemap Feed With Multisite Support*](http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/) de [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [*Google XML Sitemap for Videos*](http://wordpress.org/plugins/xml-sitemaps-for-videos/) de [Amit Agarwal](http://profiles.wordpress.org/labnol/), que aún siendo magníficos plugins no ofrecían todas las características que necesitábamos. Aún así su trabajo ha sido completamente imprescindible para la realización de este plugin.
 
-También se han realizado mejoras a partir de la versión 1.0 gracias al código aportado por [Ludo Bonnet](https://twitter.com/ludobonnet) y su idea de mejorar **Google Video Sitemap Feed With Multisite Support** añadiéndole soporte para Vimeo y Dailymotion. 
+También se han realizado mejoras a partir de la versión 1.0 gracias al código aportado por [Ludo Bonnet](https://twitter.com/ludobonnet) y su idea de mejorar **APG Google Video Sitemap Feed** añadiéndole soporte para Vimeo y Dailymotion. 
 
 = Complementos =
-Se recomienda el uso de **Google Video Sitemap Feed With Multisite Support** junto a [**Google Image Sitemap Feed With Multisite Support**](http://wordpress.org/plugins/google-image-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-image.xml`, y [**Google Mobile Sitemap Feed With Multisite Support**](http://wordpress.org/plugins/google-mobile-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-mobile.xml`.
+Se recomienda el uso de **APG Google Video Sitemap Feed** junto a [**APG Google Image Sitemap Feed**](http://wordpress.org/plugins/google-image-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-image.xml`, y [**Google Mobile Sitemap Feed With Multisite Support**](http://wordpress.org/plugins/google-mobile-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-mobile.xml`.
 
 = Muy importante =
 Se han descrito errores al utilizarlo conjuntamente con la última versión de **Google XML Sitemaps** con soporte para WordPress multisitio. Los errores están descritos en [¿Cómo arreglar la incompatibilidad de Google XML Sitemaps con nuestros plugins?](https://artprojectgroup.es/como-arreglar-la-incompatibilidad-de-google-xml-sitemaps-con-nuestros-plugins) donde encontrarás toda la información necesaria para solucionar la incompatibilidad detectada.
 
 = Más información =
-En nuestro sitio web oficial puede obtener más información sobre [**Google Video Sitemap Feed With Multisite Support**](https://artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support). 
+En nuestro sitio web oficial puede obtener más información sobre [**APG Google Video Sitemap Feed**](https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed). 
 
 = Comentarios =
 No olvides dejarnos tu comentario en:
 
-* [Google Video Sitemap Feed With Multisite Support](https://artprojectgroup.es/plugins-para-wordpress/google-video-sitemap-feed-with-multisite-support) en Art Project Group.
+* [APG Google Video Sitemap Feed](https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed) en Art Project Group.
 * [Art Project Group](https://www.facebook.com/artprojectgroup) en Facebook.
 * [@artprojectgroup](https://twitter.com/artprojectgroup) en Twitter.
 * [+ArtProjectGroupES](https://plus.google.com/+ArtProjectGroupES/) en Google+.
@@ -63,7 +64,7 @@ Puedes seguir el desarrollo de este plugin en [Github](https://github.com/artpro
 1. Puedes:
  * Subir la carpeta `google-video-sitemap-feed-with-multisite-support` al directorio `/wp-content/plugins/` vía FTP. 
  * Subir el archivo ZIP completo vía *Plugins -> Añadir nuevo -> Subir* en el Panel de Administración de tu instalación de WordPress.
- * Buscar **Google Video Sitemap Feed With Multisite Support** en el buscador disponible en *Plugins -> Añadir nuevo* y pulsar el botón *Instalar ahora*.
+ * Buscar **APG Google Video Sitemap Feed** en el buscador disponible en *Plugins -> Añadir nuevo* y pulsar el botón *Instalar ahora*.
 2. Activar el plugin a través del menú *Plugins* en el Panel de Administración de WordPress.
 3. Listo, ahora ya puedes disfrutar de él, y si te gusta y te resulta útil, hacer una [*donación*](https://artprojectgroup.es/tienda/donacion).
 
@@ -78,15 +79,20 @@ Si, es completamente compatible.
 Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google XML Sitemaps**. Los errores están provocados por un orden erróneo de las reglas de redirección de WordPress, ya que **Google XML Sitemaps** interpreta todos los tipos de mapas de sitios posibles. En [¿Cómo arreglar la incompatibilidad de Google XML Sitemaps con nuestros plugins?](https://artprojectgroup.es/como-arreglar-la-incompatibilidad-de-google-xml-sitemaps-con-nuestros-plugins) encontrarás toda la información sobre esta incompatibilidad y la solución a la misma.
 
 = Soporte técnico =
-Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With Multisite Support**, **Art Project Group** te ofrece su servicio de [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte). 
+Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**, **Art Project Group** te ofrece su servicio de [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte). 
 
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 == Screenshots ==
-1. Captura de pantalla de **Google Video Sitemap Feed With Multisite Support**.
+1. Captura de pantalla de **APG Google Video Sitemap Feed**.
 2. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 2.0 =
+* Adecuación de la nueva estructura de datos.
+* Generación de múltiples sitemaps por cada 50.000 vídeos.
+* Corrección de errores.
+* Soporte para sitios web con gran cantidad de vídeos.
 = 1.8.1.1 =
 * Actualización de cabecera.
 * Actualización de hoja de estilo.
@@ -195,17 +201,18 @@ Si necesitas ayuda para configurar o instalar **Google Video Sitemap Feed With M
 * Versión inicial.
 
 == Upgrade Notice ==
-= 1.8.1.1 =
-* Actualización de cabecera.
-* Actualización de hoja de estilo.
-* Actualización de captura de pantalla.
+= 2.0 =
+* Adecuación de la nueva estructura de datos.
+* Generación de múltiples sitemaps por cada 50.000 vídeos.
+* Corrección de errores.
+* Soporte para sitios web con gran cantidad de vídeos.
 
 ==Traducciones ==
 * *English*: by [**Art Project Group**](https://artprojectgroup.es/) (default language).
 * *Español*: por [**Art Project Group**](https://artprojectgroup.es/).
 
 == Soporte técnico ==
-Dado que **Google Video Sitemap Feed With Multisite Support** es totalmente gratuito, **Art Project Group** sólo proporciona el servicio de [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte) previo pago. En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.
+Dado que **APG Google Video Sitemap Feed** es totalmente gratuito, **Art Project Group** sólo proporciona el servicio de [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte) previo pago. En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.
 
 == ¿Por qué está esta página en español? ==
 Mientras WordPress no nos permita a los desarrolladores realizar esta página en más de un idioma, elegiremos siempre el español.
@@ -217,10 +224,10 @@ Por ello regalamos a esa gran comunidad hispana nuestros plugins con interfaces,
 Esperamos que os guste nuestra iniciativa.
 
 == Donación ==
-¿Te ha gustado y te ha resultado útil **Google Video Sitemap Feed With Multisite Support** en tu sitio web? Te agradeceríamos una [pequeña donación](https://artprojectgroup.es/tienda/donacion) que nos ayudará a seguir mejorando este plugin y a crear más plugins totalmente gratuitos para toda la comunidad WordPress.
+¿Te ha gustado y te ha resultado útil **APG Google Video Sitemap Feed** en tu sitio web? Te agradeceríamos una [pequeña donación](https://artprojectgroup.es/tienda/donacion) que nos ayudará a seguir mejorando este plugin y a crear más plugins totalmente gratuitos para toda la comunidad WordPress.
 
 == Gracias ==
-* A [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [Amit Agarwal](http://profiles.wordpress.org/labnol/) por sus grandes plugins que han inspirado **Google Video Sitemap Feed With Multisite Support**.
+* A [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [Amit Agarwal](http://profiles.wordpress.org/labnol/) por sus grandes plugins que han inspirado **APG Google Video Sitemap Feed**.
 * A [Ludo Bonnet](https://twitter.com/ludobonnet) por sus aportaciones al código y por su idea de añadir soporte para Vimeo y Dailymotion.
 * A todos los que lo usáis.
 * A todos los que ayudáis a mejorarlo.
