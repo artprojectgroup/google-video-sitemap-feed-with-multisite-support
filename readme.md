@@ -9,7 +9,7 @@ Requires at least: 2.6
 
 Tested up to: 6.1
 
-Stable tag: 2.0
+Stable tag: 2.0.1
 
 License: GPLv3
 
@@ -91,6 +91,9 @@ Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**,
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
+### 2.0.1
+* Pequeños arreglos.
+
 ### 2.0
 * Adecuación de la nueva estructura de datos.
 * Generación de múltiples sitemaps por cada 50.000 vídeos.

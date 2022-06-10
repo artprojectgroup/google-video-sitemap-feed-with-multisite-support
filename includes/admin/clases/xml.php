@@ -192,23 +192,24 @@ class APGSitemapVideo {
         $envia  = false;
         if ( ! is_wp_error( $respuesta ) ) {
             $dailymotion  = json_decode( $respuesta[ 'body' ] );
-            if ( ( $respuesta[ 'response' ][ 'code' ] == 404 || $respuesta[ 'body' ] == 'Video not found' || $respuesta[ 'body' ] == 'Invalid id' || $respuesta[ 'body' ] == 'Private video' || isset( $dailymotion->error ) ) && ( isset( $configuracion[ 'correo' ] ) && $configuracion[ 'correo' ] == "1" ) ) {
+            if ( $respuesta[ 'response' ][ 'code' ] == 404 || $respuesta[ 'body' ] == 'Video not found' || $respuesta[ 'body' ] == 'Invalid id' || $respuesta[ 'body' ] == 'Private video' || isset( $dailymotion->error ) ) {
                 $envia  = true;
             }
-        } else if ( $configuracion[ 'correo' ] == "1" ) {
+        } else {
             $envia  = true;
         }
         if ( $envia ) {
-            if ( ! array_key_exists( $video, $configuracion ) ) { //No se ha enviado nunca
+            if ( ! array_key_exists( $video, $configuracion ) && $configuracion[ 'correo' ] == "1" ) { //No se ha enviado nunca
                 $configuracion[ $video ]    = 1;
                 update_option( 'xml_video_sitemap', $configuracion );
                 APGSitemapVideo::envia_correo( $video );
-
-                return NULL;
             }
+            delete_transient( $url );
+            
+            return NULL;
         }
 
-        return $respuesta[ 'body' ]; 
+        return $respuesta[ 'body' ];
     }
 
     //Procesa los datos externos
