@@ -199,7 +199,7 @@ class APGSitemapVideo {
             $envia  = true;
         }
         if ( $envia ) {
-            if ( ! array_key_exists( $video, $configuracion ) && $configuracion[ 'correo' ] == "1" ) { //No se ha enviado nunca
+            if ( ! empty( $configuracion ) && ! array_key_exists( $video, $configuracion ) && $configuracion[ 'correo' ] == "1" ) { //No se ha enviado nunca
                 $configuracion[ $video ]    = 1;
                 update_option( 'xml_video_sitemap', $configuracion );
                 APGSitemapVideo::envia_correo( $video );

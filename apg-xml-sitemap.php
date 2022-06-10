@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: APG Google Video Sitemap Feed
-Version: 2.0.1
+Version: 2.0.1.1
 Plugin URI: https://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
 Description: Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. Compatible with WordPress Multisite installations. Created from <a href="https://profiles.wordpress.org/users/timbrd/" target="_blank">Tim Brandon</a> <a href="https://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="https://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="https://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://twitter.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
 Author: Art Project Group
@@ -26,8 +26,14 @@ define( 'DIRECCION_apg_video_sitemap', plugin_basename( __FILE__ ) );
 //Funciones generales de APG
 include_once( 'includes/admin/funciones-apg.php' );
 
-//WP Background Processing
+//Action Scheduler
 include_once( 'vendor/autoload.php');
+
+//Registra las opciones
+function apg_video_sitemap_registra_opciones() {
+    register_setting( 'apg_video_sitemap_settings_group', 'xml_video_sitemap' );
+}
+add_action( 'admin_init', 'apg_video_sitemap_registra_opciones' );
 
 //Inicializa la opción Google Video Sitemap Feed Options en el menú Ajustes
 function apg_video_sitemap_menu_administrador() {
@@ -37,39 +43,6 @@ add_action( 'admin_menu', 'apg_video_sitemap_menu_administrador' );
 
 //Pinta el formulario de configuración y guarda los campos
 function apg_video_sitemap_formulario() {
-	$actualizacion	= false;
-	$campos			= [ 'correo' ];
-	$campos_chequeo	= [ 'correo' ];    
-    $configuracion  = get_option( 'xml_video_sitemap' );
-    if ( ! empty( $configuracion ) ) {
-        foreach ( $configuracion as $nombre => $opcion ) {
-            if ( $nombre != 'correo' ) {
-                $campos[]   = $nombre; //Añade las URLs procesadas
-            }
-        }
-    } else {
-	   $configuracion	= [];        
-    }
-
-    if ( ! empty( $_POST ) ) {
-		$actualizacion    = true;
-		foreach ( $campos_chequeo as $campo ) { //El campo está vacío
-			if ( ! isset( $_POST[ $campo ] ) ) {
-				$_POST[ $campo ]  = 0;
-			}
-		}
-		
-		foreach ( $campos as $campo ) { //Actualizamos el valor
-			$configuracion[ $campo ] = $_POST[ htmlspecialchars( $campo ) ];
-		}
-
-        if ( get_option( 'xml_video_sitemap' ) || get_option( 'xml_video_sitemap' ) == NULL ) {
-			update_option( 'xml_video_sitemap', $configuracion ); //Actualiza la configuración
-		} else {
-			add_option( 'xml_video_sitemap', $configuracion ); //Añade la configuración
-		}
-	}
-
     include( 'includes/formulario.php' );
 }
 
