@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: APG Google Video Sitemap Feed
-Version: 2.0.1.1
+Version: 2.0.1.2
 Plugin URI: https://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
 Description: Dynamically generates a Google Video Sitemap and automatically submit updates to Google and Bing. Compatible with WordPress Multisite installations. Created from <a href="https://profiles.wordpress.org/users/timbrd/" target="_blank">Tim Brandon</a> <a href="https://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="https://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="https://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://twitter.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
 Author: Art Project Group
@@ -46,27 +46,27 @@ function apg_video_sitemap_formulario() {
     include( 'includes/formulario.php' );
 }
 
-
 //Clase
 include( 'includes/admin/clases/xml.php' );
 
-//Inicia Action Scheduler
-add_action( 'init', function() {
-	add_action( 'procesamiento', 'apg_video_sitemap_procesamiento', 10 , 2 );
+//Fuerza la limpieza de Action Scheduler cada semana
+add_filter( 'action_scheduler_retention_period', function() {
+    return WEEK_IN_SECONDS;
 } );
 
-//Obtiene información de los vídeos publicados
+//Obtiene información de los vídeos publicados vía Action Scheduler
 function apg_video_sitemap_procesamiento( $identificador, $proveedor ) {
 	APGSitemapVideo::obtiene_informacion( $identificador, $proveedor );
 }
+add_action( 'apg_video_sitemap_procesamiento', 'apg_video_sitemap_procesamiento', 10 , 2 );
 
 //Controla si se ha actualizado el plugin 
 function apg_video_sitemap_actualiza( $upgrader_object, $opciones ) {
     $plugin_apg = plugin_basename( __FILE__ );
  
     if ( $opciones[ 'action' ] == 'update' && $opciones[ 'type' ] == 'plugin' ) {
-        foreach ( $opciones[ 'plugins' ] as $plugin_apg ) {
-            if ( $plugin_apg == $current_plugin_path_name ) {
+        foreach ( $opciones[ 'plugins' ] as $plugin ) {
+            if ( $plugin == $plugin_apg ) {
                 global $wp_rewrite;
 
                 $wp_rewrite->flush_rules(); //Regenera los enlaces permanentes

@@ -25,7 +25,8 @@ class APGSitemapVideo {
 		}
         
         //Inicializa la información del 100% de los vídeos
-        if ( get_transient( 'xml_video_sitemap_procesado' ) === false ) {
+        if ( get_transient( 'xml_video_sitemap_procesado' ) === false && is_admin() ) {
+            set_transient( 'xml_video_sitemap_procesado', 1, 365 * DAY_IN_SECONDS );           
             APGSitemapVideo::procesamiento();
         }
 	}
@@ -283,8 +284,6 @@ class APGSitemapVideo {
     
     //Genera el procesamiento de los vídeos
     static public function procesamiento() {
-        set_transient( 'xml_video_sitemap_procesado', 1, 365 * DAY_IN_SECONDS );
-
         $videos = APGSitemapVideo::consulta();
         if ( ! empty( $videos ) ) {
             $videos_buscados    = [];
@@ -302,7 +301,8 @@ class APGSitemapVideo {
                             'identificador' => $video_buscado[ 'identificador' ], 
                             'proveedor'     => $video_buscado[ 'proveedor' ]
                         ];
-                        as_enqueue_async_action( 'procesamiento', $argumentos );
+                        as_enqueue_async_action( 'apg_video_sitemap_procesamiento', $argumentos );
+                        spawn_cron();
                     }
                 }
             }
