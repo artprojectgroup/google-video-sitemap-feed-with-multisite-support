@@ -7,9 +7,9 @@ Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, 
 
 Requires at least: 2.6
 
-Tested up to: 6.1
+Tested up to: 6.2
 
-Stable tag: 2.0.1.2
+Stable tag: 2.0.1.3
 
 License: GPLv3
 
@@ -91,6 +91,9 @@ Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**,
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
+### 2.0.1.3
+* Pequeños arreglos.
+
 ### 2.0.1.2
 * Pequeños arreglos.
 

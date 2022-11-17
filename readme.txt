@@ -3,8 +3,8 @@ Contributors: artprojectgroup
 Donate link: https://artprojectgroup.es/tienda/donacion
 Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, Sitemap, sitemap-video.xml, YouTube, Vimeo, Dailymotion
 Requires at least: 2.6
-Tested up to: 6.1
-Stable tag: 2.0.1.2
+Tested up to: 6.2
+Stable tag: 2.0.1.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -88,6 +88,8 @@ Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**,
 2. Captura de pantalla del archivo `sitemap-video.xml`.
 
 == Changelog ==
+= 2.0.1.3 =
+* Pequeños arreglos.
 = 2.0.1.2 =
 * Pequeños arreglos.
 = 2.0.1.1 =
@@ -207,7 +209,7 @@ Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**,
 * Versión inicial.
 
 == Upgrade Notice ==
-= 2.0.1.2 =
+= 2.0.1.3 =
 * Pequeños arreglos.
 
 ==Traducciones ==

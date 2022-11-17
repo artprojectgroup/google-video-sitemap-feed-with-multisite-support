@@ -223,7 +223,9 @@ class APGSitemapVideo {
 
         if ( $proveedor == 'vimeo' ) {
             $vimeo   = json_decode( APGSitemapVideo::procesa_url( $api[ $proveedor ] , $identificador ) );
-            return $vimeo[ 0 ];
+            if ( isset ( $vimeo[ 0 ] ) ) {
+                return $vimeo[ 0 ];
+            }
         } else {
             return json_decode( APGSitemapVideo::procesa_url( $api[ $proveedor ], $identificador ) );
         }
