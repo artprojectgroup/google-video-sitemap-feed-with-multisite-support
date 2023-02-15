@@ -26,7 +26,7 @@ class APGSitemapVideo {
         
         //Inicializa la información del 100% de los vídeos
         if ( get_transient( 'xml_video_sitemap_procesado' ) === false && is_admin() ) {
-            set_transient( 'xml_video_sitemap_procesado', 1, 365 * DAY_IN_SECONDS );           
+            set_transient( 'xml_video_sitemap_procesado', 1, YEAR_IN_SECONDS );           
             APGSitemapVideo::procesamiento();
         }
 	}
@@ -223,7 +223,9 @@ class APGSitemapVideo {
 
         if ( $proveedor == 'vimeo' ) {
             $vimeo   = json_decode( APGSitemapVideo::procesa_url( $api[ $proveedor ] , $identificador ) );
-            return $vimeo[ 0 ];
+            if ( isset ( $vimeo[ 0 ] ) ) {
+                return $vimeo[ 0 ];
+            }
         } else {
             return json_decode( APGSitemapVideo::procesa_url( $api[ $proveedor ], $identificador ) );
         }
@@ -301,8 +303,9 @@ class APGSitemapVideo {
                             'identificador' => $video_buscado[ 'identificador' ], 
                             'proveedor'     => $video_buscado[ 'proveedor' ]
                         ];
-                        as_enqueue_async_action( 'apg_video_sitemap_procesamiento', $argumentos );
-                        spawn_cron();
+                        if ( false === as_next_scheduled_action( 'apg_video_sitemap_procesamiento' ) ) {
+                            as_schedule_recurring_action( strtotime( '+1 minute' ), YEAR_IN_SECONDS, 'apg_video_sitemap_procesamiento', $argumentos, 'apg_video_sitemap' );
+                        }
                     }
                 }
             }
