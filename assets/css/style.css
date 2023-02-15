@@ -40,7 +40,6 @@ div.informacion {
 	max-width: 220px;
 	text-align: center;
 	border-left: 4px solid #d9001d;
-	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
 	color: #fff;
 }
 div.informacion div.fila {
