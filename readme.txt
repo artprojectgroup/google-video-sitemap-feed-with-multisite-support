@@ -1,252 +1,275 @@
 === APG Google Video Sitemap Feed ===
 Contributors: artprojectgroup 
 Donate link: https://artprojectgroup.es/tienda/donacion
-Tags: Google, Google Video, Google Video Sitemap, Video sitemap, Sitemap video, Sitemap, sitemap-video.xml, YouTube, Vimeo, Dailymotion
-Requires at least: 2.6
-Tested up to: 6.2
-Stable tag: 2.1
+Tags: video sitemap, sitemap, youtube, vimeo, dailymotion
+Requires at least: 6.0
+Tested up to: 7.1
+Requires PHP: 7.4
+Stable tag: 3.0.0
 License: GPLv3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Genera dinámicamente el archivo sitemap-video.xml, un mapa de sitio de vídeos para Google. No requiere ningún tipo de configuración.
+Dynamically generates sitemap-video.xml, a video sitemap for Google. It needs no configuration at all.
 
 == Description ==
-[*Español*](http://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/) - [*English*](http://goo.gl/93lWhz) - [*Italiano*](http://goo.gl/jIv71W) - [*Français*](http://goo.gl/Gbquf8) - [*Deutsch*](http://goo.gl/kuCgCa) 
+**APG Google Video Sitemap Feed** dynamically generates a video sitemap for Google by creating a virtual `sitemap-video.xml` file.
 
-**APG Google Video Sitemap Feed** genera dinámicamente un mapa de sitio de vídeos para Google creando un archivo `sitemap-video.xml` virtual. 
+= Features =
+* It needs virtually no configuration, so it works on its own from the moment you activate it.
+* Automatically adds every YouTube, Vimeo and Dailymotion video.
+* Supports every custom post type.
+* Also detects videos hosted on your own website: the video block, the `[video]` shortcode and the media library.
+* Finds videos even when they live in custom fields belonging to your theme or to a page builder.
+* Publishes the duration, the publication date and the uploader of each video.
+* Groups every video of the same page into a single sitemap entry, the way Google's specification expects.
+* Automatically caches the external data of each video to speed up building `sitemap-video.xml`.
+* Emails the site administrator when a video has been deleted or made private, so you can edit the post and remove the URL that is no longer valid.
+* Fully compatible with WordPress Multisite installations.
+* Automatically generates several sitemaps, with a maximum of 50,000 pages in each one.
+* Refreshes the sitemap as soon as a post is published, edited or deleted.
+* Announces itself in `robots.txt` and in the WordPress sitemap index, so search engines can find it.
+* Warns you if Yoast, Rank Math, All in One SEO or SEOPress is already publishing a video sitemap, so you do not end up with two.
 
-= Características =
-* Prácticamente no requiere ningún tipo de configuración, por lo que funciona de forma totalmente autónoma y automática.
-* Añade automáticamente todos los vídeos de YouTube, Vimeo y Dailymotion.
-* Soporta todos los tipos de entradas personalizadas.
-* Gestión automática de caché de datos externos de los vídeos para acelerar la creación del archivo `sitemap-video.xml`.
-* Notificación por correo electrónico al administrador del sitio web en caso de que el vídeo haya sido borrado o marcado como privado para que edite la entrada donde aparece y borre la URL que ya no es válida.
-* Es totalmente compatible con instalaciones de WordPress multisitio.
-* Informa automáticamente a Google y a Bing cada vez que publiquemos una nueva entrada o página.
-* Genera automáticamente múltiples sitemaps con un máximo de 50.000 vídeos por cada uno de ellos.
-
-= Traducciones =
-* Español ([**Art Project Group**](https://artprojectgroup.es/)).
+= Translations =
 * English ([**Art Project Group**](https://artprojectgroup.es/)).
+* Spanish ([**Art Project Group**](https://artprojectgroup.es/)).
 
-= Soporte técnico =
-**Art Project Group** te ofrece [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte) para configurar o instalar **APG Google Video Sitemap Feed**. 
+= Support =
+**Art Project Group** offers paid [**technical support**](https://artprojectgroup.es/tienda/ticket-de-soporte) to help you install or configure **APG Google Video Sitemap Feed**.
 
-= Origen =
-**APG Google Video Sitemap Feed** ha sido programado a partir de los plugins [*Google News Sitemap Feed With Multisite Support*](http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/) de [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [*Google XML Sitemap for Videos*](http://wordpress.org/plugins/xml-sitemaps-for-videos/) de [Amit Agarwal](http://profiles.wordpress.org/labnol/), que aún siendo magníficos plugins no ofrecían todas las características que necesitábamos. Aún así su trabajo ha sido completamente imprescindible para la realización de este plugin.
+= Origin =
+**APG Google Video Sitemap Feed** was built on top of [*Google News Sitemap Feed With Multisite Support*](https://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/) by [Tim Brandon](https://profiles.wordpress.org/timbrd/) and [*Google XML Sitemap for Videos*](https://wordpress.org/plugins/xml-sitemaps-for-videos/) by [Amit Agarwal](https://profiles.wordpress.org/labnol/). Both are excellent plugins that did not offer everything we needed, but their work was essential to build this one.
 
-También se han realizado mejoras a partir de la versión 1.0 gracias al código aportado por [Ludo Bonnet](https://twitter.com/ludobonnet) y su idea de mejorar **APG Google Video Sitemap Feed** añadiéndole soporte para Vimeo y Dailymotion. 
+Since version 1.0 it has also been improved thanks to the code contributed by [Ludo Bonnet](https://github.com/ludobonnet) and his idea of adding Vimeo and Dailymotion support.
 
-= Complementos =
-Se recomienda el uso de **APG Google Video Sitemap Feed** junto a [**APG Google Image Sitemap Feed**](http://wordpress.org/plugins/google-image-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-image.xml`, y [**Google Mobile Sitemap Feed With Multisite Support**](http://wordpress.org/plugins/google-mobile-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-mobile.xml`.
+= Companion plugins =
+We recommend using **APG Google Video Sitemap Feed** together with [**APG Google Image Sitemap Feed**](https://wordpress.org/plugins/google-image-sitemap-feed-with-multisite-support/), which generates `sitemap-image.xml`, and [**Google Mobile Sitemap Feed With Multisite Support**](https://wordpress.org/plugins/google-mobile-sitemap-feed-with-multisite-support/), which generates `sitemap-mobile.xml`.
 
-= Muy importante =
-Se han descrito errores al utilizarlo conjuntamente con la última versión de **Google XML Sitemaps** con soporte para WordPress multisitio. Los errores están descritos en [¿Cómo arreglar la incompatibilidad de Google XML Sitemaps con nuestros plugins?](https://artprojectgroup.es/como-arreglar-la-incompatibilidad-de-google-xml-sitemaps-con-nuestros-plugins) donde encontrarás toda la información necesaria para solucionar la incompatibilidad detectada.
+= Important =
+Problems have been reported when using it alongside the latest version of **Google XML Sitemaps** with WordPress Multisite support. They are described in [How to fix the incompatibility between Google XML Sitemaps and our plugins](https://artprojectgroup.es/como-arreglar-la-incompatibilidad-de-google-xml-sitemaps-con-nuestros-plugins), where you will find everything you need to solve it.
 
-= Más información =
-En nuestro sitio web oficial puede obtener más información sobre [**APG Google Video Sitemap Feed**](https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed). 
+= More information =
+You can read more about [**APG Google Video Sitemap Feed**](https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed) on our official website. The Spanish version of this documentation ships with the plugin in `readme.md`.
 
-= Comentarios =
-No olvides dejarnos tu comentario en:
+= Feedback =
+Do not forget to leave us your comments on:
 
-* [APG Google Video Sitemap Feed](https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed) en Art Project Group.
-* [Art Project Group](https://www.facebook.com/artprojectgroup) en Facebook.
-* [@artprojectgroup](https://twitter.com/artprojectgroup) en Twitter.
-* [+ArtProjectGroupES](https://plus.google.com/+ArtProjectGroupES/) en Google+.
+* [APG Google Video Sitemap Feed](https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed) at Art Project Group.
+* [Art Project Group](https://www.facebook.com/artprojectgroup) on Facebook.
+* [@artprojectgroup](https://twitter.com/artprojectgroup) on Twitter.
 
-= Más plugins =
-Recuerda que puedes encontrar más [plugins para WordPress](https://artprojectgroup.es/plugins-para-wordpress) en [Art Project Group](https://artprojectgroup.es) y en nuestro perfil en [WordPress](http://profiles.wordpress.org/artprojectgroup/).
+= More plugins =
+Remember that you can find more [WordPress plugins](https://artprojectgroup.es/plugins-para-wordpress) at [Art Project Group](https://artprojectgroup.es) and on our [WordPress profile](https://profiles.wordpress.org/artprojectgroup/).
 
 = GitHub =
-Puedes seguir el desarrollo de este plugin en [Github](https://github.com/artprojectgroup/google-video-sitemap-feed-with-multisite-support).
+You can follow the development of this plugin on [GitHub](https://github.com/artprojectgroup/google-video-sitemap-feed-with-multisite-support).
 
 == Installation ==
-1. Puedes:
- * Subir la carpeta `google-video-sitemap-feed-with-multisite-support` al directorio `/wp-content/plugins/` vía FTP. 
- * Subir el archivo ZIP completo vía *Plugins -> Añadir nuevo -> Subir* en el Panel de Administración de tu instalación de WordPress.
- * Buscar **APG Google Video Sitemap Feed** en el buscador disponible en *Plugins -> Añadir nuevo* y pulsar el botón *Instalar ahora*.
-2. Activar el plugin a través del menú *Plugins* en el Panel de Administración de WordPress.
-3. Listo, ahora ya puedes disfrutar de él, y si te gusta y te resulta útil, hacer una [*donación*](https://artprojectgroup.es/tienda/donacion).
+1. You can:
+ * Upload the `google-video-sitemap-feed-with-multisite-support` folder to the `/wp-content/plugins/` directory over FTP.
+ * Upload the whole ZIP file from *Plugins -> Add New -> Upload* in your WordPress admin panel.
+ * Search for **APG Google Video Sitemap Feed** in *Plugins -> Add New* and click *Install Now*.
+2. Activate the plugin from the *Plugins* menu in your WordPress admin panel.
+3. That is all. Enjoy it, and if you find it useful please consider making a [*donation*](https://artprojectgroup.es/tienda/donacion).
 
 == Frequently Asked Questions ==
-= ¿Necesita configuración? =
-No, el plugin es totalmente autónomo.
+= Does it need any configuration? =
+No, the plugin works entirely on its own.
 
-= ¿Es compatible con instalaciones de WordPress multisitio? =
-Si, es completamente compatible.
+= Where is my video sitemap? =
+At `sitemap-video.xml`, in the root of your website. If your site has more than 50,000 pages with videos, that address becomes an index pointing to `sitemap-video-1.xml`, `sitemap-video-2.xml` and so on.
 
-= ¿Existen incompatibilidades? =
-Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google XML Sitemaps**. Los errores están provocados por un orden erróneo de las reglas de redirección de WordPress, ya que **Google XML Sitemaps** interpreta todos los tipos de mapas de sitios posibles. En [¿Cómo arreglar la incompatibilidad de Google XML Sitemaps con nuestros plugins?](https://artprojectgroup.es/como-arreglar-la-incompatibilidad-de-google-xml-sitemaps-con-nuestros-plugins) encontrarás toda la información sobre esta incompatibilidad y la solución a la misma.
+= Is it compatible with WordPress Multisite installations? =
+Yes, it is fully compatible.
 
-= Soporte técnico =
-Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**, **Art Project Group** te ofrece su servicio de [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte). 
+= Which videos does it find? =
+Videos from YouTube, Vimeo and Dailymotion embedded anywhere in the post content, the excerpt or a custom field, plus videos hosted on your own website through the video block, the `[video]` shortcode or the media library.
 
-*En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
+= My videos are in the sitemap but Google does not index them. Why? =
+Since 2023 Google only indexes a video when it is the main content of the page it lives on. A long article with a video embedded halfway through will show up in Search Console as "Video is not the main content of the page". That is a Google policy, not a problem with the sitemap.
+
+= Are there any known incompatibilities? =
+Yes, problems have been reported when using it together with **Google XML Sitemaps**. They are caused by the wrong order of the WordPress rewrite rules, because **Google XML Sitemaps** handles every possible kind of sitemap. You will find the full explanation and the solution in [How to fix the incompatibility between Google XML Sitemaps and our plugins](https://artprojectgroup.es/como-arreglar-la-incompatibilidad-de-google-xml-sitemaps-con-nuestros-plugins).
+
+= The plugin tells me another plugin already publishes a video sitemap. What should I do? =
+Whatever you prefer. Having two video sitemaps is not penalized by search engines, but keeping only one is easier to maintain. The notice lets you deactivate this plugin in one click, or hide the message and keep both.
+
+= Technical support =
+If you need help installing or configuring **APG Google Video Sitemap Feed**, **Art Project Group** offers its [**technical support**](https://artprojectgroup.es/tienda/ticket-de-soporte) service.
+
+*Art Project Group does not provide free technical support of any kind.*
 
 == Screenshots ==
-1. Captura de pantalla de **APG Google Video Sitemap Feed**.
-2. Captura de pantalla del archivo `sitemap-video.xml`.
+1. Screenshot of **APG Google Video Sitemap Feed**.
+2. Screenshot of the `sitemap-video.xml` file.
 
 == Changelog ==
+= 3.0.0 =
+* Every video on the same page is now grouped into a single sitemap entry.
+* Added support for videos hosted on your own website.
+* Added video detection inside the custom fields of themes and page builders.
+* Added the duration, the publication date and the uploader of each video, and the modification date of each page.
+* The sitemap is now announced in robots.txt and in the WordPress sitemap index.
+* New notice when Yoast, Rank Math, All in One SEO or SEOPress already publishes a video sitemap, with one click deactivation.
+* YouTube data is now requested from its own oEmbed endpoint, with no middleman.
+* Fixed a query bug that let videos from unpublished posts into the sitemap.
+* Fixed saving the settings, which corrupted the identifiers of the videos already processed.
+* Restored the email notice for deleted or private videos, which was never actually sent.
+* Fixed the XML to match Google's current specification: namespace, a maximum of 32 tags and a 2048 character description.
+* Fixed the numbering of the partial sitemaps, which could serve the wrong one.
+* Removed the automatic ping to Google and Bing, as both retired their ping services.
+* Hardened security: prepared statements, escaping on every output and capability checks.
+* Improved performance: fewer permalink rebuilds and fewer queries per page.
+* Updated translations.
+* The cache and the permalinks are now also rebuilt when the plugin is updated over FTP.
+* Fixed every Plugin Check error and warning.
+* Updated compatibility up to WordPress 7.1.
 = 2.1 =
-* Actualización de Action Scheduler.
-* Mejora del rendimiento.
-* Actualización de cabecera.
-* Actualización de hoja de estilo.
-* Actualización de captura de pantalla.
+* Action Scheduler update.
+* Performance improvements.
+* Header update.
+* Stylesheet update.
+* Screenshot update.
 = 2.0.1.3 =
-* Pequeños arreglos.
+* Minor fixes.
 = 2.0.1.2 =
-* Pequeños arreglos.
+* Minor fixes.
 = 2.0.1.1 =
-* Pequeños arreglos.
+* Minor fixes.
 = 2.0.1 =
-* Pequeños arreglos.
+* Minor fixes.
 = 2.0 =
-* Adecuación de la nueva estructura de datos.
-* Generación de múltiples sitemaps por cada 50.000 vídeos.
-* Corrección de errores.
-* Soporte para sitios web con gran cantidad de vídeos.
+* Adapted to the new data structure.
+* Generates several sitemaps, one per 50,000 videos.
+* Bug fixes.
+* Support for websites with a large number of videos.
 = 1.8.1.1 =
-* Actualización de cabecera.
-* Actualización de hoja de estilo.
-* Actualización de captura de pantalla.
+* Header update.
+* Stylesheet update.
+* Screenshot update.
 = 1.8.1 =
-* Eliminado el procesamiento adicional de descripciones cortas y extractos.
+* Removed the extra processing of short descriptions and excerpts.
 = 1.8 =
-* Añadida búsqueda de vídeos en descripciones cortas y extractos.
+* Added video search inside short descriptions and excerpts.
 = 1.7.3.3 =
-* Arreglo de consulta SQL.
+* SQL query fix.
 = 1.7.3.2 =
-* Arreglo de consulta SQL.
+* SQL query fix.
 = 1.7.3.1 =
-* Arreglo de error que no actualizaba la configuración.
+* Fixed a bug that prevented the settings from being updated.
 = 1.7.3 =
-* Soporta todos los tipos de entradas personalizadas.
+* Supports every custom post type.
 = 1.7.2.2 =
-* Actualización de enlaces de soporte y pequeñas actualizaciones.
+* Updated support links and minor updates.
 = 1.7.2.1 =
-* Actualización del paquete de fuentes. Nuevo icono de Google+.
-* Actualización de las traducciones.
+* Updated the font package. New Google+ icon.
+* Updated translations.
 = 1.7.2 =
-* Arreglo de la URL del reproductor de YouTube.
+* Fixed the YouTube player URL.
 = 1.7.1 =
-* Ajuste del diseño sensible de la plantilla XSL.
+* Adjusted the responsive design of the XSL template.
 = 1.7 =
-* Arreglo de error detectado en la notificación y procesamiento de vídeos borrados o marcados como privados.
-* Rediseño sensible de la plantilla XSL.
-* Eliminación de funciones innecesarias.
-* Actualización de la captura de pantalla.
+* Fixed a bug in the notification and processing of deleted or private videos.
+* Responsive redesign of the XSL template.
+* Removed unnecessary functions.
+* Screenshot update.
 = 1.6 =
-* Actualización de la API de YouTube.
-* Arreglo de las expresiones regulares. Ambos problemas reportados en [WordPress.org](https://wordpress.org/support/topic/youtube-dailymotion-videos-not-working?replies=3#post-7475198).
-* Actualización de URLs de reproductores externos.
-* Actualización de las traducciones.
-* Mejora del archivo XSL que genera la plantilla del archivo XML.
+* Updated the YouTube API.
+* Fixed the regular expressions. Both problems reported on [WordPress.org](https://wordpress.org/support/topic/youtube-dailymotion-videos-not-working?replies=3#post-7475198).
+* Updated the URLs of the external players.
+* Updated translations.
+* Improved the XSL file that renders the XML template.
 = 1.5 =
-* Actualización de las traducciones.
-* Nueva hoja de estilo sensible.
-* Modificación de la estructura interna del plugin para ajustarse a los estándares de WordPress.
-* Actualización de la captura de pantalla.
+* Updated translations.
+* New responsive stylesheet.
+* Reworked the internal structure of the plugin to follow the WordPress standards.
+* Screenshot update.
 = 1.4.1 =
-* Añadido borrado de caché al publicar nuevo contenido.
+* Added cache clearing when new content is published.
 = 1.4 =
-* Arreglo de error que provocaba un mensaje de error en versiones superiores a la 5.2 de PHP.
+* Fixed a bug that raised an error message on PHP versions above 5.2.
 = 1.3.1 =
-* Arreglo de error que borraba toda la configuración al desactivar el plugin.
-* Corrección menor que evita la aparición de un código de error al recopilar información sobre el plugin.
+* Fixed a bug that wiped the whole configuration when the plugin was deactivated.
+* Minor fix that avoided an error code while gathering information about the plugin.
 = 1.3 =
-* Añadido un nuevo panel de administración donde poder elegir si queremos recibir correos electrónicos o no.
-* Mejora en el código que envía el correo electrónico.
-* Cambio del enlace de donación.
+* Added a new settings screen to choose whether to receive email notifications.
+* Improved the code that sends the email.
+* Changed the donation link.
 = 1.2 =
-* Mejora y optimización del código.
-* Añadida caché para los datos externos.
-* Añadida función que limpia la caché cuando se borra el plugin.
-* Cambio del botón y enlace de donación.
+* Improved and optimized the code.
+* Added a cache for the external data.
+* Added a function that clears the cache when the plugin is deleted.
+* Changed the donation button and link.
 = 1.1.7 =
-* Arreglos de pequeños errores.
+* Minor bug fixes.
 = 1.1.6 =
-* Mejora y optimización del código.
-* Arreglos de pequeños errores.
-* Uso de la API Transients de WordPress para mejorar las consultas.
-* Mejora en la búsqueda de vídeos de Vimeo.
+* Improved and optimized the code.
+* Minor bug fixes.
+* Used the WordPress Transients API to improve the queries.
+* Improved the Vimeo video search.
 = 1.1.5 =
-* Arreglo de error en nombre de variable que deja datos en blanco en el correo electrónico
+* Fixed a variable name bug that left blank data in the email.
 = 1.1.4 =
-* Arreglos de diversos errores en los envíos de correos electrónicos.
-* Arreglos de diversos errores en el almacenamiento de datos en la caché.
+* Fixed several bugs when sending emails.
+* Fixed several bugs when storing data in the cache.
 = 1.1.3 =
-* Simplificación de código duplicado.
+* Simplified duplicated code.
 = 1.1.2 =
-* Arreglo de error que no reiniciaba la variable encargada de controlar los envíos de correos electrónicos.
+* Fixed a bug that did not reset the variable controlling the email notifications.
 = 1.1.1 =
-* Arreglo del código que envía los correos electrónicos.
+* Fixed the code that sends the emails.
 = 1.1 =
-* Gestión de caché de datos externos de los vídeos.
-* Envía notificaciones de error por correo electrónico en caso de que el video no exista.
-* Optimización del código.
-* Arreglos de pequeños errores detectados.
+* Cache management for the external data of the videos.
+* Sends email notifications when a video no longer exists.
+* Code optimization.
+* Minor bug fixes.
 = 1.0 =
-* Añadido soporte para el acortador http://youtu.be.
-* Añadido soporte para Vimeo.
-* Añadido soporte para Dailymotion.
+* Added support for the https://youtu.be shortener.
+* Added Vimeo support.
+* Added Dailymotion support.
 = 0.9 =
-* Añadida nueva función que limpia la base de datos al desinstalar el plugin.
+* Added a new function that cleans the database when the plugin is uninstalled.
 = 0.8 =
-* Arreglo en la codificación de las entidades RSS.
+* Fixed the encoding of the RSS entities.
 = 0.7 =
-* Arreglos menores en el código.
+* Minor code fixes.
 = 0.6 =
-* Mejora del código para mejorar la validación del archivo sitemap-video.xml
+* Improved the code to make sitemap-video.xml validate better.
 = 0.5 =
-* Actualización de las hojas de estilo acorde al nuevo WordPress 8.
-* Arreglo de pequeños errores en el código.
+* Updated the stylesheets to match the new WordPress 8.
+* Minor code fixes.
 = 0.4 =
-* Inclusión de nuevos botones y enlaces.
+* Added new buttons and links.
 = 0.3 =
-* Pequeños arreglos de código.
-* Pequeño arreglo de la traducción.
+* Minor code fixes.
+* Minor translation fix.
 = 0.2 =
-* Pequeñas modificaciones y arreglos de código.
-* Inclusión de enlaces.
-* Actualización de los textos de información.
+* Minor changes and code fixes.
+* Added links.
+* Updated the information texts.
 = 0.1 =
-* Versión inicial.
+* Initial release.
 
 == Upgrade Notice ==
-= 2.1 =
-* Actualización de Action Scheduler.
-* Mejora del rendimiento.
-* Actualización de cabecera.
-* Actualización de hoja de estilo.
-* Actualización de captura de pantalla.
+= 3.0.0 =
+* New features (self hosted video, custom fields, duration, uploader and date of each video), several sitemap fixes and hardened security. See the changelog.
 
-==Traducciones ==
+== Translations ==
 * *English*: by [**Art Project Group**](https://artprojectgroup.es/) (default language).
-* *Español*: por [**Art Project Group**](https://artprojectgroup.es/).
+* *Spanish*: by [**Art Project Group**](https://artprojectgroup.es/).
 
-== Soporte técnico ==
-Dado que **APG Google Video Sitemap Feed** es totalmente gratuito, **Art Project Group** sólo proporciona el servicio de [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte) previo pago. En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.
+== Technical support ==
+Since **APG Google Video Sitemap Feed** is completely free, **Art Project Group** only offers paid [**technical support**](https://artprojectgroup.es/tienda/ticket-de-soporte). Art Project Group does not provide free technical support of any kind.
 
-== ¿Por qué está esta página en español? ==
-Mientras WordPress no nos permita a los desarrolladores realizar esta página en más de un idioma, elegiremos siempre el español.
+== Donation ==
+Did you like **APG Google Video Sitemap Feed** and find it useful on your website? We would appreciate a [small donation](https://artprojectgroup.es/tienda/donacion) to help us keep improving this plugin and building more completely free plugins for the whole WordPress community.
 
-A pesar de que es una apuesta muy arriesgada y de que reduce mucho las posibilidades de propagación de nuestros plugins, creemos que la comunidad hispana de WordPress es lo suficientemente amplia como para abocarla al idioma inglés hasta el final de los tiempos.
+== Thanks ==
+* To [Tim Brandon](https://profiles.wordpress.org/timbrd/) and [Amit Agarwal](https://profiles.wordpress.org/labnol/) for their great plugins, which inspired **APG Google Video Sitemap Feed**.
+* To [Ludo Bonnet](https://github.com/ludobonnet) for his contributions to the code and his idea of adding Vimeo and Dailymotion support.
+* To everyone who uses it.
+* To everyone who helps to improve it.
+* To everyone who donates.
+* To everyone who encourages us with their comments.
 
-Por ello regalamos a esa gran comunidad hispana nuestros plugins con interfaces, instrucciones, tutoriales, soporte y páginas web en *WordPress.org* en español.
-
-Esperamos que os guste nuestra iniciativa.
-
-== Donación ==
-¿Te ha gustado y te ha resultado útil **APG Google Video Sitemap Feed** en tu sitio web? Te agradeceríamos una [pequeña donación](https://artprojectgroup.es/tienda/donacion) que nos ayudará a seguir mejorando este plugin y a crear más plugins totalmente gratuitos para toda la comunidad WordPress.
-
-== Gracias ==
-* A [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [Amit Agarwal](http://profiles.wordpress.org/labnol/) por sus grandes plugins que han inspirado **APG Google Video Sitemap Feed**.
-* A [Ludo Bonnet](https://twitter.com/ludobonnet) por sus aportaciones al código y por su idea de añadir soporte para Vimeo y Dailymotion.
-* A todos los que lo usáis.
-* A todos los que ayudáis a mejorarlo.
-* A todos los que realizáis donaciones.
-* A todos los que nos animáis con vuestros comentarios.
-
-¡Muchas gracias a todos!
+Thank you all very much!

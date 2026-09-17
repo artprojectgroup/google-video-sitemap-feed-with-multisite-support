@@ -2,24 +2,64 @@
 //Igual no deberías poder abrirme
 defined( 'ABSPATH' ) || exit;
 
-/*
-Clase que controla todo lo relacionado con el  XML
-*/
-class APGSitemapVideo {
-	public function __construct() {		
-        add_action( 'init', [ $this, 'init' ] );
+/**
+ * Clase que controla todo lo relacionado con el XML.
+ * 
+ */
+class APG_Video_Sitemap {
+
+    /**
+     * Instancia activa, necesaria para poder quitar sus filtros al desactivar.
+     *
+     * @var APG_Video_Sitemap|null
+     */
+    protected static $instancia = null;
+
+    /**
+     * Textos que delatan un vídeo en la base de datos. Acotan la consulta; el
+     * reconocimiento real lo hacen las expresiones regulares de busca_videos().
+     *
+     * Son siete, y consulta() lleva siete marcadores LIKE por columna: si se añade o se
+     * quita alguno hay que actualizar también las dos consultas.
+     *
+     * @var string[]
+     */
+    const PATRONES = [ 'youtube.com', 'youtube-nocookie.com', 'youtu.be', 'dailymotion.com', 'vimeo.com', '<video', '[video' ];
+
+    /**
+     * Extensiones de vídeo autoalojado que se publican como content_loc.
+     *
+     * @var string[]
+     */
+    const EXTENSIONES = [ 'mp4', 'm4v', 'mov', 'webm', 'ogv', 'flv', 'wmv', 'avi', 'mpg', 'mpeg', '3gp', '3g2' ];
+
+    /**
+     * Constructor.
+     *
+     */
+	public function __construct() {
+        self::$instancia = $this;
+
+		add_action( 'init', [ $this, 'init' ] );
         add_action( 'do_feed_sitemap-video', [ $this, 'carga_plantilla' ], 10, 1 );
         add_filter( 'generate_rewrite_rules', [ $this, 'rewrite' ] );
-        add_action( 'enviar_ping', [ $this, 'envia_ping' ], 10, 1 ); 
+        add_filter( 'query_vars', [ $this, 'query_vars' ] );
+        //Descubrimiento del sitemap, ahora que Google y Bing ya no aceptan pings
+        add_filter( 'robots_txt', [ $this, 'robots_txt' ], 10, 2 );
+        add_filter( 'wp_sitemaps_index_entries', [ $this, 'indice_del_core' ] );
         //Actúa cuando se publica una página, una entrada o se borra una entrada
-        add_action( 'publish_post', [ $this, 'programa_ping' ], 999, 1 );
-        add_action( 'publish_page', [ $this, 'programa_ping' ], 999, 1 );
-        add_action( 'delete_post', [ $this, 'programa_ping' ], 999, 1 );
-        add_action( 'pre_post_update', [ $this, 'programa_ping' ], 999, 1 );
+        add_action( 'publish_post', [ $this, 'limpia_cache' ], 999, 1 );
+        add_action( 'publish_page', [ $this, 'limpia_cache' ], 999, 1 );
+        add_action( 'delete_post', [ $this, 'limpia_cache' ], 999, 1 );
+        add_action( 'pre_post_update', [ $this, 'limpia_cache' ], 999, 1 );
 	}
 
-    //Funciones iniciales
-	public function init() {
+    /**
+     * Funciones iniciales del plugin.
+     *
+     * @return void
+     */	
+    public function init() {
 		if ( defined( 'QT_LANGUAGE' ) ) {
 			add_filter( 'xml_sitemap_url', [ $this, 'qtranslate' ], 99 );
 		}
@@ -27,7 +67,7 @@ class APGSitemapVideo {
         //Inicializa la información del 100% de los vídeos
         if ( get_transient( 'xml_video_sitemap_procesado' ) === false && is_admin() ) {
             set_transient( 'xml_video_sitemap_procesado', 1, YEAR_IN_SECONDS );           
-            APGSitemapVideo::procesamiento();
+            self::procesamiento();
         }
 	}
     
@@ -36,26 +76,89 @@ class APGSitemapVideo {
 		load_template( plugin_dir_path( __FILE__ ) . 'contenido-xml.php' );
 	}
 
+    /**
+     * Registra la variable que identifica cada sitemap parcial.
+     *
+     * @param array $variables Variables públicas de la consulta.
+     * @return array
+     */
+    public function query_vars( $variables ) {
+        $variables[] = 'sitemap_video_feed';
+
+        return $variables;
+    }
+
+    /**
+     * Devuelve las direcciones del sitemap, ya sea el índice o los parciales.
+     *
+     * @return string[]
+     */
+    static public function dame_direcciones() {
+        $paginas = (int) get_option( 'apg_video_sitemap_paginas' );
+        if ( $paginas < 2 ) {
+            return [ home_url( '/sitemap-video.xml' ) ];
+        }
+
+        $direcciones = [];
+        for ( $i = 1; $i <= $paginas; $i++ ) {
+            $direcciones[] = home_url( "/sitemap-video-$i.xml" );
+        }
+
+        return $direcciones;
+    }
+
+    /**
+     * Anuncia el sitemap en robots.txt.
+     *
+     * @param string $salida  Contenido de robots.txt.
+     * @param bool   $publico Si el sitio web es visible para los buscadores.
+     * @return string
+     */
+    public function robots_txt( $salida, $publico ) {
+        if ( ! $publico ) {
+            return $salida;
+        }
+
+        //robots.txt admite un índice de sitemaps, así que basta con la dirección principal.
+        return $salida . 'Sitemap: ' . esc_url_raw( home_url( '/sitemap-video.xml' ) ) . PHP_EOL;
+    }
+
+    /**
+     * Añade el sitemap de vídeos al índice de sitemaps de WordPress.
+     *
+     * @param array $entradas Entradas del índice.
+     * @return array
+     */
+    public function indice_del_core( $entradas ) {
+        //Un índice de sitemaps no puede anidar otro índice: se listan los parciales.
+        foreach ( self::dame_direcciones() as $direccion ) {
+            $entradas[] = [ 'loc' => $direccion ];
+        }
+
+        return $entradas;
+    }
+
 	//Añade el sitemap a los enlaces permanentes
 	public function rewrite( $wp_rewrite ) {
-        global $maximo_videos;
-        
-        $feed_rules           = [ 
-            'sitemap-video.xml$'    => $wp_rewrite->index . '?feed=sitemap-video' 
+        $feed_rules = [ 
+            'sitemap-video\.xml$' => $wp_rewrite->index . '?feed=sitemap-video' 
         ];
-        $videos               = get_transient( 'xml_video_sitemap_consulta' );
-        if ( $videos !== false && ! empty( $videos ) && ceil( count( $videos ) / $maximo_videos ) > 1 ) {
-            for ( $i = 1; $i <= ceil( count( $videos ) / $maximo_videos ); $i++ ) {
-                $feed_rules[ "sitemap-video-$i.xml$" ]   = $wp_rewrite->index . "?feed=sitemap-video";
+        $entradas   = get_transient( 'xml_video_sitemap_consulta' );
+        if ( ! empty( $entradas ) && is_array( $entradas ) ) {
+            $paginas = (int) ceil( count( $entradas ) / APG_VIDEO_SITEMAP_MAXIMO );
+            for ( $i = 1; $i <= $paginas; $i++ ) {
+                //Cada sitemap parcial lleva su número en una variable propia, no en la URL a pelo.
+                $feed_rules[ "sitemap-video-$i\.xml$" ] = $wp_rewrite->index . "?feed=sitemap-video&sitemap_video_feed=$i";
             }
         }
-		$wp_rewrite->rules    = $feed_rules + $wp_rewrite->rules;
+		$wp_rewrite->rules = $feed_rules + $wp_rewrite->rules;
 	}
 
     //qTranslate
 	public function qtranslate( $input ) {
 		global $q_config;
 
+        $return = [];
 		if ( is_array( $input ) ) { // got an array? return one!
 			foreach ( $input as $url ) {
 				foreach( $q_config[ 'enabled_languages' ] as $language ) {
@@ -69,172 +172,435 @@ class APGSitemapVideo {
 		return $return;
 	}
 
-	//Envía el ping a Google y Bing
-	public function envia_ping() {
-        $url      = urlencode( home_url( '/' ) . "sitemap-video.xml" );
-		$ping     = [ 
-			"https://www.google.com/webmasters/sitemaps/ping?sitemap=$url", 
-			"https://www.bing.com/webmaster/ping.aspx?siteMap=$url" 
-		];
-		$opciones = [
-            'timeout'   => 10,
-        ];
-		foreach( $ping as $url ) {
-			wp_remote_get( $url, $opciones );
-		}
-	}
-
-	//Programa el ping a los buscadores web
-	public function programa_ping() {
+	//Invalida la caché del sitemap cuando cambia el contenido
+	public function limpia_cache() {
 		delete_transient( 'xml_video_sitemap_consulta' );
-		wp_schedule_single_event( time(), 'enviar_ping' );
 	}
 
 	//Desactiva el plugin
 	public static function desactivar() {
 		global $wp_rewrite;
 
-		remove_filter( 'generate_rewrite_rules', [ __CLASS__, 'rewrite' ] );
+        if ( self::$instancia ) {
+            remove_filter( 'generate_rewrite_rules', [ self::$instancia, 'rewrite' ] );
+        }
+        //Limpia el evento de ping a buscadores que usaban las versiones anteriores.
+        wp_clear_scheduled_hook( 'enviar_ping' );
 		$wp_rewrite->flush_rules();
 	}
     
-    //Devuelve la búqueda que añade todos los tipos de entradas
-    static public function dame_busqueda() {
-        $argumentos         = [
-           'public'   => true,
-        ];
-        $tipos_de_entradas  = get_post_types( $argumentos, 'names' );
-        $busqueda           = '';
-        foreach ( $tipos_de_entradas as $tipo_de_entrada ) {
-            $busqueda  .= "post_type = '$tipo_de_entrada' OR ";
-        }
-        $busqueda           = substr_replace( $busqueda, '', -4, -1 );
-        if ( strlen( $busqueda ) ) {
-            $busqueda  = "AND ($busqueda)";
-        }
+    /**
+     * Devuelve los tipos de entrada públicos que hay que recorrer.
+     *
+     * @return string[]
+     */
+    static public function dame_tipos_de_entradas() {
+        $tipos_de_entradas = get_post_types( [ 'public' => true ], 'names' );
 
-        return $busqueda;
+        return array_values( array_filter( array_map( 'sanitize_key', (array) $tipos_de_entradas ) ) );
     }
 
-    //Genera y devuelve la consulta a la base de datos
-    static public function consulta() {
-        $videos = get_transient( 'xml_video_sitemap_consulta' );
-        if ( $videos === false ) {
-            global $wpdb;
-            
-            $busqueda   = APGSitemapVideo::dame_busqueda();
-            $videos     = $wpdb->get_results( "(SELECT id, post_title, post_content, post_excerpt, post_date
-                                            FROM $wpdb->posts
-                                            WHERE post_status = 'publish'
-                                                $busqueda
-                                                AND (post_content LIKE '%youtube.com%'
-                                                    OR post_content LIKE '%youtube-nocookie.com%'
-                                                    OR post_content LIKE '%youtu.be%'                              
-                                                    OR post_content LIKE '%dailymotion.com%'
-                                                    OR post_content LIKE '%vimeo.com%')
-                                                OR (post_excerpt LIKE '%youtube.com%'
-                                                    OR post_excerpt LIKE '%youtube-nocookie.com%'
-                                                    OR post_excerpt LIKE '%youtu.be%'                              
-                                                    OR post_excerpt LIKE '%dailymotion.com%'
-                                                    OR post_excerpt LIKE '%vimeo.com%'))											
-                                        UNION ALL
-                                            (SELECT id, post_title, meta_value as 'post_content', post_excerpt, post_date
-                                                FROM $wpdb->posts
-                                                JOIN $wpdb->postmeta
-                                                    ON id = post_id
-                                                        AND meta_key = 'wpex_post_oembed'
-                                                        AND (meta_value LIKE '%youtube.com%'
-                                                            OR meta_value LIKE '%youtube-nocookie.com%'
-                                                            OR meta_value LIKE '%youtu.be%'
-                                                            OR meta_value LIKE '%dailymotion.com%'
-                                                            OR meta_value LIKE '%vimeo.com%')
-                                                WHERE post_status = 'publish'
-                                                    $busqueda)
-                                        UNION ALL
-                                            (SELECT id, post_title, post_excerpt, post_parent, post_date
-                                                FROM $wpdb->posts
-                                                WHERE post_type = 'attachment'
-                                                        AND post_mime_type like 'video%'
-                                                        AND post_parent > 0)
-                                        ORDER BY post_date DESC" ); //Consulta mejorada con ayuda de Ludo Bonnet [https://github.com/ludobonnet]
-            set_transient( 'xml_video_sitemap_consulta', $videos, 24 * HOUR_IN_SECONDS );
-            APGSitemapVideo::desactivar();
+    /**
+     * Campos personalizados que nunca contienen vídeos y no merece la pena recorrer.
+     *
+     * @return string[]
+     */
+    static public function dame_campos_excluidos() {
+        $excluidos = [ '_edit_lock', '_edit_last', '_thumbnail_id', '_wp_page_template', '_wp_old_slug', '_wp_old_date', '_wp_attached_file', '_wp_attachment_metadata' ];
+
+        $excluidos = array_map( 'strval', (array) apply_filters( 'apg_video_sitemap_campos_excluidos', $excluidos ) );
+
+        //La lista viaja a FIND_IN_SET() separada por comas: una clave con coma la rompería.
+        return array_values( array_unique( array_filter( $excluidos, static function( $clave ) {
+            return '' !== $clave && false === strpos( $clave, ',' );
+        } ) ) );
+    }
+
+    /**
+     * Devuelve los patrones LIKE, listos para $wpdb->prepare().
+     *
+     * @return string[]
+     */
+    static protected function dame_patrones() {
+        global $wpdb;
+
+        $patrones = [];
+        foreach ( self::PATRONES as $patron ) {
+            $patrones[] = '%' . $wpdb->esc_like( $patron ) . '%';
         }
-        
-        return $videos;
+
+        return $patrones;
+    }
+
+    /**
+     * Devuelve las entradas publicadas que contienen algún vídeo, agrupadas por entrada.
+     *
+     * La consulta va escrita entera, sin fragmentos montados a trozos: los siete patrones
+     * LIKE se corresponden uno a uno con self::PATRONES, y las listas variables (tipos de
+     * entrada y campos excluidos) viajan como un único parámetro para FIND_IN_SET().
+     *
+     * @return array
+     */
+    static public function consulta() {
+        $entradas = get_transient( 'xml_video_sitemap_consulta' );
+        if ( is_array( $entradas ) ) {
+            //Las versiones anteriores guardaban aquí otra estructura: si no es la de ahora, se rehace.
+            $primera = reset( $entradas );
+            if ( false === $primera || isset( $primera->contenido ) ) {
+                return $entradas;
+            }
+        }
+
+        global $wpdb;
+
+        $tipos_de_entradas = self::dame_tipos_de_entradas();
+        if ( empty( $tipos_de_entradas ) ) {
+            return [];
+        }
+
+        $tipos    = implode( ',', $tipos_de_entradas );
+        $patrones = self::dame_patrones();
+
+        /**
+         * Permite desactivar el rastreo de campos personalizados, que recorre toda la
+         * tabla de metadatos y puede resultar caro en sitios web muy grandes.
+         *
+         * @param bool $busca Si hay que buscar vídeos en los campos personalizados.
+         */
+        $busca_campos = (bool) apply_filters( 'apg_video_sitemap_busca_en_campos_personalizados', true );
+
+        //Cada consulta se pasa entera y literal a $wpdb->prepare(): lo único variable son
+        //los parámetros. Las listas (tipos de entrada y campos excluidos) viajan como una
+        //sola cadena separada por comas para FIND_IN_SET(), así no hay que montar marcadores.
+        if ( $busca_campos ) {
+            //La segunda rama recoge constructores visuales, ACF, la caché de oEmbed y los campos de los temas.
+            $argumentos = array_merge( [ $tipos ], $patrones, $patrones, [ $tipos, implode( ',', self::dame_campos_excluidos() ) ], $patrones );
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- no hay API de WordPress que busque siete cadenas dentro del contenido y el resultado se guarda en el transitorio xml_video_sitemap_consulta unas líneas más abajo; $argumentos lleva 24 valores para los 24 marcadores de esta consulta.
+            $filas      = $wpdb->get_results( $wpdb->prepare( "(SELECT ID, post_title, post_excerpt, post_date, post_modified, post_content AS contenido
+                                FROM $wpdb->posts
+                                WHERE post_status = 'publish'
+                                    AND FIND_IN_SET( post_type, %s )
+                                    AND ( post_content LIKE %s OR post_content LIKE %s OR post_content LIKE %s OR post_content LIKE %s OR post_content LIKE %s OR post_content LIKE %s OR post_content LIKE %s
+                                        OR post_excerpt LIKE %s OR post_excerpt LIKE %s OR post_excerpt LIKE %s OR post_excerpt LIKE %s OR post_excerpt LIKE %s OR post_excerpt LIKE %s OR post_excerpt LIKE %s ))
+                            UNION ALL
+                            (SELECT entradas.ID, entradas.post_title, entradas.post_excerpt, entradas.post_date, entradas.post_modified, campos.meta_value AS contenido
+                                FROM $wpdb->posts AS entradas
+                                INNER JOIN $wpdb->postmeta AS campos
+                                    ON campos.post_id = entradas.ID
+                                WHERE entradas.post_status = 'publish'
+                                    AND FIND_IN_SET( entradas.post_type, %s )
+                                    AND NOT FIND_IN_SET( campos.meta_key, %s )
+                                    AND ( campos.meta_value LIKE %s OR campos.meta_value LIKE %s OR campos.meta_value LIKE %s OR campos.meta_value LIKE %s OR campos.meta_value LIKE %s OR campos.meta_value LIKE %s OR campos.meta_value LIKE %s ))
+                            ORDER BY post_date DESC", ...$argumentos ) );
+        } else {
+            $argumentos = array_merge( [ $tipos ], $patrones, $patrones );
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- no hay API de WordPress que busque siete cadenas dentro del contenido y el resultado se guarda en el transitorio xml_video_sitemap_consulta unas líneas más abajo; $argumentos lleva 15 valores para los 15 marcadores de esta consulta.
+            $filas      = $wpdb->get_results( $wpdb->prepare( "(SELECT ID, post_title, post_excerpt, post_date, post_modified, post_content AS contenido
+                                FROM $wpdb->posts
+                                WHERE post_status = 'publish'
+                                    AND FIND_IN_SET( post_type, %s )
+                                    AND ( post_content LIKE %s OR post_content LIKE %s OR post_content LIKE %s OR post_content LIKE %s OR post_content LIKE %s OR post_content LIKE %s OR post_content LIKE %s
+                                        OR post_excerpt LIKE %s OR post_excerpt LIKE %s OR post_excerpt LIKE %s OR post_excerpt LIKE %s OR post_excerpt LIKE %s OR post_excerpt LIKE %s OR post_excerpt LIKE %s ))
+                            ORDER BY post_date DESC", ...$argumentos ) );
+        }
+
+        $entradas = [];
+        foreach ( (array) $filas as $fila ) {
+            $id = (int) $fila->ID;
+            //Una misma entrada puede llegar varias veces (contenido y cada campo): se agrupan.
+            if ( ! isset( $entradas[ $id ] ) ) {
+                $entradas[ $id ] = (object) [
+                    'ID'         => $id,
+                    'titulo'     => $fila->post_title,
+                    'extracto'   => $fila->post_excerpt,
+                    'fecha'      => $fila->post_date,
+                    'modificada' => $fila->post_modified,
+                    'contenido'  => (string) $fila->post_excerpt,
+                ];
+            }
+            $entradas[ $id ]->contenido .= "\n" . (string) $fila->contenido;
+        }
+
+        set_transient( 'xml_video_sitemap_consulta', $entradas, DAY_IN_SECONDS );
+
+        //Sólo se regeneran las reglas si ha cambiado el número de sitemaps parciales.
+        $paginas = (int) ceil( count( $entradas ) / APG_VIDEO_SITEMAP_MAXIMO );
+        if ( (int) get_option( 'apg_video_sitemap_paginas' ) !== $paginas ) {
+            update_option( 'apg_video_sitemap_paginas', $paginas, false );
+            $GLOBALS[ 'wp_rewrite' ]->flush_rules();
+        }
+
+        return $entradas;
     }
 
     //Envía un correo informando de que el vídeo ya no existe
     static public function envia_correo( $video ) {
         global $wpdb;
 
-        $busqueda   = APGSitemapVideo::dame_busqueda();
-        $entrada    = $wpdb->get_results( "SELECT id, post_title FROM $wpdb->posts WHERE post_status = 'publish' $busqueda AND (post_content LIKE '%$video%')" );
+        $tipos_de_entradas = self::dame_tipos_de_entradas();
+        if ( empty( $tipos_de_entradas ) ) {
+            return;
+        }
 
-        wp_mail( get_option( 'admin_email' ), __( 'Video not found!', 'google-video-sitemap-feed-with-multisite-support' ), sprintf( __( 'Please check the page <a href="%s">%s</a> from your website %s and edit the deleted video with id %s.<br /><br />email sended by <a href="https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed">APG Google Video Sitemap Feed</a>.', 'google-video-sitemap-feed-with-multisite-support' ), get_permalink( $entrada[ 0 ]->id ), $entrada[ 0 ]->post_title, get_bloginfo( 'name' ), $video ), "Content-type: text/html" );
+        $entrada = $wpdb->get_row( $wpdb->prepare( "SELECT ID, post_title FROM $wpdb->posts WHERE post_status = 'publish' AND FIND_IN_SET( post_type, %s ) AND post_content LIKE %s LIMIT 1", implode( ',', $tipos_de_entradas ), '%' . $wpdb->esc_like( $video ) . '%' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- búsqueda puntual del texto de un vídeo perdido; no hay API de WordPress equivalente y sólo ocurre al enviar el aviso.
+
+        if ( empty( $entrada ) ) {
+            return;
+        }
+
+        /* translators: 1: URL of the page, 2: title of the page, 3: name of the website, 4: identifier of the video. */
+        $aviso = sprintf( __( 'Please check the page <a href="%1$s">%2$s</a> from your website %3$s and edit the deleted video with id %4$s.<br /><br />email sent by <a href="https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed">APG Google Video Sitemap Feed</a>.', 'google-video-sitemap-feed-with-multisite-support' ), esc_url( get_permalink( $entrada->ID ) ), esc_html( $entrada->post_title ), esc_html( get_bloginfo( 'name' ) ), esc_html( $video ) );
+        wp_mail( get_option( 'admin_email' ), __( 'Video not found!', 'google-video-sitemap-feed-with-multisite-support' ), $aviso, [ 'Content-type: text/html' ] );
+    }
+
+    /**
+     * Avisa por correo, una sola vez por vídeo, de que el vídeo ya no está disponible.
+     *
+     * @param string $video Identificador del vídeo.
+     * @return void
+     */
+    static protected function avisa_de_video_perdido( $video ) {
+        $configuracion = get_option( 'xml_video_sitemap' );
+        if ( ! is_array( $configuracion ) || empty( $configuracion[ 'correo' ] ) ) {
+            return;
+        }
+
+        //El aviso se marca con su propia clave: la clave del vídeo guarda su URL de consulta.
+        $aviso = 'aviso_' . $video;
+        if ( isset( $configuracion[ $aviso ] ) ) {
+            return;
+        }
+
+        $configuracion[ $aviso ] = '1';
+        update_option( 'xml_video_sitemap', $configuracion );
+        self::envia_correo( $video );
     }
 
     //Obtiene información del vídeo ( función mejorada con ayuda de Ludo Bonnet [https://github.com/ludobonnet] )
     static public function procesa_url( $url, $video ) {
-        $configuracion  = get_option( 'xml_video_sitemap' );
-        $respuesta      = get_transient( $url );
+        $clave     = 'apg_video_' . md5( $url );
+        $respuesta = get_transient( $clave );
         if ( $respuesta === false ) { //No hay información en la base de datos
-            $respuesta    = wp_remote_get( $url );
-            set_transient( $url, $respuesta, 365 * DAY_IN_SECONDS );
-            $configuracion[ $video ]    = $url;
-            if ( get_option( 'xml_video_sitemap' ) || get_option( 'xml_video_sitemap' ) == NULL ) {
-                update_option( 'xml_video_sitemap', $configuracion );
-            } else {
-                add_option( 'xml_video_sitemap', $configuracion );
-            }
+            $respuesta = wp_safe_remote_get( $url, [ 'timeout' => 10 ] );
+            //Un fallo de red no describe el estado del vídeo: se reintenta pronto.
+            set_transient( $clave, $respuesta, is_wp_error( $respuesta ) ? HOUR_IN_SECONDS : 365 * DAY_IN_SECONDS );
+            self::registra_video( $video, $url );
         }
 
         //Comprueba si hay error en la respuesta y si hay que enviar el correo de aviso
-        $envia  = false;
-        if ( ! is_wp_error( $respuesta ) ) {
-            $dailymotion  = json_decode( $respuesta[ 'body' ] );
-            if ( $respuesta[ 'response' ][ 'code' ] == 404 || $respuesta[ 'body' ] == 'Video not found' || $respuesta[ 'body' ] == 'Invalid id' || $respuesta[ 'body' ] == 'Private video' || isset( $dailymotion->error ) ) {
-                $envia  = true;
+        $cuerpo   = wp_remote_retrieve_body( $respuesta );
+        $codigo   = (int) wp_remote_retrieve_response_code( $respuesta );
+        $datos    = ( '' !== $cuerpo ) ? json_decode( $cuerpo ) : null;
+        $mensajes = [ 'Video not found', 'Invalid id', 'Private video' ];
+        //Sólo se avisa cuando el proveedor dice que el vídeo ya no está: una caída de
+        //red o un 500 son temporales y no deben generar un correo ni marcar el vídeo.
+        $perdido  = ! is_wp_error( $respuesta ) && ( in_array( $codigo, [ 401, 403, 404, 410 ], true ) || in_array( trim( $cuerpo ), $mensajes, true ) || isset( $datos->error ) );
+
+        if ( $perdido || is_wp_error( $respuesta ) || 200 !== $codigo ) {
+            delete_transient( $clave );
+            if ( $perdido ) {
+                self::avisa_de_video_perdido( $video );
             }
-        } else {
-            $envia  = true;
-        }
-        if ( $envia ) {
-            if ( ! empty( $configuracion ) && ! array_key_exists( $video, $configuracion ) && $configuracion[ 'correo' ] == "1" ) { //No se ha enviado nunca
-                $configuracion[ $video ]    = 1;
-                update_option( 'xml_video_sitemap', $configuracion );
-                APGSitemapVideo::envia_correo( $video );
-            }
-            delete_transient( $url );
-            
-            return NULL;
+
+            return null;
         }
 
-        return $respuesta[ 'body' ];
+        return $cuerpo;
+    }
+
+    /**
+     * Guarda la URL de consulta de un vídeo para poder limpiar su caché al desinstalar.
+     *
+     * @param string $video Identificador del vídeo.
+     * @param string $url   URL consultada.
+     * @return void
+     */
+    static protected function registra_video( $video, $url ) {
+        $configuracion = get_option( 'xml_video_sitemap' );
+        if ( ! is_array( $configuracion ) ) {
+            $configuracion = [];
+        }
+
+        if ( isset( $configuracion[ $video ] ) && $configuracion[ $video ] === $url ) {
+            return;
+        }
+
+        $configuracion[ $video ] = $url;
+        update_option( 'xml_video_sitemap', $configuracion );
     }
 
     //Procesa los datos externos
     static public function obtiene_informacion( $identificador, $proveedor ) {
-        $api   = [ 
-            'youtube'		=> 'https://noembed.com/embed?url=https://www.youtube.com/watch?v=' . $identificador, 
-            'dailymotion'	=> 'https://api.dailymotion.com/video/' . $identificador, 
-            'vimeo'			=> 'https://vimeo.com/api/v2/video/' . $identificador . ".json"
+        $codificado = rawurlencode( $identificador );
+        $api        = [ 
+            //oEmbed propio de YouTube: no necesita clave y evita depender de un tercero.
+            'youtube'		=> 'https://www.youtube.com/oembed?format=json&url=' . rawurlencode( 'https://www.youtube.com/watch?v=' . $identificador ), 
+            'dailymotion'	=> 'https://api.dailymotion.com/video/' . $codificado . '?fields=' . rawurlencode( 'id,title,duration,thumbnail_url,created_time,owner.screenname,owner.url' ), 
+            'vimeo'			=> 'https://vimeo.com/api/v2/video/' . $codificado . '.json'
         ];
 
-        if ( $proveedor == 'vimeo' ) {
-            $vimeo   = json_decode( APGSitemapVideo::procesa_url( $api[ $proveedor ] , $identificador ) );
-            if ( isset ( $vimeo[ 0 ] ) ) {
-                return $vimeo[ 0 ];
-            }
-        } else {
-            return json_decode( APGSitemapVideo::procesa_url( $api[ $proveedor ], $identificador ) );
+        if ( ! isset( $api[ $proveedor ] ) ) {
+            return false;
         }
 
-        return false;
+        $cuerpo = self::procesa_url( $api[ $proveedor ], $identificador );
+        if ( empty( $cuerpo ) ) {
+            return false;
+        }
+
+        $datos = json_decode( $cuerpo );
+        if ( $proveedor === 'vimeo' ) {
+            return isset( $datos[ 0 ] ) ? $datos[ 0 ] : false;
+        }
+
+        return is_object( $datos ) ? $datos : false;
+    }
+
+    /**
+     * Devuelve los datos de un vídeo ya normalizados, venga de donde venga.
+     *
+     * @param array  $video_buscado Vídeo localizado por busca_videos().
+     * @param object $entrada       Entrada que lo contiene.
+     * @return array|false
+     */
+    static public function dame_datos_del_video( $video_buscado, $entrada ) {
+        if ( $video_buscado[ 'proveedor' ] === 'local' ) {
+            return self::dame_datos_locales( $video_buscado, $entrada );
+        }
+
+        $datos = self::obtiene_informacion( $video_buscado[ 'identificador' ], $video_buscado[ 'proveedor' ] );
+        if ( ! $datos ) {
+            return false;
+        }
+
+        return self::normaliza( $datos, $video_buscado );
+    }
+
+    /**
+     * Estructura común a todos los proveedores.
+     *
+     * @param array $video_buscado Vídeo localizado por busca_videos().
+     * @return array
+     */
+    static protected function dame_plantilla( $video_buscado ) {
+        return [
+            'titulo'      => '',
+            'descripcion' => '',
+            'imagen'      => isset( $video_buscado[ 'imagen' ] ) ? $video_buscado[ 'imagen' ] : '',
+            'reproductor' => isset( $video_buscado[ 'reproductor' ] ) ? $video_buscado[ 'reproductor' ] : '',
+            'contenido'   => isset( $video_buscado[ 'contenido' ] ) ? $video_buscado[ 'contenido' ] : '',
+            'duracion'    => 0,
+            'autor'       => '',
+            'autor_url'   => '',
+            'publicado'   => '',
+        ];
+    }
+
+    /**
+     * Traduce la respuesta de cada API a la estructura común.
+     *
+     * @param object $datos         Respuesta de la API.
+     * @param array  $video_buscado Vídeo localizado por busca_videos().
+     * @return array
+     */
+    static protected function normaliza( $datos, $video_buscado ) {
+        $video = self::dame_plantilla( $video_buscado );
+
+        switch ( $video_buscado[ 'proveedor' ] ) {
+            case 'youtube':
+                $video[ 'titulo' ]    = isset( $datos->title ) ? $datos->title : '';
+                $video[ 'autor' ]     = isset( $datos->author_name ) ? $datos->author_name : '';
+                $video[ 'autor_url' ] = isset( $datos->author_url ) ? $datos->author_url : '';
+                if ( ! empty( $datos->thumbnail_url ) ) {
+                    $video[ 'imagen' ] = $datos->thumbnail_url;
+                }
+                break;
+
+            case 'vimeo':
+                $video[ 'titulo' ]      = isset( $datos->title ) ? $datos->title : '';
+                $video[ 'descripcion' ] = isset( $datos->description ) ? $datos->description : '';
+                $video[ 'autor' ]       = isset( $datos->user_name ) ? $datos->user_name : '';
+                $video[ 'autor_url' ]   = isset( $datos->user_url ) ? $datos->user_url : '';
+                $video[ 'duracion' ]    = isset( $datos->duration ) ? (int) $datos->duration : 0;
+                if ( ! empty( $datos->thumbnail_large ) ) {
+                    $video[ 'imagen' ] = $datos->thumbnail_large;
+                }
+                if ( ! empty( $datos->upload_date ) ) {
+                    $video[ 'publicado' ] = self::fecha_w3c( $datos->upload_date );
+                }
+                break;
+
+            case 'dailymotion':
+                $video[ 'titulo' ]   = isset( $datos->title ) ? $datos->title : '';
+                $video[ 'duracion' ] = isset( $datos->duration ) ? (int) $datos->duration : 0;
+                //Dailymotion devuelve los campos anidados con el punto en el nombre.
+                $video[ 'autor' ]     = isset( $datos->{ 'owner.screenname' } ) ? $datos->{ 'owner.screenname' } : '';
+                $video[ 'autor_url' ] = isset( $datos->{ 'owner.url' } ) ? $datos->{ 'owner.url' } : '';
+                if ( ! empty( $datos->thumbnail_url ) ) {
+                    $video[ 'imagen' ] = $datos->thumbnail_url;
+                }
+                if ( ! empty( $datos->created_time ) ) {
+                    $video[ 'publicado' ] = self::fecha_w3c( '@' . (int) $datos->created_time );
+                }
+                break;
+        }
+
+        return $video;
+    }
+
+    /**
+     * Resuelve los datos de un vídeo alojado en el propio sitio web.
+     *
+     * @param array  $video_buscado Vídeo localizado por busca_videos().
+     * @param object $entrada       Entrada que lo contiene.
+     * @return array
+     */
+    static protected function dame_datos_locales( $video_buscado, $entrada ) {
+        $video   = self::dame_plantilla( $video_buscado );
+        $adjunto = attachment_url_to_postid( $video[ 'contenido' ] );
+
+        if ( $adjunto ) {
+            $video[ 'titulo' ]    = get_the_title( $adjunto );
+            $video[ 'publicado' ] = self::fecha_w3c( get_post_time( 'c', true, $adjunto ) );
+            $metadatos            = wp_get_attachment_metadata( $adjunto );
+            if ( ! empty( $metadatos[ 'length' ] ) ) {
+                $video[ 'duracion' ] = (int) $metadatos[ 'length' ];
+            }
+            $miniatura = get_post_thumbnail_id( $adjunto );
+            if ( $miniatura ) {
+                $video[ 'imagen' ] = (string) wp_get_attachment_image_url( $miniatura, 'full' );
+            }
+        }
+
+        if ( '' === $video[ 'titulo' ] ) {
+            $video[ 'titulo' ] = $entrada->titulo;
+        }
+        if ( '' === $video[ 'imagen' ] ) {
+            //Google exige miniatura: sin una propia se recurre a la imagen destacada.
+            $video[ 'imagen' ] = (string) get_the_post_thumbnail_url( $entrada->ID, 'full' );
+        }
+
+        return $video;
+    }
+
+    /**
+     * Convierte una fecha a formato W3C, que es el que exige Google.
+     *
+     * @param string $fecha Fecha en cualquier formato que entienda strtotime().
+     * @return string
+     */
+    static protected function fecha_w3c( $fecha ) {
+        $marca = strtotime( (string) $fecha );
+
+        return $marca ? gmdate( 'c', $marca ) : '';
     }
 
     //Busca el vídeo en el contenido
     static public function busca_videos( $contenido, $videos ) { //Mejorado con ayuda de Ludo Bonnet [https://github.com/ludobonnet]
+        $contenido = (string) $contenido;
+        //Los constructores visuales guardan el contenido como JSON, con las barras escapadas.
+        $contenido = str_replace( '\/', '/', $contenido );
+
         if ( preg_match_all( '/youtube\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER ) || preg_match_all( '/youtube-nocookie\.com\/(v\/|watch\?v=|embed\/)([^\$][a-zA-Z0-9\-_]*)/', $contenido, $busquedas, PREG_SET_ORDER ) ) { //Youtube
             foreach ( $busquedas as $busqueda ) {
                 $identificador               = $busqueda[ 2 ];
@@ -280,36 +646,54 @@ class APGSitemapVideo {
                 }
             }
         }
+        //Vídeo autoalojado: bloque de vídeo, etiqueta <video> y shortcode [video]
+        if ( preg_match_all( '/(?:src|mp4|m4v|webm|ogv|flv|wmv)\s*=\s*["\']([^"\']+)["\']/i', $contenido, $busquedas, PREG_SET_ORDER ) ) {
+            foreach ( $busquedas as $busqueda ) {
+                $url       = $busqueda[ 1 ];
+                $ruta      = wp_parse_url( $url, PHP_URL_PATH );
+                $extension = strtolower( (string) pathinfo( (string) $ruta, PATHINFO_EXTENSION ) );
+                if ( ! in_array( $extension, self::EXTENSIONES, true ) ) {
+                    continue;
+                }
+                $identificador            = 'local_' . md5( $url );
+                $videos[ $identificador ] = [ 
+                    'proveedor'		=> 'local', 
+                    'identificador'	=> $identificador, 
+                    'contenido'		=> $url 
+                ];
+            }
+        }
 
         return $videos;
     }
     
     //Genera el procesamiento de los vídeos
     static public function procesamiento() {
-        $videos = APGSitemapVideo::consulta();
-        if ( ! empty( $videos ) ) {
-            $videos_buscados    = [];
-            $video_procesado    = [];
-            foreach ( $videos as $video ) {
-                //Procesamos el contenido
-                $contenido        = $video->post_content;
-                $videos_buscados  = APGSitemapVideo::busca_videos( $contenido, $videos_buscados );
-                //Procesamos el extracto
-                $contenido        = $video->post_excerpt;
-                $videos_buscados  = APGSitemapVideo::busca_videos( $contenido, $videos_buscados );
-                if ( ! empty( $videos_buscados ) ) {
-                    foreach ( $videos_buscados as $video_buscado ) {
-                        $argumentos     = [
-                            'identificador' => $video_buscado[ 'identificador' ], 
-                            'proveedor'     => $video_buscado[ 'proveedor' ]
-                        ];
-                        if ( false === as_next_scheduled_action( 'apg_video_sitemap_procesamiento' ) ) {
-                            as_schedule_recurring_action( strtotime( '+1 minute' ), YEAR_IN_SECONDS, 'apg_video_sitemap_procesamiento', $argumentos, 'apg_video_sitemap' );
-                        }
-                    }
+        if ( ! function_exists( 'as_schedule_single_action' ) ) {
+            return;
+        }
+
+        $entradas = self::consulta();
+        if ( empty( $entradas ) ) {
+            return;
+        }
+
+        $video_procesado = [];
+        foreach ( $entradas as $entrada ) {
+            foreach ( self::busca_videos( $entrada->contenido, [] ) as $video_buscado ) {
+                $identificador = $video_buscado[ 'identificador' ];
+                //El vídeo autoalojado no consulta ninguna API: no hay nada que precargar.
+                if ( $video_buscado[ 'proveedor' ] === 'local' || isset( $video_procesado[ $identificador ] ) ) {
+                    continue;
                 }
+
+                as_schedule_single_action( time() + MINUTE_IN_SECONDS, 'apg_video_sitemap_procesamiento', [
+                    'identificador' => $identificador,
+                    'proveedor'     => $video_buscado[ 'proveedor' ],
+                ], 'apg_video_sitemap' );
+                $video_procesado[ $identificador ] = true;
             }
         }
     }
 }
-new APGSitemapVideo();
+new APG_Video_Sitemap();
