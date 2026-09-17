@@ -1,44 +1,130 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Art Project Group
+# This file is distributed under the same license as the APG Google Video Sitemap Feed package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: APG Google Video Sitemap Feed 3.0.0\n"
 "Report-Msgid-Bugs-To: https://artprojectgroup.es/\n"
-"POT-Creation-Date: 2026-09-17 12:00+0000\n"
+"POT-Creation-Date: 2026-09-18 01:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Domain: google-video-sitemap-feed-with-multisite-support\n"
 
-#. Name of the plugin
-msgid "APG Google Video Sitemap Feed"
+#: apg-xml-sitemap.php:98 includes/formulario.php:14
+msgid "Google Video Sitemap Feed Options."
 msgstr ""
 
-#. Author of the plugin
-msgid "Art Project Group"
+#: apg-xml-sitemap.php:109
+msgid "You do not have permission to access this page."
 msgstr ""
 
-#. Description of the plugin
-msgid "Dynamically generates a Google Video Sitemap. Compatible with WordPress Multisite installations. Created from <a href=\"https://profiles.wordpress.org/users/timbrd/\" target=\"_blank\">Tim Brandon</a> <a href=\"https://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/\" target=\"_blank\"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href=\"https://profiles.wordpress.org/labnol/\" target=\"_blank\">Amit Agarwal</a> <a href=\"https://wordpress.org/plugins/xml-sitemaps-for-videos/\" target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href=\"https://twitter.com/ludobonnet\" target=\"_blank\">Ludo Bonnet</a>."
+#. translators: %s: name of the detected SEO plugin.
+#: includes/admin/aviso-seo.php:125
+#, php-format
+msgid "%s is already publishing a video sitemap, so this plugin is probably redundant. Keeping both is harmless, but you only need one."
 msgstr ""
 
-#: includes/cuadro-informacion.php:33
-#: includes/admin/funciones-apg.php:32
+#: includes/admin/aviso-seo.php:131
+msgid "Deactivate this plugin"
+msgstr ""
+
+#: includes/admin/aviso-seo.php:132
+msgid "Keep it and hide this notice"
+msgstr ""
+
+#. translators: 1: URL of the page, 2: title of the page, 3: name of the website, 4: identifier of the video.
+#: includes/admin/clases/xml.php:352
+#, php-format
+msgid "Please check the page <a href=\"%1$s\">%2$s</a> from your website %3$s and edit the deleted video with id %4$s.<br /><br />email sent by <a href=\"https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed\">APG Google Video Sitemap Feed</a>."
+msgstr ""
+
+#: includes/admin/clases/xml.php:353
+msgid "Video not found!"
+msgstr ""
+
+#. translators: %s: name of the payment platform.
+#: includes/admin/funciones-apg.php:29
+#, php-format
+msgid "Make a donation by %s"
+msgstr ""
+
+#. translators: %s: name of the social network.
+#: includes/admin/funciones-apg.php:31 includes/admin/funciones-apg.php:33
+#: includes/admin/funciones-apg.php:35
+#, php-format
+msgid "Follow us on %s"
+msgstr ""
+
+#. translators: %s: name of the website where the plugins are published.
+#: includes/admin/funciones-apg.php:37
+#, php-format
+msgid "More plugins on %s"
+msgstr ""
+
+#. translators: %s: name of the contact method.
+#: includes/admin/funciones-apg.php:39 includes/admin/funciones-apg.php:41
 #, php-format
 msgid "Contact us by %s"
 msgstr ""
 
-#: includes/cuadro-informacion.php:31
+#. translators: %s: name of the plugin.
+#: includes/admin/funciones-apg.php:79
+#, php-format
+msgid "Settings of %s"
+msgstr ""
+
+#. translators: %s: name of the plugin.
+#: includes/admin/funciones-apg.php:81
+#, php-format
+msgid "Support of %s"
+msgstr ""
+
+#: includes/admin/funciones-apg.php:83
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/funciones-apg.php:84 includes/cuadro-informacion.php:48
+msgid "Support"
+msgstr ""
+
+#. translators: %s: name of the plugin.
+#: includes/admin/funciones-apg.php:108 includes/cuadro-informacion.php:8
+#, php-format
+msgid "Please, rate %s:"
+msgstr ""
+
+#: includes/admin/funciones-apg.php:119
+msgid "Unknown rating"
+msgstr ""
+
+#: includes/cuadro-informacion.php:14
+msgid "If you enjoy this plugin and find it helpful, please make a donation:"
+msgstr ""
+
+#: includes/cuadro-informacion.php:26
+msgid "Follow us:"
+msgstr ""
+
+#: includes/cuadro-informacion.php:32
+msgid "More plugins:"
+msgstr ""
+
+#: includes/cuadro-informacion.php:40
 msgid "Contact us:"
 msgstr ""
 
-#: includes/cuadro-informacion.php:37
+#: includes/cuadro-informacion.php:46
 msgid "Documentation and Support:"
 msgstr ""
 
-#: includes/formulario.php:19
+#: includes/formulario.php:18
 msgid "Dynamically generates a Google Video Sitemap."
 msgstr ""
 
@@ -46,109 +132,30 @@ msgstr ""
 msgid "email:"
 msgstr ""
 
-#: includes/cuadro-informacion.php:19
-#: includes/admin/funciones-apg.php:30
-#, php-format
-msgid "Follow us on %s"
+#: includes/formulario.php:31
+msgid "Send video error notifications by email."
 msgstr ""
 
-#: includes/cuadro-informacion.php:17
-msgid "Follow us:"
+#: includes/formulario.php:37
+msgid "Save Changes"
 msgstr ""
 
-#: apg-xml-sitemap.php:92
-#: includes/formulario.php:14
-msgid "Google Video Sitemap Feed Options."
-msgstr ""
-
-#. Author URI of the plugin
-msgid "https://artprojectgroup.es/"
+#. Name of the plugin
+msgid "APG Google Video Sitemap Feed"
 msgstr ""
 
 #. URI of the plugin
 msgid "https://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/"
 msgstr ""
 
-#: includes/cuadro-informacion.php:5
-msgid "If you enjoy this plugin and find it helpful, please make a donation:"
+#. Description of the plugin
+msgid "Dynamically generates a Google Video Sitemap. Compatible with WordPress Multisite installations. Created from <a href=\"https://profiles.wordpress.org/timbrd/\" target=\"_blank\">Tim Brandon</a> <a href=\"https://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/\" target=\"_blank\"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href=\"https://profiles.wordpress.org/labnol/\" target=\"_blank\">Amit Agarwal</a> <a href=\"https://wordpress.org/plugins/xml-sitemaps-for-videos/\" target=\"_blank\"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href=\"https://twitter.com/ludobonnet\" target=\"_blank\">Ludo Bonnet</a>."
 msgstr ""
 
-#: includes/cuadro-informacion.php:7
-#: includes/admin/funciones-apg.php:28
-#, php-format
-msgid "Make a donation by %s"
+#. Author of the plugin
+msgid "Art Project Group"
 msgstr ""
 
-#: includes/cuadro-informacion.php:25
-#: includes/admin/funciones-apg.php:31
-#, php-format
-msgid "More plugins on %s"
-msgstr ""
-
-#: includes/cuadro-informacion.php:23
-msgid "More plugins:"
-msgstr ""
-
-#: includes/admin/clases/xml.php:243
-#, php-format
-msgid "Please check the page <a href=\"%1$s\">%2$s</a> from your website %3$s and edit the deleted video with id %4$s.<br /><br />email sent by <a href=\"https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed\">APG Google Video Sitemap Feed</a>."
-msgstr ""
-
-#: includes/cuadro-informacion.php:44
-#: includes/admin/funciones-apg.php:64
-#: includes/admin/funciones-apg.php:79
-#, php-format
-msgid "Please, rate %s:"
-msgstr ""
-
-#: includes/formulario.php:38
-msgid "Save Changes"
-msgstr ""
-
-#: includes/formulario.php:31
-msgid "Send video error notifications by email."
-msgstr ""
-
-#: includes/admin/funciones-apg.php:45
-msgid "Settings"
-msgstr ""
-
-#: includes/admin/funciones-apg.php:45
-#, php-format
-msgid "Settings of %s"
-msgstr ""
-
-#: includes/cuadro-informacion.php:39
-#: includes/admin/funciones-apg.php:46
-msgid "Support"
-msgstr ""
-
-#: includes/admin/funciones-apg.php:46
-#, php-format
-msgid "Support of %s"
-msgstr ""
-
-#: includes/admin/funciones-apg.php:73
-msgid "Unknown rating"
-msgstr ""
-
-#: includes/admin/clases/xml.php:243
-msgid "Video not found!"
-msgstr ""
-
-#: apg-xml-sitemap.php:106
-msgid "You do not have permission to access this page."
-msgstr ""
-
-#: includes/admin/aviso-seo.php:126
-msgid "Deactivate this plugin"
-msgstr ""
-
-#: includes/admin/aviso-seo.php:127
-msgid "Keep it and hide this notice"
-msgstr ""
-
-#: includes/admin/aviso-seo.php:120
-#, php-format
-msgid "%s is already publishing a video sitemap, so this plugin is probably redundant. Keeping both is harmless, but you only need one."
+#. Author URI of the plugin
+msgid "https://artprojectgroup.es/"
 msgstr ""

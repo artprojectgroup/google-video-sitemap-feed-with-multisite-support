@@ -3,7 +3,7 @@
 Plugin Name: APG Google Video Sitemap Feed
 Version: 3.0.0
 Plugin URI: https://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
-Description: Dynamically generates a Google Video Sitemap. Compatible with WordPress Multisite installations. Created from <a href="https://profiles.wordpress.org/users/timbrd/" target="_blank">Tim Brandon</a> <a href="https://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="https://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="https://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://twitter.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
+Description: Dynamically generates a Google Video Sitemap. Compatible with WordPress Multisite installations. Created from <a href="https://profiles.wordpress.org/timbrd/" target="_blank">Tim Brandon</a> <a href="https://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="https://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="https://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://twitter.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
 Author: Art Project Group
 Author URI: https://artprojectgroup.es/
 Requires at least: 6.0

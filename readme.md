@@ -54,13 +54,13 @@ Esta es la documentación en español. La [ficha del plugin en WordPress.org](ht
 
 ### Origen
 
-**APG Google Video Sitemap Feed** ha sido programado a partir de los plugins [*Google News Sitemap Feed With Multisite Support*](http://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/) de [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [*Google XML Sitemap for Videos*](http://wordpress.org/plugins/xml-sitemaps-for-videos/) de [Amit Agarwal](http://profiles.wordpress.org/labnol/), que aún siendo magníficos plugins no ofrecían todas las características que necesitábamos. Aún así su trabajo ha sido completamente imprescindible para la realización de este plugin.
+**APG Google Video Sitemap Feed** ha sido programado a partir de los plugins [*Google News Sitemap Feed With Multisite Support*](https://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/) de [Tim Brandon](https://profiles.wordpress.org/timbrd/) y [*Google XML Sitemap for Videos*](https://wordpress.org/plugins/xml-sitemaps-for-videos/) de [Amit Agarwal](https://profiles.wordpress.org/labnol/), que aún siendo magníficos plugins no ofrecían todas las características que necesitábamos. Aún así su trabajo ha sido completamente imprescindible para la realización de este plugin.
 
 También se han realizado mejoras a partir de la versión 1.0 gracias al código aportado por [Ludo Bonnet](https://twitter.com/ludobonnet) y su idea de mejorar **APG Google Video Sitemap Feed** añadiéndole soporte para Vimeo y Dailymotion. 
 
 ### Complementos
 
-Se recomienda el uso de **APG Google Video Sitemap Feed** junto a [**APG Google Image Sitemap Feed**](http://wordpress.org/plugins/google-image-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-image.xml`, y [**Google Mobile Sitemap Feed With Multisite Support**](http://wordpress.org/plugins/google-mobile-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-mobile.xml`.
+Se recomienda el uso de **APG Google Video Sitemap Feed** junto a [**APG Google Image Sitemap Feed**](https://wordpress.org/plugins/google-image-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-image.xml`, y [**Google Mobile Sitemap Feed With Multisite Support**](https://wordpress.org/plugins/google-mobile-sitemap-feed-with-multisite-support/) que genera el archivo `sitemap-mobile.xml`.
 
 ### Muy importante
 
@@ -80,7 +80,7 @@ No olvides dejarnos tu comentario en:
 
 ### Más plugins
 
-Recuerda que puedes encontrar más [plugins para WordPress](https://artprojectgroup.es/plugins-para-wordpress) en [Art Project Group](https://artprojectgroup.es) y en nuestro perfil en [WordPress](http://profiles.wordpress.org/artprojectgroup/).
+Recuerda que puedes encontrar más [plugins para WordPress](https://artprojectgroup.es/plugins-para-wordpress) en [Art Project Group](https://artprojectgroup.es) y en nuestro perfil en [WordPress](https://profiles.wordpress.org/artprojectgroup/).
 
 ### GitHub
 
@@ -322,7 +322,7 @@ Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**,
 
 ### 1.0
 
-- Añadido soporte para el acortador http://youtu.be.
+- Añadido soporte para el acortador https://youtu.be.
 - Añadido soporte para Vimeo.
 - Añadido soporte para Dailymotion.
 
@@ -390,7 +390,7 @@ Esperamos que os siga gustando nuestra iniciativa.
 
 ## Gracias
 
-- A [Tim Brandon](http://profiles.wordpress.org/users/timbrd/) y [Amit Agarwal](http://profiles.wordpress.org/labnol/) por sus grandes plugins que han inspirado **APG Google Video Sitemap Feed**.
+- A [Tim Brandon](https://profiles.wordpress.org/timbrd/) y [Amit Agarwal](https://profiles.wordpress.org/labnol/) por sus grandes plugins que han inspirado **APG Google Video Sitemap Feed**.
 - A [Ludo Bonnet](https://twitter.com/ludobonnet) por sus aportaciones al código y por su idea de añadir soporte para Vimeo y Dailymotion.
 - A todos los que lo usáis.
 - A todos los que ayudáis a mejorarlo.
