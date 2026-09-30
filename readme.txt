@@ -5,7 +5,7 @@ Tags: video sitemap, sitemap, youtube, vimeo, dailymotion
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -104,6 +104,10 @@ If you need help installing or configuring **APG Google Video Sitemap Feed**, **
 2. Screenshot of the `sitemap-video.xml` file.
 
 == Changelog ==
+= 3.0.1 =
+* Fixed a loop that re-queued the same videos every minute and fired thousands of daily requests to the video APIs.
+* Video checks now run as a daily task and on content changes, instead of on every admin page load.
+* A video that fails is retried three times and then abandoned, leaving a note in the Action Scheduler log.
 = 3.0.0 =
 * Every video on the same page is now grouped into a single sitemap entry.
 * Added support for videos hosted on your own website.
@@ -251,6 +255,9 @@ If you need help installing or configuring **APG Google Video Sitemap Feed**, **
 * Initial release.
 
 == Upgrade Notice ==
+= 3.0.1 =
+* Fixes a loop that re-queued the same videos every minute. Update as soon as you can.
+
 = 3.0.0 =
 * New features (self hosted video, custom fields, duration, uploader and date of each video), several sitemap fixes and hardened security. See the changelog.
 

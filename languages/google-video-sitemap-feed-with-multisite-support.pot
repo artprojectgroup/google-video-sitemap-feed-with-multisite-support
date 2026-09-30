@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: APG Google Video Sitemap Feed 3.0.0\n"
+"Project-Id-Version: APG Google Video Sitemap Feed 3.0.1\n"
 "Report-Msgid-Bugs-To: https://artprojectgroup.es/\n"
-"POT-Creation-Date: 2026-09-18 01:14+0200\n"
+"POT-Creation-Date: 2026-09-30 22:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,13 +40,25 @@ msgid "Keep it and hide this notice"
 msgstr ""
 
 #. translators: 1: URL of the page, 2: title of the page, 3: name of the website, 4: identifier of the video.
-#: includes/admin/clases/xml.php:352
+#: includes/admin/clases/xml.php:366
 #, php-format
 msgid "Please check the page <a href=\"%1$s\">%2$s</a> from your website %3$s and edit the deleted video with id %4$s.<br /><br />email sent by <a href=\"https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed\">APG Google Video Sitemap Feed</a>."
 msgstr ""
 
-#: includes/admin/clases/xml.php:353
+#: includes/admin/clases/xml.php:367
 msgid "Video not found!"
+msgstr ""
+
+#. translators: 1: video identifier, 2: video provider, 3: number of times.
+#: includes/admin/clases/xml.php:831
+#, php-format
+msgid "The video %1$s (%2$s) has been processed %3$d times in 24 hours. Something is queueing it again in a loop."
+msgstr ""
+
+#. translators: 1: video identifier, 2: number of attempts.
+#: includes/admin/clases/xml.php:848
+#, php-format
+msgid "The video %1$s could not be read after %2$d attempts. It will not be tried again until its page changes."
 msgstr ""
 
 #. translators: %s: name of the payment platform.

@@ -12,7 +12,7 @@ Tested up to: 7.1
 
 Requires PHP: 7.4
 
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 
 License: GPLv3
 
@@ -132,6 +132,12 @@ Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**,
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
+
+### 3.0.1
+
+- Corregido un bucle que reencolaba los mismos vídeos cada minuto y disparaba miles de peticiones diarias a las APIs.
+- La revisión de los vídeos pasa a una tarea diaria y a los cambios de contenido, en lugar de ejecutarse en cada carga del escritorio.
+- Un vídeo que falla se reintenta tres veces y se abandona, dejando constancia en el registro de Action Scheduler.
 
 ### 3.0.0
 

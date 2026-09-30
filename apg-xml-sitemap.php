@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: APG Google Video Sitemap Feed
-Version: 3.0.0
+Version: 3.0.1
 Plugin URI: https://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
 Description: Dynamically generates a Google Video Sitemap. Compatible with WordPress Multisite installations. Created from <a href="https://profiles.wordpress.org/timbrd/" target="_blank">Tim Brandon</a> <a href="https://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="https://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="https://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://twitter.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
 Author: Art Project Group
@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 
 //Definimos constantes
 define( 'APG_VIDEO_SITEMAP_DIRECCION', plugin_basename( __FILE__ ) );
-define( 'APG_VIDEO_SITEMAP_VERSION', '3.0.0' );
+define( 'APG_VIDEO_SITEMAP_VERSION', '3.0.1' );
 
 //Funciones generales de APG
 include_once( plugin_dir_path( __FILE__ ) . 'includes/admin/funciones-apg.php' );
@@ -128,7 +128,7 @@ add_filter( 'action_scheduler_retention_period', function() {
  * @return void
  */
 function apg_video_sitemap_procesamiento( $identificador, $proveedor ) {
-	APG_Video_Sitemap::obtiene_informacion( $identificador, $proveedor );
+	APG_Video_Sitemap::procesa_video( $identificador, $proveedor );
 }
 add_action( 'apg_video_sitemap_procesamiento', 'apg_video_sitemap_procesamiento', 10 , 2 );
 
@@ -148,6 +148,7 @@ function apg_video_sitemap_comprueba_version() {
 
     delete_transient( 'xml_video_sitemap_consulta' );
     delete_transient( 'apg_video_sitemap_plugin' );
+    delete_transient( 'xml_video_sitemap_procesado' ); //Marca de las versiones anteriores, ya sin uso
     wp_clear_scheduled_hook( 'enviar_ping' ); //El ping a buscadores ya no existe
     update_option( 'apg_video_sitemap_version', APG_VIDEO_SITEMAP_VERSION, false );
 
@@ -213,11 +214,14 @@ function apg_video_sitemap_desinstalar() {
 
     if ( function_exists( 'as_unschedule_all_actions' ) ) {
         as_unschedule_all_actions( 'apg_video_sitemap_procesamiento' );
+        as_unschedule_all_actions( 'apg_video_sitemap_revision' );
     }
 
 	delete_option( 'xml_video_sitemap' );
     delete_option( 'apg_video_sitemap_paginas' );
     delete_option( 'apg_video_sitemap_version' );
+    delete_option( 'apg_video_sitemap_videos' );
+    delete_option( 'apg_video_sitemap_revision_diaria' );
 }
 register_uninstall_hook( __FILE__, 'apg_video_sitemap_desinstalar' );
 
@@ -228,5 +232,12 @@ register_uninstall_hook( __FILE__, 'apg_video_sitemap_desinstalar' );
  */
 function apg_video_sitemap_desactivador() {
     APG_Video_Sitemap::desactivar();
+
+    //Nada debe quedar en la cola de un plugin desactivado.
+    if ( function_exists( 'as_unschedule_all_actions' ) ) {
+        as_unschedule_all_actions( 'apg_video_sitemap_procesamiento' );
+        as_unschedule_all_actions( 'apg_video_sitemap_revision' );
+    }
+    delete_option( 'apg_video_sitemap_revision_diaria' );
 }
 register_deactivation_hook( __FILE__, 'apg_video_sitemap_desactivador' );
