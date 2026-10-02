@@ -5,7 +5,7 @@ Tags: video sitemap, sitemap, youtube, vimeo, dailymotion
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -19,7 +19,7 @@ Dynamically generates sitemap-video.xml, a video sitemap for Google. It needs no
 * Automatically adds every YouTube, Vimeo and Dailymotion video.
 * Supports every custom post type.
 * Also detects videos hosted on your own website: the video block, the `[video]` shortcode and the media library.
-* Finds videos even when they live in custom fields belonging to your theme or to a page builder.
+* Finds videos even when they live in the custom fields of the most common page builders or in the oEmbed cache.
 * Publishes the duration, the publication date and the uploader of each video.
 * Groups every video of the same page into a single sitemap entry, the way Google's specification expects.
 * Automatically caches the external data of each video to speed up building `sitemap-video.xml`.
@@ -104,6 +104,10 @@ If you need help installing or configuring **APG Google Video Sitemap Feed**, **
 2. Screenshot of the `sitemap-video.xml` file.
 
 == Changelog ==
+= 3.0.2 =
+* The sitemap no longer rebuilds on every post save: it only does so when the post that changed contains, or used to contain, videos.
+* The custom field search now looks at a list of known keys instead of scanning the whole metadata table.
+* The plugin no longer changes the Action Scheduler retention period for the whole website.
 = 3.0.1 =
 * Fixed a loop that re-queued the same videos every minute and fired thousands of daily requests to the video APIs.
 * Video checks now run as a daily task and on content changes, instead of on every admin page load.
@@ -255,6 +259,9 @@ If you need help installing or configuring **APG Google Video Sitemap Feed**, **
 * Initial release.
 
 == Upgrade Notice ==
+= 3.0.2 =
+* Performance: the sitemap no longer rebuilds after every post save, and the custom field search no longer scans the whole metadata table.
+
 = 3.0.1 =
 * Fixes a loop that re-queued the same videos every minute. Update as soon as you can.
 

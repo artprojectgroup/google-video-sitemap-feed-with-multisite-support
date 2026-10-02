@@ -12,7 +12,7 @@ Tested up to: 7.1
 
 Requires PHP: 7.4
 
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 
 License: GPLv3
 
@@ -37,7 +37,7 @@ Esta es la documentación en español. La [ficha del plugin en WordPress.org](ht
 - Genera automáticamente múltiples sitemaps con un máximo de 50.000 páginas por cada uno de ellos.
 - Actualiza el sitemap en cuanto se publica, se edita o se borra una entrada.
 - Detecta también los vídeos alojados en el propio sitio web: bloque de vídeo, shortcode `[video]` y biblioteca de medios.
-- Encuentra los vídeos aunque estén en campos personalizados de temas o de constructores visuales.
+- Encuentra los vídeos aunque estén en los campos personalizados de los constructores visuales más usados o en la caché de oEmbed.
 - Publica la duración, la fecha de publicación y el autor de cada vídeo.
 - Agrupa todos los vídeos de una misma página en una sola entrada del sitemap, como espera la especificación de Google.
 - Se anuncia solo en `robots.txt` y en el índice de sitemaps de WordPress.
@@ -132,6 +132,12 @@ Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**,
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
+
+### 3.0.2
+
+- El sitemap deja de regenerarse al guardar cualquier entrada: sólo lo hace cuando la que cambia contiene o contenía vídeos.
+- La búsqueda en campos personalizados pasa a una lista de claves conocidas y deja de recorrer toda la tabla de metadatos.
+- El plugin deja de cambiar el tiempo de retención de Action Scheduler de todo el sitio web.
 
 ### 3.0.1
 

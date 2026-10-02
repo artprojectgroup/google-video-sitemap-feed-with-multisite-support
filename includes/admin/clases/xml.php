@@ -61,11 +61,11 @@ class APG_Video_Sitemap {
         //Descubrimiento del sitemap, ahora que Google y Bing ya no aceptan pings
         add_filter( 'robots_txt', [ $this, 'robots_txt' ], 10, 2 );
         add_filter( 'wp_sitemaps_index_entries', [ $this, 'indice_del_core' ] );
-        //Actúa cuando se publica una página, una entrada o se borra una entrada
-        add_action( 'publish_post', [ $this, 'limpia_cache' ], 999, 1 );
-        add_action( 'publish_page', [ $this, 'limpia_cache' ], 999, 1 );
-        add_action( 'delete_post', [ $this, 'limpia_cache' ], 999, 1 );
-        add_action( 'pre_post_update', [ $this, 'limpia_cache' ], 999, 1 );
+        //Sólo se invalida cuando cambia una entrada que contiene o contenía vídeos
+        add_action( 'post_updated', [ $this, 'entrada_actualizada' ], 999, 3 );
+        add_action( 'save_post', [ $this, 'entrada_guardada' ], 999, 2 );
+        add_action( 'deleted_post', [ $this, 'entrada_borrada' ], 999, 2 );
+        add_action( 'trashed_post', [ $this, 'entrada_borrada' ], 999, 1 );
         //La revisión de vídeos cuelga de la cola, nunca de una carga de página
         add_action( 'apg_video_sitemap_revision', [ __CLASS__, 'procesamiento' ] );
         add_action( 'action_scheduler_before_execute', [ __CLASS__, 'recuerda_accion' ] );
@@ -193,6 +193,113 @@ class APG_Video_Sitemap {
 		self::programa_revision();
 	}
 
+    /**
+     * Comprueba si un texto contiene algo que parezca un vídeo.
+     *
+     * Es una criba barata en memoria: evita rehacer una consulta de casi un segundo
+     * cada vez que se guarda cualquier cosa.
+     *
+     * @param string $texto Texto a examinar.
+     * @return bool
+     */
+    static public function tiene_video( $texto ) {
+        $texto = (string) $texto;
+        foreach ( self::PATRONES as $patron ) {
+            if ( false !== stripos( $texto, $patron ) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Decide si una entrada puede llegar a salir en el sitemap.
+     *
+     * @param WP_Post|null $entrada Entrada.
+     * @return bool
+     */
+    static protected function entrada_cuenta( $entrada ) {
+        if ( ! $entrada instanceof WP_Post ) {
+            return false;
+        }
+
+        //Las revisiones y los autoguardados no se publican nunca.
+        if ( wp_is_post_revision( $entrada ) || wp_is_post_autosave( $entrada ) ) {
+            return false;
+        }
+
+        return in_array( $entrada->post_type, self::dame_tipos_de_entradas(), true );
+    }
+
+    /**
+     * Devuelve el texto de una entrada donde puede haber vídeos.
+     *
+     * @param WP_Post $entrada Entrada.
+     * @return string
+     */
+    static protected function dame_texto( $entrada ) {
+        return $entrada->post_content . ' ' . $entrada->post_excerpt;
+    }
+
+    /**
+     * Invalida la caché al editar una entrada, sólo si el cambio afecta al sitemap.
+     *
+     * @param int     $entrada_id Identificador de la entrada.
+     * @param WP_Post $despues    Entrada después de guardar.
+     * @param WP_Post $antes      Entrada antes de guardar.
+     * @return void
+     */
+    public function entrada_actualizada( $entrada_id, $despues, $antes ) {
+        if ( ! self::entrada_cuenta( $despues ) ) {
+            return;
+        }
+
+        //Cuenta tanto si ahora tiene vídeo como si lo tenía y ha dejado de tenerlo.
+        $ahora  = 'publish' === $despues->post_status && self::tiene_video( self::dame_texto( $despues ) );
+        $estaba = $antes instanceof WP_Post && 'publish' === $antes->post_status && self::tiene_video( self::dame_texto( $antes ) );
+
+        if ( $ahora || $estaba ) {
+            self::limpia_cache();
+        }
+    }
+
+    /**
+     * Invalida la caché al crear una entrada con vídeos.
+     *
+     * @param int     $entrada_id Identificador de la entrada.
+     * @param WP_Post $entrada    Entrada guardada.
+     * @return void
+     */
+    public function entrada_guardada( $entrada_id, $entrada ) {
+        if ( ! self::entrada_cuenta( $entrada ) || 'publish' !== $entrada->post_status ) {
+            return;
+        }
+
+        if ( self::tiene_video( self::dame_texto( $entrada ) ) ) {
+            self::limpia_cache();
+        }
+    }
+
+    /**
+     * Invalida la caché al borrar o enviar a la papelera una entrada con vídeos.
+     *
+     * @param int          $entrada_id Identificador de la entrada.
+     * @param WP_Post|null $entrada    Entrada borrada, si el gancho la pasa.
+     * @return void
+     */
+    public function entrada_borrada( $entrada_id, $entrada = null ) {
+        $entrada = ( $entrada instanceof WP_Post ) ? $entrada : get_post( $entrada_id );
+
+        if ( ! self::entrada_cuenta( $entrada ) ) {
+            return;
+        }
+
+        if ( self::tiene_video( self::dame_texto( $entrada ) ) ) {
+            self::limpia_cache();
+        }
+    }
+
 	//Desactiva el plugin
 	public static function desactivar() {
 		global $wp_rewrite;
@@ -217,19 +324,28 @@ class APG_Video_Sitemap {
     }
 
     /**
-     * Campos personalizados que nunca contienen vídeos y no merece la pena recorrer.
+     * Campos personalizados donde buscar vídeos.
+     *
+     * Es una lista blanca a propósito. Recorrer toda la tabla de metadatos excluyendo unas
+     * pocas claves obliga a leerla entera: medido en producción, 413 ms frente a 2 ms con
+     * IN sobre el índice de meta_key. Además, lo único que encontraba el recorrido completo
+     * eran copias de seguridad de constructores y schema generado a partir del propio vídeo,
+     * que no son contenido vivo y pueden resucitar vídeos ya borrados de la entrada.
      *
      * @return string[]
      */
-    static public function dame_campos_excluidos() {
-        $excluidos = [ '_edit_lock', '_edit_last', '_thumbnail_id', '_wp_page_template', '_wp_old_slug', '_wp_old_date', '_wp_attached_file', '_wp_attachment_metadata' ];
+    static public function dame_campos_incluidos() {
+        $incluidos = [
+            '_elementor_data',          //Elementor
+            'wpex_post_oembed',         //Total
+            'panels_data',              //SiteOrigin Page Builder
+            '_et_pb_old_content',       //Divi
+            'fusion_builder_content',   //Avada, el contenido vivo y no la copia de seguridad
+        ];
 
-        $excluidos = array_map( 'strval', (array) apply_filters( 'apg_video_sitemap_campos_excluidos', $excluidos ) );
+        $incluidos = array_map( 'strval', (array) apply_filters( 'apg_video_sitemap_campos_incluidos', $incluidos ) );
 
-        //La lista viaja a FIND_IN_SET() separada por comas: una clave con coma la rompería.
-        return array_values( array_unique( array_filter( $excluidos, static function( $clave ) {
-            return '' !== $clave && false === strpos( $clave, ',' );
-        } ) ) );
+        return array_values( array_unique( array_filter( $incluidos ) ) );
     }
 
     /**
@@ -284,14 +400,15 @@ class APG_Video_Sitemap {
          * @param bool $busca Si hay que buscar vídeos en los campos personalizados.
          */
         $busca_campos = (bool) apply_filters( 'apg_video_sitemap_busca_en_campos_personalizados', true );
+        $campos       = self::dame_campos_incluidos();
 
-        //Cada consulta se pasa entera y literal a $wpdb->prepare(): lo único variable son
-        //los parámetros. Las listas (tipos de entrada y campos excluidos) viajan como una
-        //sola cadena separada por comas para FIND_IN_SET(), así no hay que montar marcadores.
-        if ( $busca_campos ) {
-            //La segunda rama recoge constructores visuales, ACF, la caché de oEmbed y los campos de los temas.
-            $argumentos = array_merge( [ $tipos ], $patrones, $patrones, [ $tipos, implode( ',', self::dame_campos_excluidos() ) ], $patrones );
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- no hay API de WordPress que busque siete cadenas dentro del contenido y el resultado se guarda en el transitorio xml_video_sitemap_consulta unas líneas más abajo; $argumentos lleva 24 valores para los 24 marcadores de esta consulta.
+        //Las consultas se pasan a $wpdb->prepare() con todos sus parámetros. La segunda rama
+        //sólo mira las claves conocidas y la caché de oEmbed, que es lo que de verdad guarda
+        //contenido vivo, en lugar de leer la tabla de metadatos entera.
+        if ( $busca_campos && $campos ) {
+            $campos_sql = implode( ', ', array_fill( 0, count( $campos ), '%s' ) );
+            $argumentos = array_merge( [ $tipos ], $patrones, $patrones, $campos, [ $wpdb->esc_like( '_oembed_' ) . '%', $tipos ], $patrones );
+            // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- lo único interpolado es $campos_sql, una lista de marcadores %s generada a partir de dame_campos_incluidos(); se usa IN y no FIND_IN_SET porque IN sí aprovecha el índice de meta_key (2 ms frente a 413 ms medidos en producción). El resultado se guarda en el transitorio xml_video_sitemap_consulta unas líneas más abajo.
             $filas      = $wpdb->get_results( $wpdb->prepare( "(SELECT ID, post_title, post_excerpt, post_date, post_modified, post_content AS contenido
                                 FROM $wpdb->posts
                                 WHERE post_status = 'publish'
@@ -303,11 +420,12 @@ class APG_Video_Sitemap {
                                 FROM $wpdb->posts AS entradas
                                 INNER JOIN $wpdb->postmeta AS campos
                                     ON campos.post_id = entradas.ID
+                                        AND ( campos.meta_key IN ( $campos_sql ) OR campos.meta_key LIKE %s )
                                 WHERE entradas.post_status = 'publish'
                                     AND FIND_IN_SET( entradas.post_type, %s )
-                                    AND NOT FIND_IN_SET( campos.meta_key, %s )
                                     AND ( campos.meta_value LIKE %s OR campos.meta_value LIKE %s OR campos.meta_value LIKE %s OR campos.meta_value LIKE %s OR campos.meta_value LIKE %s OR campos.meta_value LIKE %s OR campos.meta_value LIKE %s ))
                             ORDER BY post_date DESC", ...$argumentos ) );
+            // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         } else {
             $argumentos = array_merge( [ $tipos ], $patrones, $patrones );
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- no hay API de WordPress que busque siete cadenas dentro del contenido y el resultado se guarda en el transitorio xml_video_sitemap_consulta unas líneas más abajo; $argumentos lleva 15 valores para los 15 marcadores de esta consulta.
@@ -897,7 +1015,8 @@ class APG_Video_Sitemap {
             as_schedule_recurring_action( time() + MINUTE_IN_SECONDS, DAY_IN_SECONDS, 'apg_video_sitemap_revision', [], 'apg_video_sitemap' );
         }
 
-        update_option( 'apg_video_sitemap_revision_diaria', APG_VIDEO_SITEMAP_VERSION );
+        //Autocargada: se consulta en cada init como guarda barata.
+        update_option( 'apg_video_sitemap_revision_diaria', APG_VIDEO_SITEMAP_VERSION, true );
     }
 
     /**
