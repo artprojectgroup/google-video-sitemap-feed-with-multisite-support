@@ -5,7 +5,7 @@ Tags: video sitemap, sitemap, youtube, vimeo, dailymotion
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.0.2
+Stable tag: 3.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,6 +22,7 @@ Dynamically generates sitemap-video.xml, a video sitemap for Google. It needs no
 * Finds videos even when they live in the custom fields of the most common page builders or in the oEmbed cache.
 * Publishes the duration, the publication date and the uploader of each video.
 * Groups every video of the same page into a single sitemap entry, the way Google's specification expects.
+* Contextual help on the settings page, explaining where the sitemap is and what goes into it without leaving the screen.
 * Automatically caches the external data of each video to speed up building `sitemap-video.xml`.
 * Emails the site administrator when a video has been deleted or made private, so you can edit the post and remove the URL that is no longer valid.
 * Fully compatible with WordPress Multisite installations.
@@ -35,7 +36,7 @@ Dynamically generates sitemap-video.xml, a video sitemap for Google. It needs no
 * Spanish ([**Art Project Group**](https://artprojectgroup.es/)).
 
 = Support =
-**Art Project Group** offers paid [**technical support**](https://artprojectgroup.es/tienda/ticket-de-soporte) to help you install or configure **APG Google Video Sitemap Feed**.
+**Art Project Group** offers paid [**technical support**](https://artprojectgroup.es/tienda/soporte-tecnico) to help you install or configure **APG Google Video Sitemap Feed**.
 
 = Origin =
 **APG Google Video Sitemap Feed** was built on top of [*Google News Sitemap Feed With Multisite Support*](https://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/) by [Tim Brandon](https://profiles.wordpress.org/timbrd/) and [*Google XML Sitemap for Videos*](https://wordpress.org/plugins/xml-sitemaps-for-videos/) by [Amit Agarwal](https://profiles.wordpress.org/labnol/). Both are excellent plugins that did not offer everything we needed, but their work was essential to build this one.
@@ -50,6 +51,8 @@ Problems have been reported when using it alongside the latest version of **Goog
 
 = More information =
 You can read more about [**APG Google Video Sitemap Feed**](https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed) on our official website. The Spanish version of this documentation ships with the plugin in `readme.md`.
+
+You can also read the [full documentation](https://artprojectgroup.es/documentacion/apg-google-video-sitemap-feed), with every setting explained one by one.
 
 = Feedback =
 Do not forget to leave us your comments on:
@@ -95,7 +98,7 @@ Yes, problems have been reported when using it together with **Google XML Sitema
 Whatever you prefer. Having two video sitemaps is not penalized by search engines, but keeping only one is easier to maintain. The notice lets you deactivate this plugin in one click, or hide the message and keep both.
 
 = Technical support =
-If you need help installing or configuring **APG Google Video Sitemap Feed**, **Art Project Group** offers its [**technical support**](https://artprojectgroup.es/tienda/ticket-de-soporte) service.
+If you need help installing or configuring **APG Google Video Sitemap Feed**, **Art Project Group** offers its [**technical support**](https://artprojectgroup.es/tienda/soporte-tecnico) service.
 
 *Art Project Group does not provide free technical support of any kind.*
 
@@ -104,6 +107,9 @@ If you need help installing or configuring **APG Google Video Sitemap Feed**, **
 2. Screenshot of the `sitemap-video.xml` file.
 
 == Changelog ==
+= 3.1.0 =
+* Contextual help on the settings page, explaining where the sitemap is and what goes into it without leaving the screen.
+
 = 3.0.2 =
 * The sitemap no longer rebuilds on every post save: it only does so when the post that changed contains, or used to contain, videos.
 * The custom field search now looks at a list of known keys instead of scanning the whole metadata table.
@@ -273,7 +279,7 @@ If you need help installing or configuring **APG Google Video Sitemap Feed**, **
 * *Spanish*: by [**Art Project Group**](https://artprojectgroup.es/).
 
 == Technical support ==
-Since **APG Google Video Sitemap Feed** is completely free, **Art Project Group** only offers paid [**technical support**](https://artprojectgroup.es/tienda/ticket-de-soporte). Art Project Group does not provide free technical support of any kind.
+Since **APG Google Video Sitemap Feed** is completely free, **Art Project Group** only offers paid [**technical support**](https://artprojectgroup.es/tienda/soporte-tecnico). Art Project Group does not provide free technical support of any kind.
 
 == Donation ==
 Did you like **APG Google Video Sitemap Feed** and find it useful on your website? We would appreciate a [small donation](https://artprojectgroup.es/tienda/donacion) to help us keep improving this plugin and building more completely free plugins for the whole WordPress community.

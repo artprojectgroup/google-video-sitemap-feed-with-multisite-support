@@ -12,7 +12,7 @@ Tested up to: 7.1
 
 Requires PHP: 7.4
 
-Stable tag: 3.0.2
+Stable tag: 3.1.0
 
 License: GPLv3
 
@@ -40,6 +40,7 @@ Esta es la documentación en español. La [ficha del plugin en WordPress.org](ht
 - Encuentra los vídeos aunque estén en los campos personalizados de los constructores visuales más usados o en la caché de oEmbed.
 - Publica la duración, la fecha de publicación y el autor de cada vídeo.
 - Agrupa todos los vídeos de una misma página en una sola entrada del sitemap, como espera la especificación de Google.
+- Ayuda contextual en la página de ajustes, que explica dónde está el sitemap y qué entra en él sin salir de la pantalla.
 - Se anuncia solo en `robots.txt` y en el índice de sitemaps de WordPress.
 - Avisa si Yoast, Rank Math, All in One SEO o SEOPress ya publican un sitemap de vídeos, para que no tengas dos.
 
@@ -50,7 +51,7 @@ Esta es la documentación en español. La [ficha del plugin en WordPress.org](ht
 
 ### Soporte técnico
 
-**Art Project Group** te ofrece [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte) para configurar o instalar **APG Google Video Sitemap Feed**. 
+**Art Project Group** te ofrece [**Soporte técnico**](https://artprojectgroup.es/tienda/soporte-tecnico) para configurar o instalar **APG Google Video Sitemap Feed**. 
 
 ### Origen
 
@@ -69,6 +70,8 @@ Se han descrito errores al utilizarlo conjuntamente con la última versión de *
 ### Más información
 
 En nuestro sitio web oficial puede obtener más información sobre [**APG Google Video Sitemap Feed**](https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed). 
+
+Tienes la [documentación completa](https://artprojectgroup.es/documentacion/apg-google-video-sitemap-feed), con cada ajuste explicado uno a uno.
 
 ### Comentarios
 
@@ -127,11 +130,15 @@ Si, se han descrito errores al utilizarlo conjuntamente con el plugin **Google X
 
 ### Soporte técnico
 
-Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**, **Art Project Group** te ofrece su servicio de [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte). 
+Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**, **Art Project Group** te ofrece su servicio de [**Soporte técnico**](https://artprojectgroup.es/tienda/soporte-tecnico). 
 
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
+
+### 3.1.0
+
+- Ayuda contextual en la página de ajustes, que explica dónde está el sitemap y qué entra en él sin salir de la pantalla.
 
 ### 3.0.2
 
@@ -386,7 +393,7 @@ Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**,
 
 ## Soporte técnico
 
-Dado que **APG Google Video Sitemap Feed** es totalmente gratuito, **Art Project Group** sólo proporciona el servicio de [**Soporte técnico**](https://artprojectgroup.es/tienda/ticket-de-soporte) previo pago. En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.
+Dado que **APG Google Video Sitemap Feed** es totalmente gratuito, **Art Project Group** sólo proporciona el servicio de [**Soporte técnico**](https://artprojectgroup.es/tienda/soporte-tecnico) previo pago. En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.
 
 ## ¿Por qué esta documentación está en español?
 

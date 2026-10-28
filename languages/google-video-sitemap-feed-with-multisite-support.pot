@@ -171,3 +171,91 @@ msgstr ""
 #. Author URI of the plugin
 msgid "https://artprojectgroup.es/"
 msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:53
+msgid "More help"
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:54
+msgid "Full documentation"
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:96
+msgid "The sitemap"
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:98
+msgid ""
+"The plugin builds the video sitemap on the fly, every time it is asked for, "
+"so there is no file to regenerate and nothing to keep up to date by hand. "
+"Publish a post with a video and it is in the sitemap straight away."
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:99
+msgid "Where it is"
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:99
+msgid ""
+"at /sitemap-video.xml of your site. That address is an index that points to /"
+"sitemap-video-1.xml, -2 and so on, because the videos are served in pages. "
+"It is the address you give to Google Search Console."
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:100
+msgid "What goes in it"
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:100
+msgid ""
+"the YouTube, Vimeo and Dailymotion videos embedded in your published "
+"content, and the ones hosted on your own site through the video block, the "
+"video shortcode or the media library, each with the title, the description, "
+"the thumbnail, the duration and the date Google asks for. It looks in every "
+"post type, and also inside the custom fields of the usual page builders and "
+"the oEmbed cache, so a video put in by the builder is not left out."
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:101
+msgid "One entry per page"
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:101
+msgid ""
+"every video on the same page is grouped into a single sitemap entry, which "
+"is what the Google specification expects. A page with five videos is one "
+"entry with five videos, not five entries."
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:102
+msgid "On a network"
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:102
+msgid ""
+"each site of a Multisite network has its own sitemap at its own address, and "
+"each one is submitted separately."
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:107
+msgid "Notifications"
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:109
+msgid ""
+"A video that has been deleted, made private or blocked where you sell stays "
+"embedded in your post, looking fine to you and broken to everyone else. The "
+"plugin checks them and can tell you."
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:110
+msgid "Send video error notifications by email"
+msgstr ""
+
+#: includes/admin/clases/class-apg-video-sitemap-help.php:110
+msgid ""
+"writes to the site administrator when a video is no longer available, so you "
+"can replace it. It writes once per video, never again for the same one, and "
+"a network error or a server failure does not count as a missing video, "
+"because those come back on their own."
+msgstr ""

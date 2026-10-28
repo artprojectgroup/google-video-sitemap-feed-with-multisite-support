@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: APG Google Video Sitemap Feed
-Version: 3.0.2
+Version: 3.1.0
 Plugin URI: https://wordpress.org/plugins/google-video-sitemap-feed-with-multisite-support/
 Description: Dynamically generates a Google Video Sitemap. Compatible with WordPress Multisite installations. Created from <a href="https://profiles.wordpress.org/timbrd/" target="_blank">Tim Brandon</a> <a href="https://wordpress.org/plugins/google-news-sitemap-feed-with-multisite-support/" target="_blank"><strong>Google News Sitemap Feed With Multisite Support</strong></a> and <a href="https://profiles.wordpress.org/labnol/" target="_blank">Amit Agarwal</a> <a href="https://wordpress.org/plugins/xml-sitemaps-for-videos/" target="_blank"><strong>Google XML Sitemap for Videos</strong></a> plugins. Added new functions and ideas (Vimeo and Dailymotion support) by <a href="https://twitter.com/ludobonnet" target="_blank">Ludo Bonnet</a>.
 Author: Art Project Group
@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 
 //Definimos constantes
 define( 'APG_VIDEO_SITEMAP_DIRECCION', plugin_basename( __FILE__ ) );
-define( 'APG_VIDEO_SITEMAP_VERSION', '3.0.2' );
+define( 'APG_VIDEO_SITEMAP_VERSION', '3.1.0' );
 
 //Funciones generales de APG
 include_once( plugin_dir_path( __FILE__ ) . 'includes/admin/funciones-apg.php' );
@@ -95,7 +95,14 @@ function apg_video_sitemap_sanitize( $input ) {
  * @return void
  */
 function apg_video_sitemap_menu_administrador() {
-	add_options_page( __( 'Google Video Sitemap Feed Options.', 'google-video-sitemap-feed-with-multisite-support' ), 'Google Video Sitemap Feed', 'manage_options', 'xml-sitemap-video', 'apg_video_sitemap_formulario' );
+	$apg_video_sitemap_pantalla = add_options_page( __( 'Google Video Sitemap Feed Options.', 'google-video-sitemap-feed-with-multisite-support' ), 'Google Video Sitemap Feed', 'manage_options', 'xml-sitemap-video', 'apg_video_sitemap_formulario' );
+
+	// Ayuda contextual. Se engancha al hook que devuelve add_options_page() para que sólo se
+	// cargue en esta pantalla y no en el resto del escritorio.
+	if ( $apg_video_sitemap_pantalla ) {
+		include_once plugin_dir_path( __FILE__ ) . 'includes/admin/clases/class-apg-video-sitemap-help.php';
+		add_action( 'load-' . $apg_video_sitemap_pantalla, [ 'APG_Video_Sitemap_Help', 'add_tabs' ] );
+	}
 }
 add_action( 'admin_menu', 'apg_video_sitemap_menu_administrador' );
 
