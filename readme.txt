@@ -3,7 +3,7 @@ Contributors: artprojectgroup
 Donate link: https://artprojectgroup.es/tienda/donacion
 Tags: video sitemap, sitemap, youtube, vimeo, dailymotion
 Requires at least: 6.0
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 7.4
 Stable tag: 3.1.0
 License: GPLv3
