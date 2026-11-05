@@ -13,14 +13,14 @@ if ( ! is_array( $apg_video_sitemap_configuracion ) ) {
 	<h2>
 		<?php esc_html_e( 'Google Video Sitemap Feed Options.', 'google-video-sitemap-feed-with-multisite-support' ); ?>
 	</h2>
-	<h3><a href="<?php echo esc_url( $apg_video_sitemap[ 'plugin_url' ] ); ?>" title="<?php echo esc_attr( 'Art Project Group' ); ?>"><?php echo esc_html( $apg_video_sitemap[ 'plugin' ] ); ?></a> </h3>
+	<h3><a href="<?php echo esc_url( apg_video_sitemap_enlace( 'plugin_url' ) ); ?>" title="<?php echo esc_attr( 'Art Project Group' ); ?>"><?php echo esc_html( $apg_video_sitemap[ 'plugin' ] ); ?></a> </h3>
 	<p>
 		<?php esc_html_e( 'Dynamically generates a Google Video Sitemap.', 'google-video-sitemap-feed-with-multisite-support' ); ?>
 	</p>
 	<?php include( plugin_dir_path( __FILE__ ) . 'cuadro-informacion.php' ); ?>
 	<form method="post" action="options.php">
 		<?php settings_fields( 'apg_video_sitemap_settings_group' ); ?>
-		<div class="cabecera"> <a href="<?php echo esc_url( $apg_video_sitemap[ 'plugin_url' ] ); ?>" title="<?php echo esc_attr( $apg_video_sitemap[ 'plugin' ] ); ?>" target="_blank"><img src="<?php echo esc_url( plugins_url( 'assets/images/cabecera.jpg', APG_VIDEO_SITEMAP_DIRECCION ) ); ?>" class="imagen" alt="<?php echo esc_attr( $apg_video_sitemap[ 'plugin' ] ); ?>" /></a> </div>
+		<div class="cabecera"> <a href="<?php echo esc_url( apg_video_sitemap_enlace( 'plugin_url' ) ); ?>" title="<?php echo esc_attr( $apg_video_sitemap[ 'plugin' ] ); ?>" target="_blank"><img src="<?php echo esc_url( plugins_url( 'assets/images/cabecera.jpg', APG_VIDEO_SITEMAP_DIRECCION ) ); ?>" class="imagen" alt="<?php echo esc_attr( $apg_video_sitemap[ 'plugin' ] ); ?>" /></a> </div>
 		<table class="form-table apg-table">
 			<tbody>
 				<tr valign="top">

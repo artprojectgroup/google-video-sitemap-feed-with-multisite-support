@@ -13,15 +13,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class APG_Video_Sitemap_Help {
 
-	/**
-	 * Dirección de la documentación completa, en español.
-	 */
-	const DOCS_URL = 'https://artprojectgroup.es/documentacion/apg-google-video-sitemap-feed';
 
-	/**
-	 * Dirección de la documentación completa, en inglés.
-	 */
-	const DOCS_URL_EN = 'https://artprojectgroup.com/documentation/apg-google-video-sitemap-feed';
 
 	/**
 	 * Sustituye la ayuda de la pantalla de ajustes por los paneles del plugin.
@@ -61,7 +53,8 @@ class APG_Video_Sitemap_Help {
 	 * @return string
 	 */
 	private static function documentacion() {
-		return ( 0 === strpos( get_user_locale(), 'es' ) ) ? self::DOCS_URL : self::DOCS_URL_EN;
+		//El idioma lo decide apg_video_sitemap_enlace(), que es quien guarda las dos direcciones.
+		return apg_video_sitemap_enlace( 'documentacion' );
 	}
 
 	/**

@@ -3,12 +3,31 @@
 defined( 'ABSPATH' ) || exit;
 
 //Definimos las variables
+/* Devuelve la direccion de la web en el idioma de quien mira la pantalla. Se resuelve al usarla y
+nunca al cargar el plugin, porque hasta que WordPress no identifica al usuario no se sabe su idioma. */
+function apg_video_sitemap_enlace( $clave ) {
+	global $apg_video_sitemap;
+
+	if ( ! isset( $apg_video_sitemap['enlaces'][ $clave ] ) ) {
+		return '';
+	}
+
+	$par = $apg_video_sitemap['enlaces'][ $clave ];
+
+	return ( 0 === strpos( get_user_locale(), 'es' ) ) ? $par[0] : $par[1];
+}
+
 $apg_video_sitemap = [ 	
 	'plugin' 		=> 'APG Google Video Sitemap Feed', 
 	'plugin_uri' 	=> 'google-video-sitemap-feed-with-multisite-support', 
-	'donacion' 		=> 'https://artprojectgroup.es/tienda/donacion',
-	'soporte' 		=> 'https://artprojectgroup.es/tienda/soporte-tecnico',
-	'plugin_url' 	=> 'https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed', 
+	//Cada direccion de la web, en espanol y en ingles.
+	'enlaces' 		=> array(
+		'web' 		=> array( 'https://artprojectgroup.es/', 'https://artprojectgroup.com/' ),
+		'plugin_url' 		=> array( 'https://artprojectgroup.es/plugins-para-wordpress/apg-google-video-sitemap-feed', 'https://artprojectgroup.com/wordpress-plugins/apg-google-video-sitemap-feed' ),
+		'donacion' 		=> array( 'https://artprojectgroup.es/tienda/donacion', 'https://artprojectgroup.com/shop/donation' ),
+		'soporte' 		=> array( 'https://artprojectgroup.es/tienda/soporte-tecnico', 'https://artprojectgroup.com/shop/technical-support' ),
+		'documentacion' 		=> array( 'https://artprojectgroup.es/documentacion/apg-google-video-sitemap-feed', 'https://artprojectgroup.com/documentation/apg-google-video-sitemap-feed' ),
+	), 
 	'ajustes' 		=> 'options-general.php?page=xml-sitemap-video', 
 	'puntuacion' 	=> 'https://wordpress.org/support/view/plugin-reviews/google-video-sitemap-feed-with-multisite-support'
  ];
@@ -60,8 +79,8 @@ function apg_video_sitemap_enlaces( $enlaces, $archivo ) {
 	}
 
 	$textos		= apg_video_sitemap_dame_textos();
-	$enlaces[]	= '<a href="' . esc_url( $apg_video_sitemap[ 'donacion' ] ) . '" target="_blank" title="' . esc_attr( $textos[ 'donacion' ] ) . '"><span class="genericon genericon-cart"></span></a>';
-	$enlaces[]	= '<a href="' . esc_url( $apg_video_sitemap[ 'plugin_url' ] ) . '" target="_blank" title="' . esc_attr( $apg_video_sitemap[ 'plugin' ] ) . '"><strong class="artprojectgroup">APG</strong></a>';
+	$enlaces[]	= '<a href="' . esc_url( apg_video_sitemap_enlace( 'donacion' ) ) . '" target="_blank" title="' . esc_attr( $textos[ 'donacion' ] ) . '"><span class="genericon genericon-cart"></span></a>';
+	$enlaces[]	= '<a href="' . esc_url( apg_video_sitemap_enlace( 'plugin_url' ) ) . '" target="_blank" title="' . esc_attr( $apg_video_sitemap[ 'plugin' ] ) . '"><strong class="artprojectgroup">APG</strong></a>';
 	$enlaces[]	= '<a href="' . esc_url( 'https://www.facebook.com/artprojectgroup' ) . '" title="' . esc_attr( $textos[ 'facebook' ] ) . '" target="_blank"><span class="genericon genericon-facebook-alt"></span></a> <a href="' . esc_url( 'https://twitter.com/artprojectgroup' ) . '" title="' . esc_attr( $textos[ 'twitter' ] ) . '" target="_blank"><span class="genericon genericon-twitter"></span></a> <a href="' . esc_url( 'https://es.linkedin.com/in/artprojectgroup' ) . '" title="' . esc_attr( $textos[ 'linkedin' ] ) . '" target="_blank"><span class="genericon genericon-linkedin"></span></a>';
 	$enlaces[]	= '<a href="' . esc_url( 'https://profiles.wordpress.org/artprojectgroup/' ) . '" title="' . esc_attr( $textos[ 'plugins' ] ) . '" target="_blank"><span class="genericon genericon-wordpress"></span></a>';
 	$enlaces[]	= '<a href="' . esc_url( 'mailto:info@artprojectgroup.es' ) . '" title="' . esc_attr( $textos[ 'correo' ] ) . '"><span class="genericon genericon-mail"></span></a> <a href="' . esc_url( 'skype:artprojectgroup' ) . '" title="' . esc_attr( $textos[ 'skype' ] ) . '"><span class="genericon genericon-skype"></span></a>';
@@ -81,7 +100,7 @@ function apg_video_sitemap_enlace_de_ajustes( $enlaces ) {
 	$soporte			= sprintf( __( 'Support of %s', 'google-video-sitemap-feed-with-multisite-support' ), $apg_video_sitemap[ 'plugin' ] );
 	$enlaces_de_ajustes	= [
 		'<a href="' . esc_url( admin_url( $apg_video_sitemap[ 'ajustes' ] ) ) . '" title="' . esc_attr( $ajustes ) . '">' . esc_html__( 'Settings', 'google-video-sitemap-feed-with-multisite-support' ) . '</a>', 
-		'<a href="' . esc_url( $apg_video_sitemap[ 'soporte' ] ) . '" title="' . esc_attr( $soporte ) . '" target="_blank">' . esc_html__( 'Support', 'google-video-sitemap-feed-with-multisite-support' ) . '</a>'
+		'<a href="' . esc_url( apg_video_sitemap_enlace( 'soporte' ) ) . '" title="' . esc_attr( $soporte ) . '" target="_blank">' . esc_html__( 'Support', 'google-video-sitemap-feed-with-multisite-support' ) . '</a>'
 	];
 	foreach ( $enlaces_de_ajustes as $enlace_de_ajustes )	{
 		array_unshift( $enlaces, $enlace_de_ajustes );

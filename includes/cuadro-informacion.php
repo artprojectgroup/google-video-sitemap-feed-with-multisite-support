@@ -13,11 +13,11 @@ $apg_video_sitemap_puntua = sprintf( __( 'Please, rate %s:', 'google-video-sitem
       <p>
         <?php esc_html_e( 'If you enjoy this plugin and find it helpful, please make a donation:', 'google-video-sitemap-feed-with-multisite-support' ); ?>
       </p>
-      <p><a href="<?php echo esc_url( $apg_video_sitemap[ 'donacion' ] ); ?>" target="_blank" title="<?php echo esc_attr( $apg_video_sitemap_textos[ 'donacion' ] ); ?>"><span class="genericon genericon-cart"></span></a></p>
+      <p><a href="<?php echo esc_url( apg_video_sitemap_enlace( 'donacion' ) ); ?>" target="_blank" title="<?php echo esc_attr( $apg_video_sitemap_textos[ 'donacion' ] ); ?>"><span class="genericon genericon-cart"></span></a></p>
     </div>
     <div class="columna">
       <p><?php echo esc_html( 'Art Project Group:' ); ?></p>
-      <p><a href="<?php echo esc_url( 'https://www.artprojectgroup.es' ); ?>" title="<?php echo esc_attr( 'Art Project Group' ); ?>" target="_blank"><strong class="artprojectgroup"><?php echo esc_html( 'APG' ); ?></strong></a></p>
+      <p><a href="<?php echo esc_url( apg_video_sitemap_enlace( 'web' ) ); ?>" title="<?php echo esc_attr( 'Art Project Group' ); ?>" target="_blank"><strong class="artprojectgroup"><?php echo esc_html( 'APG' ); ?></strong></a></p>
     </div>
   </div>
   <div class="fila">
@@ -45,7 +45,7 @@ $apg_video_sitemap_puntua = sprintf( __( 'Please, rate %s:', 'google-video-sitem
       <p>
         <?php esc_html_e( 'Documentation and Support:', 'google-video-sitemap-feed-with-multisite-support' ); ?>
       </p>
-      <p><a href="<?php echo esc_url( $apg_video_sitemap[ 'plugin_url' ] ); ?>" title="<?php echo esc_attr( $apg_video_sitemap[ 'plugin' ] ); ?>"><span class="genericon genericon-book"></span></a> <a href="<?php echo esc_url( $apg_video_sitemap[ 'soporte' ] ); ?>" title="<?php esc_attr_e( 'Support', 'google-video-sitemap-feed-with-multisite-support' ); ?>"><span class="genericon genericon-cog"></span></a></p>
+      <p><a href="<?php echo esc_url( apg_video_sitemap_enlace( 'plugin_url' ) ); ?>" title="<?php echo esc_attr( $apg_video_sitemap[ 'plugin' ] ); ?>"><span class="genericon genericon-book"></span></a> <a href="<?php echo esc_url( apg_video_sitemap_enlace( 'soporte' ) ); ?>" title="<?php esc_attr_e( 'Support', 'google-video-sitemap-feed-with-multisite-support' ); ?>"><span class="genericon genericon-cog"></span></a></p>
     </div>
   </div>
   <div class="fila final">

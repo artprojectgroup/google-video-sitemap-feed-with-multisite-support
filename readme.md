@@ -8,11 +8,10 @@ Tags: video sitemap, sitemap, youtube, vimeo, dailymotion
 
 Requires at least: 6.0
 
-Tested up to: 7.1
-
+Tested up to: 7.2
 Requires PHP: 7.4
 
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 
 License: GPLv3
 
@@ -135,6 +134,10 @@ Si necesitas ayuda para configurar o instalar **APG Google Video Sitemap Feed**,
 *En ningún caso **Art Project Group** proporciona ningún tipo de soporte técnico gratuito.*
 
 ## Changelog
+
+### 3.1.1
+
+- Los enlaces a la web, a la documentación, a la donación y al soporte se abren en el idioma de quien mira la pantalla.
 
 ### 3.1.0
 
